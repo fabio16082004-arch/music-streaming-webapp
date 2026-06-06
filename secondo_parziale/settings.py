@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'listeners',
     'catalog',
-    'accounts'
+    'accounts',
+    'django_filters'
 ]
 
 MIDDLEWARE = [

@@ -9,7 +9,7 @@ html, body {
 }
 
 body{
-  background-color: var(--bg-surface)
+  background-color: var(--bg-surface) !important
 }
 
 /* ===========================
@@ -313,7 +313,7 @@ body{
   visibility: hidden;
 }
 
-.nav-link {
+.ma-nav-link {
   white-space: nowrap;
   padding: 7px 14px;
   border-radius: 8px;
@@ -326,13 +326,12 @@ body{
   transition: color 0.2s, background 0.2s;
 }
 
-.nav-link:hover {
-  color: var(--text-primary);
-  background: var(--bg-hover);
+.ma-nav-link:visited {
+  color: var(--text-muted);
 }
 
-.nav-link:visited {
-  color: var(--text-muted);
+.ma-nav-link:hover {
+  color: var(--accent-mid);
 }
 
 .nav-right {
@@ -363,16 +362,6 @@ body{
   line-height: 1;
 }
 
-@media (max-width: 663px){
-  .nav-links{
-    display: none;
-  }
-
-  .nav-burger{
-    display: flex;
-  }
-
-  .nav-left h1{
-    display: block;
-  }
+main{
+  margin: 100px 20px;
 }
