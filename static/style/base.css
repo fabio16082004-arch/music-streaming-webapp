@@ -365,3 +365,40 @@ body{
 main{
   margin: 100px 20px;
 }
+
+.logout-form button {
+  white-space: nowrap;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logout-form button:hover {
+  color: var(--accent-mid);
+}
+
+.logout-form button i {
+  font-size: 0.85rem;
+}
+
+@media screen and (max-width: 710px) {
+    .nav-links{
+      display: none;
+    }
+
+    .nav-burger{
+      display: flex;
+    }
+}

@@ -1,0 +1,80 @@
+{% extends "registration/base_authentication.html" %}
+{% load static %} {% block title %}Signup - Music app{% endblock %}
+
+{% block content_titles %}
+    <h1>Create Account</h1>
+    <p>Sign up to start your journey in the Music App</p>
+{% endblock %}
+
+{% block content_form %}
+    <form method="POST" class="auth-form">
+        {% csrf_token %}
+
+        <div class="auth-group">
+            <label for="first_name">First Name</label>
+            <div class="auth-input-wrapper">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="first_name" name="first_name" placeholder="Your first name" required>
+            </div>
+        </div>
+
+        <div class="auth-group">
+            <label for="last_name">Last Name</label>
+            <div class="auth-input-wrapper">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="last_name" name="last_name" placeholder="Your last name" required>
+            </div>
+        </div>
+
+        <div class="auth-group">
+            <label for="username">Username</label>
+            <div class="auth-input-wrapper">
+                <i class="fa-solid fa-user-gear"></i>
+                <input type="text" id="username" name="username" placeholder="Choose your username" required>
+            </div>
+        </div>
+
+        <div class="auth-group">
+            <label for="email">Email</label>
+            <div class="auth-input-wrapper">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" id="email" name="email" placeholder="Your email address">
+            </div>
+        </div>
+
+        <div class="auth-group">
+            <label for="password">Password</label>
+            <div class="auth-input-wrapper">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" name="password1" placeholder="Create a password" required>
+            </div>
+        </div>
+
+        <div class="auth-group">
+            <label for="password_confirm">Confirm Password</label>
+            <div class="auth-input-wrapper">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password_confirm" name="password2" placeholder="Repeat your password" required>
+            </div>
+        </div>
+
+        {% if form.errors %}
+            <div class="auth-error text-danger mb-3">
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <p class="mb-1">{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <p class="mb-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <button type="submit" class="btn-auth">Sign up</button>
+    </form>
+
+    <div class="auth-footer">
+        <p>Already have an account? <a href="{% url 'login' %}">Log in here</a></p>
+    </div>
+{% endblock %}

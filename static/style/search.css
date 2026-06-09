@@ -1,0 +1,374 @@
+/*
+====================
+SEARCH BAR
+====================
+*/
+
+.nav-filter-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-bar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 10px 20px;
+}
+
+.search-bar input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 1rem;
+  width: 100%;
+}
+
+.search-bar i {
+  color: var(--text-muted);
+}
+
+.ma-buttons-filter {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ma-filter-btn {
+  margin-top: 0;
+}
+
+.ma-filter-btn, .adv-filter-btn {
+  padding: 7px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.adv-filter-btn{
+  display: none;
+  align-items: center;
+  gap:10px
+}
+
+.ma-filter-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+  border-color: #5a5a5a;
+}
+
+.ma-filter-btn.active {
+  background: var(--accent-grad);
+  border-color: transparent;
+  color: var(--text-primary);
+}
+
+/*
+====================
+SEARCH RESULTS
+====================
+*/
+
+.results{
+  margin-top: 30px;
+}
+
+.result-unit, .result-details{
+  display: flex;
+  flex-direction: row;
+}
+
+.result-unit{
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 15px;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.result-unit:hover{
+  background-color: var(--text-hint);
+}
+
+.result-image{
+  width: 60px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.result-description{
+  margin-left: 15px;
+}
+
+.result-description h2, .song-detail h2{
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.result-description h3, .song-detail h3{
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.add-to-btn{
+  display: flex;
+  align-items: center;
+}
+
+.add-to-btn i{
+  color: var(--text-muted);
+}
+
+/*
+============================
+SONG PALYER
+============================
+*/
+.play-song {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #f1f1f1;
+}
+
+.song-detail h2{
+  color: var(--text-hint);
+}
+
+.song-detail h3{
+  color: var(--text-hint);
+}
+
+/*
+============================
+MODAL FILTERS
+============================
+*/
+.modal-content {
+  background-color: var(--bg-surface) !important;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text-primary);
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--border);
+  padding: 20px 24px;
+}
+
+.modal-title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.modal-body {
+  padding: 24px;
+  color: var(--text-muted);
+}
+
+.modal-footer {
+  border-top: 1px solid var(--border);
+  padding: 16px 24px;
+}
+
+.modal-footer .btn-secondary {
+  background: var(--accent-grad);
+  border: none;
+  border-radius: 20px;
+  padding: 8px 24px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  transition: opacity 0.2s;
+}
+
+.modal-footer .btn-secondary:hover {
+  opacity: 0.85;
+}
+
+.btn-close {
+  filter: invert(1) brightness(0.7);
+  transition: filter 0.2s;
+}
+
+.btn-close:hover {
+  filter: invert(1) brightness(1);
+}
+
+.modal-backdrop {
+  background-color: #000;
+}
+
+/*
+============================
+MODAL FILTER GROUPS
+============================
+*/
+.filter-group {
+  margin-bottom: 24px;
+}
+
+.filter-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.filter-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.filter-remove {
+  background: none;
+  border: none;
+  color: var(--text-hint);
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.filter-remove:hover {
+  color: var(--accent-from);
+  background: var(--bg-hover);
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-chips--letters {
+  gap: 6px;
+}
+
+.filter-chip {
+  padding: 5px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--bg-primary);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.filter-chips--letters .filter-chip {
+  padding: 5px 10px;
+  font-size: 0.75rem;
+}
+
+.filter-chip:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.filter-chip.selected {
+  background: var(--accent-grad);
+  border-color: transparent;
+  color: #fff;
+}
+
+.filter-duration {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-sep {
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.filter-input {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  width: 70px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.filter-input.full {
+  width: 100%;
+}
+
+.filter-input:focus {
+  border-color: var(--accent-mid);
+}
+
+.filter-select {
+  width: 100%;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  padding: 8px 40px 8px 12px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.filter-select:focus {
+  border-color: var(--accent-mid);
+}
+
+.filter-select option {
+  background: var(--bg-primary);
+}
+
+/*
+============================
+FILTER BTN HIDDEN STATE
+============================
+*/
+.adv-filter-btn {
+  flex-shrink: 0;
+  transition: opacity 0.2s, width 0.2s, padding 0.2s;
+}
+
+.adv-filter-btn.hidden {
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  padding: 0;
+  overflow: hidden;
+  border: none;
+}
+

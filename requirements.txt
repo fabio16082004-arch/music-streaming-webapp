@@ -1,3 +1,4 @@
 pillow
 faker
 django-filter
+django

@@ -1,0 +1,150 @@
+/* Sovrascriviamo leggermente i margini di default imposti nel base.css per evitare lo scroll inutile */
+.login-body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-primary) !important;
+}
+
+.login-wrapper {
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
+  /* Annulla il margin: 100px 20px definito in base.css per il tag main */
+  margin: 0;
+}
+
+.login-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-logo {
+  width: 80px;
+  margin: 0 auto 15px;
+  display: block;
+}
+
+.login-header h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 5px;
+  color: var(--text-primary);
+}
+
+.login-header p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.auth-group label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.auth-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  transition: border-color 0.2s;
+}
+
+.auth-input-wrapper:focus-within {
+  border-color: var(--accent-mid);
+}
+
+.auth-input-wrapper i {
+  color: var(--text-muted);
+  margin-right: 12px;
+  font-size: 1.1rem;
+}
+
+.auth-input-wrapper input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 1rem;
+  width: 100%;
+}
+
+.auth-input-wrapper input::placeholder {
+  color: var(--text-hint);
+}
+
+.auth-error {
+  color: var(--accent-from);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.btn-auth {
+  margin-top: 10px;
+  background: var(--accent-grad);
+  border: none;
+  border-radius: 24px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.btn-auth:hover {
+  opacity: 0.9;
+}
+
+.btn-auth:active {
+  transform: scale(0.98);
+}
+
+.auth-footer {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.auth-footer a {
+  color: var(--accent-mid);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.auth-footer a:hover {
+  color: var(--accent-from);
+}

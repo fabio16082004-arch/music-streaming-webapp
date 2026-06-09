@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Music app search{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'style/search.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main>
+        <div class="search-filters">
+            <div class="nav-filter-container">
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="What do you want to listen?">
+                </div>
+
+                <button class="adv-filter-btn" data-bs-toggle="modal" data-bs-target="#filters" data-genres="{{ db_genres_json }}">
+                    <i class="fa-solid fa-filter"></i>
+                    <span>Filters</span>
+                </button>
+            </div>
+
+            <div class="ma-buttons-filter">
+                <button class="ma-filter-btn active" data-category="all">All</button>
+                <button class="ma-filter-btn" data-category="artist">Artists</button>
+                <button class="ma-filter-btn" data-category="playlist">Playlists</button>
+                <button class="ma-filter-btn" data-category="album">Albums</button>
+                <button class="ma-filter-btn" data-category="track">Tracks</button>
+            </div>
+        </div>
+
+
+        <div class="results">
+            {% if tracks %}
+                <section>
+                    <h3>Tracks</h3>
+                    {% for track in tracks %}
+                        <div class="result-unit" data-type="track">
+                            <div class="result-details">
+                                <img class="result-image" src="{{ track.cover.url }}" alt="{{ track.title }}">
+                                <div class="result-description">
+                                    <h2>{{ track.title }}</h2>
+                                    <h3>Track — {{ track.artist.name }}</h3>
+                                </div>
+                            </div>
+                            <div class="add-to-btn">
+                                <i class="fa-solid fa-plus"></i>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </section>
+            {% endif %}
+
+            {% if albums %}
+                <section>
+                    <h3>Albums</h3>
+                    {% for album in albums %}
+                        <div class="result-unit" data-type="album">
+                            <div class="result-details">
+                                <img class="result-image" src="{{ album.cover.url }}" alt="{{ album.title }}">
+                                <div class="result-description">
+                                    <h2>{{ album.title }}</h2>
+                                    <h3>Album — {{ album.artist.name }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </section>
+            {% endif %}
+
+            {% if artists %}
+                <section>
+                    <h3>Artists</h3>
+                    {% for artist in artists %}
+                        <div class="result-unit" data-type="artist">
+                            <div class="result-details">
+                                <img class="result-image" src="{{ artist.photo.url }}" alt="{{ artist.name }}">
+                                <div class="result-description">
+                                    <h2>{{ artist.name }}</h2>
+                                    <h3>Artist</h3>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </section>
+            {% endif %}
+
+            {% if playlists %}
+                <section>
+                    <h3>Playlists</h3>
+                    {% for playlist in playlists %}
+                        <div class="result-unit" data-type="playlist">
+                            <div class="result-details">
+                                <img class="result-image" src="{{ playlist.cover.url }}" alt="{{ playlist.name }}">
+                                <div class="result-description">
+                                    <h2>{{ playlist.name }}</h2>
+                                    <h3>Playlist</h3>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </section>
+            {% endif %}
+
+            {% if not tracks and not albums and not artists and not playlists %}
+                <p style="color: var(--text-muted); margin-top: 20px;">No results for "{{ query }}".</p>
+            {% endif %}
+        </div>
+
+    </main>
+
+    <!--<footer>
+        <div class="play-song d-flex justify-content-around align-items-center flex-wrap p-3">
+
+            <div class="left-play-song d-flex align-items-center gap-3">
+                <img class="result-image" src="NTQtNDg1My5qcGVn.png" alt="Picture">
+                <div class="song-detail">
+                    <h2>I</h2>
+                    <h3>Track - Mach Hommy</h3>
+                </div>
+            </div>
+
+            <audio src="I.mp3" controls controlsList="nodownload"></audio>
+
+        </div>
+    </footer>-->
+
+    <div class="modal fade" id="filters" tabindex="-1" aria-labelledby="filtersLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'script/search.js' %}"></script>
+{% endblock %}

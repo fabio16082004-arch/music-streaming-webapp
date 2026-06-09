@@ -1,0 +1,40 @@
+{% extends "registration/base_authentication.html" %}
+{% load static %}
+{% block title %}Login - Music app{% endblock %}
+
+{% block content_titles %}
+    <h1>Welcome</h1>
+    <p>Log in to continue in the Music App</p>
+{% endblock %}
+
+{% block content_form %}
+    <form method="POST" class="auth-form">
+        {% csrf_token %}
+
+        <div class="auth-group">
+            <label for="username">Username</label>
+            <div class="auth-input-wrapper">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="username" name="username" placeholder="Your username" required>
+            </div>
+        </div>
+
+        <div class="auth-group">
+            <label for="password">Password</label>
+            <div class="auth-input-wrapper">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" name="password" placeholder="Your password" required>
+            </div>
+        </div>
+
+        {% if form.errors %}
+            <div class="auth-error text-danger mb-3">Username or password is invalid</div>
+        {% endif %}
+
+        <button type="submit" class="btn-auth">Log in</button>
+    </form>
+
+    <div class="auth-footer">
+        <p>Don't have an account yet? <a href="{% url 'signup' %}">Sign up here</a></p>
+    </div>
+{% endblock %}
