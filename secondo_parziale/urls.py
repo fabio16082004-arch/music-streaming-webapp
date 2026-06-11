@@ -27,10 +27,9 @@ from django.conf.urls.static import static
 import listeners
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='/catalog/', permanent=False)),
     path('admin/', admin.site.urls),
     path('catalog/', include('catalog.urls')),
     path('accounts/', include('accounts.urls')),
 
     path('me/', include('listeners.urls'))
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,5 +1,8 @@
 from django.urls import path, include
-from catalog import views
+
+from catalog.views import SearchView, SearchResultsView
+
 urlpatterns = [
-    path('search/', views.global_search_view, name='search'),
+    path('search/', SearchView.as_view(), name='search'),
+    path('search/results/', SearchResultsView.as_view(), name='search-results'),
 ]

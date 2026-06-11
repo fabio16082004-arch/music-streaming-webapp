@@ -35,6 +35,9 @@ class Artist(models.Model):
     biography = models.TextField()
     country = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.stage_name
+
 class Genre(models.Model):
     name = models.CharField(max_length=100)
 

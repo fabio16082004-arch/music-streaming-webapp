@@ -1,0 +1,71 @@
+{% load static %}
+
+{% if artists %}
+    <section>
+        {% for artist in artists %}
+            <div class="result-unit" data-type="artist">
+                <div class="result-details">
+                    <div class="result-description">
+                        <h2>{{ artist.stage_name }}</h2>
+                        <h3>Artist</h3>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+{% endif %}
+
+{% if playlists %}
+    <section>
+        {% for playlist in playlists %}
+            <div class="result-unit" data-type="playlist">
+                <div class="result-details">
+                    <img class="result-image" src="{{ MEDIA_URL }}{{ playlist.cover.url }}" alt="{{ playlist.name }}">
+                    <div class="result-description">
+                        <h2>{{ playlist.name }}</h2>
+                        <h3>Playlist</h3>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+{% endif %}
+
+{% if albums %}
+    <section>
+        {% for album in albums %}
+            <div class="result-unit" data-type="album">
+                <div class="result-details">
+                    <img class="result-image" src="{{ MEDIA_URL }}{{ album.cover_file }}" alt="{{ album.title }}">
+                    <div class="result-description">
+                        <h2>{{ album.title}}</h2>
+                        <h3>Album — {{ album.artists.all|join:", " }}</h3>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+{% endif %}
+
+{% if tracks %}
+    <section>
+        {% for track in tracks %}
+            <div class="result-unit" data-type="track">
+                <div class="result-details">
+                    <img class="result-image" src="{{ MEDIA_URL }}{{ track.single_cover }}" alt="{{ track.title }}">
+                    <div class="result-description">
+                        <h2>{{ track.title }}</h2>
+                         <h3>Track — {{ track.artists.all|join:", " }}</h3>
+                    </div>
+                </div>
+                <div class="add-to-btn">
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+{% endif %}
+
+{% if not tracks and not albums and not artists and not playlists %}
+    <p style="color: var(--text-muted); margin-top: 20px;">No results for "{{ query }}".</p>
+{% endif %}

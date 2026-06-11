@@ -12,7 +12,7 @@ class TrackFilter(django_filters.FilterSet):
     q = django_filters.CharFilter(field_name='title', lookup_expr='istartswith')
     year = django_filters.NumberFilter(field_name='date', lookup_expr='year')
     genre = django_filters.CharFilter(field_name='genre', lookup_expr='icontains')
-    max_duration = django_filters.NumberFilter(field_name='duration', lookup_expr='lte')
+    max_duration = django_filters.NumberFilter(field_name='max_duration', lookup_expr='lte')
     explicit = django_filters.BooleanFilter(field_name='explicit')
 
 class AlbumFilter(django_filters.FilterSet):
@@ -29,8 +29,9 @@ class ArtistFilter(django_filters.FilterSet):
         model = Artist
         fields = ["country", "stage_name_initial"]
 
+    q = django_filters.CharFilter(field_name='stage_name', lookup_expr='istartswith')
     country = django_filters.CharFilter(field_name='country', lookup_expr='icontains')
-    stage_name_initial = django_filters.CharFilter(field_name='stage_name_initial', lookup_expr='istartswith')
+    stage_name_initial = django_filters.CharFilter(field_name='stage_name', lookup_expr='istartswith')
 
 class PlaylistFilter(django_filters.FilterSet):
     class Meta:

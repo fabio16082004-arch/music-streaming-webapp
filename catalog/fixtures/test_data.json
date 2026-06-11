@@ -1,0 +1,262 @@
+[
+  {
+    "model": "catalog.artist",
+    "pk": 1,
+    "fields": {
+      "first_name": "Mach",
+      "last_name": "Hommy",
+      "email": "mach@hommy.com",
+      "stage_name": "Mach-Hommy",
+      "biography": "Haitian-American rapper based in Newark, New Jersey.",
+      "country": "United States"
+    }
+  },
+  {
+    "model": "catalog.genre",
+    "pk": 1,
+    "fields": {
+      "name": "Hip Hop"
+    }
+  },
+  {
+    "model": "catalog.track",
+    "pk": 1,
+    "fields": {
+      "title": "I",
+      "duration": 180,
+      "explicit": true,
+      "audio_file": "catalog/tracks/1/1/I.mp3",
+      "single_cover": "catalog/covers/1/1/NTQtNDg1My5qcGVn.png",
+      "release_date": "2021-05-21",
+      "artists": [
+        1
+      ],
+      "genres": []
+    }
+  },
+  {
+    "model": "catalog.track",
+    "pk": 2,
+    "fields": {
+      "title": "II",
+      "duration": 180,
+      "explicit": true,
+      "audio_file": "catalog/tracks/1/1/II.mp3",
+      "single_cover": "catalog/covers/1/1/NTQtNDg1My5qcGVn.png",
+      "release_date": "2021-05-21",
+      "artists": [
+        1
+      ],
+      "genres": []
+    }
+  },
+  {
+    "model": "catalog.track",
+    "pk": 3,
+    "fields": {
+      "title": "III",
+      "duration": 180,
+      "explicit": true,
+      "audio_file": "catalog/tracks/1/1/III.mp3",
+      "single_cover": "catalog/covers/1/1/NTQtNDg1My5qcGVn.png",
+      "release_date": "2021-05-21",
+      "artists": [
+        1
+      ],
+      "genres": []
+    }
+  },
+  {
+    "model": "catalog.track",
+    "pk": 4,
+    "fields": {
+      "title": "IV",
+      "duration": 180,
+      "explicit": true,
+      "audio_file": "catalog/tracks/1/1/IV.mp3",
+      "single_cover": "catalog/covers/1/1/NTQtNDg1My5qcGVn.png",
+      "release_date": "2021-05-21",
+      "artists": [
+        1
+      ],
+      "genres": []
+    }
+  },
+  {
+    "model": "catalog.track",
+    "pk": 5,
+    "fields": {
+      "title": "V",
+      "duration": 180,
+      "explicit": true,
+      "audio_file": "catalog/tracks/1/1/V.mp3",
+      "single_cover": "catalog/covers/1/1/NTQtNDg1My5qcGVn.png",
+      "release_date": "2021-05-21",
+      "artists": [
+        1
+      ],
+      "genres": []
+    }
+  },
+  {
+    "model": "catalog.track",
+    "pk": 6,
+    "fields": {
+      "title": "VI",
+      "duration": 180,
+      "explicit": true,
+      "audio_file": "catalog/tracks/1/1/VI.mp3",
+      "single_cover": "catalog/covers/1/1/NTQtNDg1My5qcGVn.png",
+      "release_date": "2021-05-21",
+      "artists": [
+        1
+      ],
+      "genres": []
+    }
+  },
+  {
+    "model": "catalog.track",
+    "pk": 7,
+    "fields": {
+      "title": "VII",
+      "duration": 180,
+      "explicit": true,
+      "audio_file": "catalog/tracks/1/1/VII.mp3",
+      "single_cover": "catalog/covers/1/1/NTQtNDg1My5qcGVn.png",
+      "release_date": "2021-05-21",
+      "artists": [
+        1
+      ],
+      "genres": []
+    }
+  },
+  {
+    "model": "catalog.track",
+    "pk": 8,
+    "fields": {
+      "title": "VIII",
+      "duration": 180,
+      "explicit": true,
+      "audio_file": "catalog/tracks/1/1/VIII.mp3",
+      "single_cover": "catalog/covers/1/1/NTQtNDg1My5qcGVn.png",
+      "release_date": "2021-05-21",
+      "artists": [
+        1
+      ],
+      "genres": []
+    }
+  },
+  {
+    "model": "catalog.track",
+    "pk": 9,
+    "fields": {
+      "title": "X - IX",
+      "duration": 180,
+      "explicit": true,
+      "audio_file": "catalog/tracks/1/1/X - IX.mp3",
+      "single_cover": "catalog/covers/1/1/NTQtNDg1My5qcGVn.png",
+      "release_date": "2021-05-21",
+      "artists": [
+        1
+      ],
+      "genres": []
+    }
+  },
+  {
+    "model": "catalog.album",
+    "pk": 1,
+    "fields": {
+      "name": "Mach-Hommy Records",
+      "title": "The Mach-Hommy Tape",
+      "cover_file": "catalog/covers/1/1/NTQtNDg1My5qcGVn.png",
+      "release_date": "2021-05-21",
+      "genres": [
+        1
+      ],
+      "artists": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "catalog.albumtrack",
+    "pk": 1,
+    "fields": {
+      "track": 1,
+      "album": 1,
+      "track_number": 1
+    }
+  },
+  {
+    "model": "catalog.albumtrack",
+    "pk": 2,
+    "fields": {
+      "track": 2,
+      "album": 1,
+      "track_number": 2
+    }
+  },
+  {
+    "model": "catalog.albumtrack",
+    "pk": 3,
+    "fields": {
+      "track": 3,
+      "album": 1,
+      "track_number": 3
+    }
+  },
+  {
+    "model": "catalog.albumtrack",
+    "pk": 4,
+    "fields": {
+      "track": 4,
+      "album": 1,
+      "track_number": 4
+    }
+  },
+  {
+    "model": "catalog.albumtrack",
+    "pk": 5,
+    "fields": {
+      "track": 5,
+      "album": 1,
+      "track_number": 5
+    }
+  },
+  {
+    "model": "catalog.albumtrack",
+    "pk": 6,
+    "fields": {
+      "track": 6,
+      "album": 1,
+      "track_number": 6
+    }
+  },
+  {
+    "model": "catalog.albumtrack",
+    "pk": 7,
+    "fields": {
+      "track": 7,
+      "album": 1,
+      "track_number": 7
+    }
+  },
+  {
+    "model": "catalog.albumtrack",
+    "pk": 8,
+    "fields": {
+      "track": 8,
+      "album": 1,
+      "track_number": 8
+    }
+  },
+  {
+    "model": "catalog.albumtrack",
+    "pk": 9,
+    "fields": {
+      "track": 9,
+      "album": 1,
+      "track_number": 9
+    }
+  }
+]

@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 
 class Playlist(models.Model):
+    title = models.CharField(max_length=100, default='New playlist')
     name = models.CharField(max_length=100)
     listener = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     tracks = models.ManyToManyField('catalog.Track', blank=True, related_name='playlists')

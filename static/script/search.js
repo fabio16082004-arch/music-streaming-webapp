@@ -24,6 +24,8 @@ document.querySelectorAll('.ma-filter-btn').forEach(btn => {
     } else {
       filterBtn.style.display = 'none';
     }
+
+    searchElements();
   });
 });
 
@@ -35,8 +37,7 @@ document.querySelector('.adv-filter-btn').addEventListener('click', function() {
   const category = activeBtn ? activeBtn.dataset.category : null;
   const modalBody = document.querySelector('.modal-body');
 
-  // Clona lo stato confermato nel temporaneo
-  let tempState = JSON.parse(JSON.stringify(filterState[category]));
+  tempState = JSON.parse(JSON.stringify(filterState[category]));
 
   switch (category) {
     case 'track':  modalBody.innerHTML = buildTrackFilters(tempState);  break;
@@ -75,6 +76,8 @@ document.querySelector('.modal-footer .btn-secondary').addEventListener('click',
   if (category) {
     filterState[category] = JSON.parse(JSON.stringify(tempState));
   }
+  const modal = bootstrap.Modal.getInstance(document.getElementById('filters'));
+  if (modal) modal.hide();
 
   searchElements();
 });
@@ -261,9 +264,9 @@ function bindInteractions(category) {
 
 function searchElements(){
   const activeBtn = document.querySelector('.ma-filter-btn.active');
-  const category = activeBtn?.dataset.category || 'all';
+  const category = activeBtn?.dataset.category;
   const query = document.querySelector('.search-bar input').value.trim();
-  const s = filterState[category];
+  const s = (category == 'all') ?  {} : filterState[category];
 
   const params = new URLSearchParams({ q: query, category });
 
@@ -283,11 +286,12 @@ function searchElements(){
     if (s.country) params.append('country', s.country);
   }
 
-  fetch(`/catalog/search/?${params}`)
+  fetch(`/catalog/search/results/?${params}`)
     .then(res => res.text())
     .then(html => {
       document.querySelector('.results').innerHTML = html;
-    });
+    })
+    .catch(err => console.error('Search failed:', err));
 }
 
 document.querySelectorAll('.result-unit[data-type="track"]').forEach(songs => {
