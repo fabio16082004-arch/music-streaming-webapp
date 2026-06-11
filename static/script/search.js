@@ -272,17 +272,27 @@ function searchElements(){
 
   if (category === 'track') {
     if (s.genre)            params.append('genre', s.genre);
-    if (s.duration.min)     params.append('duration_min', s.duration.min);
-    if (s.duration.sec)     params.append('duration_sec', s.duration.sec);
+    let min = parseInt(s.duration.min) || 0;
+    let sec = parseInt(s.duration.sec) || 0;
+    let totalSeconds = (min * 60) + sec;
+
+    if (totalSeconds > 0) {
+        params.append('max_duration', totalSeconds);
+    }
+
     if (s.year)             params.append('year', s.year);
-    if (s.explicit !== null) params.append('explicit', s.explicit);
+    if (s.explicit === 'yes') {
+        params.append('explicit', 'true');
+    } else if (s.explicit === 'no') {
+        params.append('explicit', 'false');
+    }
   }
   if (category === 'album') {
     if (s.genre) params.append('genre', s.genre);
     if (s.year)  params.append('year', s.year);
   }
   if (category === 'artist') {
-    if (s.initial) params.append('initial', s.initial);
+    if (s.initial) params.append('stage_name_initial', s.initial);
     if (s.country) params.append('country', s.country);
   }
 
