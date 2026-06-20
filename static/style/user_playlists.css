@@ -1,0 +1,38 @@
+    .playlist-options-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .playlist-options-btn:hover {
+            color: var(--text-primary);
+        }
+        .custom-form-input {
+            width: 100%;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            padding: 10px 14px;
+            outline: none;
+            margin-top: 5px;
+        }
+        .custom-form-input:focus {
+            border-color: var(--accent-mid);
+        }
+        .custom-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .section-title {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            margin-top: 40px;
+        }

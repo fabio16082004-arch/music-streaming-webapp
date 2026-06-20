@@ -1,7 +1,7 @@
+import os
 from multiprocessing import context
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views import View
 
@@ -51,6 +51,5 @@ class SearchResultsView(View):
                 context['playlists'] = PlaylistFilter(request.GET, queryset=Playlist.objects.all()).qs
             context['MEDIA_URL'] = settings.MEDIA_URL
             return render(request, 'search_results.html', context)
-
 
 

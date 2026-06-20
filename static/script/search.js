@@ -304,6 +304,33 @@ function searchElements(){
     .catch(err => console.error('Search failed:', err));
 }
 
-document.querySelectorAll('.result-unit[data-type="track"]').forEach(songs => {
+document.querySelector(".results").addEventListener("click", function (e) {
 
+  const song = e.target.closest('.result-unit[data-type="track"]');
+  if (song){
+     const play_song_div = document.querySelector("footer .play-song");
+    play_song_div.classList.remove("d-none");
+    play_song_div.classList.add("d-flex");
+  } else{
+    return;
+  }
+
+  const audioPlayer = document.getElementById("audioPlayer");
+  const id = song.dataset.id;
+  if (!id) return;
+
+  const cover = song.querySelector(".result-image");
+  const title = song.querySelector("h2");
+  const artist = song.querySelector("h3");
+
+  const footerImage = document.querySelector(".left-play-song .result-image");
+  const footerTitle = document.querySelector(".song-detail h2");
+  const footerArtist = document.querySelector(".song-detail h3");
+
+  if (cover && footerImage) footerImage.src = cover.src;
+  if (title && footerTitle) footerTitle.textContent = title.textContent;
+  if (artist && footerArtist) footerArtist.textContent = artist.textContent;
+
+  audioPlayer.src = song.dataset.audioUrl;
+  audioPlayer.play().catch(err => console.error("Playback error:", err));
 });

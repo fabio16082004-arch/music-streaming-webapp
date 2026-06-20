@@ -1,6 +1,8 @@
 import os
-from django.db import models
 
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+from django.db import models
 
 def track_upload_path(instance, filename):
     artist = instance.artists.first()
@@ -45,7 +47,8 @@ class Track(models.Model):
     title = models.CharField(max_length=100)
     duration = models.IntegerField()
     explicit = models.BooleanField()
-    audio_file = models.FileField(upload_to=track_upload_path, max_length=500)
+    audio_file = models.FileField(upload_to=track_upload_path,max_length=500)
+
     single_cover = models.ImageField(upload_to=track_cover_upload_path, blank=True, null=True)
     release_date = models.DateField()
 

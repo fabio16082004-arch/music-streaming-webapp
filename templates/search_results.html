@@ -18,7 +18,7 @@
 {% if playlists %}
     <section>
         {% for playlist in playlists %}
-            <div class="result-unit" data-type="playlist">
+            <div class="result-unit" data-type="playlist" data-id="{{ playlist.id }}">
                 <div class="result-details">
                     <img class="result-image" src="{{ MEDIA_URL }}{{ playlist.cover.url }}" alt="{{ playlist.name }}">
                     <div class="result-description">
@@ -34,7 +34,7 @@
 {% if albums %}
     <section>
         {% for album in albums %}
-            <div class="result-unit" data-type="album">
+            <div class="result-unit" data-type="album" data-id="{{ album.id }}">
                 <div class="result-details">
                     <img class="result-image" src="{{ MEDIA_URL }}{{ album.cover_file }}" alt="{{ album.title }}">
                     <div class="result-description">
@@ -50,7 +50,7 @@
 {% if tracks %}
     <section>
         {% for track in tracks %}
-            <div class="result-unit" data-type="track">
+                <div class="result-unit" data-type="track" data-id="{{ track.id }}" data-audio-url="{{ track.audio_file.url }}">
                 <div class="result-details">
                     <img class="result-image" src="{{ MEDIA_URL }}{{ track.single_cover }}" alt="{{ track.title }}">
                     <div class="result-description">
