@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ playlist.title }} — Music App{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'style/user_playlists.css' %}">
+    <link rel="stylesheet" href="{% static 'style/search.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main>
+
+        <h1 class="playlist-title">{{ playlist.title }}</h1>
+
+        <div class="search-utilities">
+            <div class="nav-filter-container">
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="track-search-input" placeholder="Search in this playlist...">
+                </div>
+            </div>
+
+            <a href="{% url 'search' %}" class="adv-filter-btn d-flex align-items-center gap-2">
+                <i class="fa-solid fa-plus"></i> ADD
+            </a>
+        </div>
+
+        <div class="results" id="playlist-tracks">
+            {% if tracks %}
+                <section>
+                    {% for track in tracks %}
+                        <div class="result-unit" data-type="track" data-id="{{ track.id }}"
+                             data-audio-url="{{ track.audio_file.url }}"
+                             data-name="{{ track.title|lower }}">
+                            <div class="result-details">
+                                <div class="result-container">
+                                    {% if track.get_cover_url %}
+                                        <img class="result-image" src="{{ track.get_cover_url }}" alt="{{ track.title }}">
+                                    {% endif %}
+                                    <div class="result-description">
+                                        <h2>{{ track.title }}</h2>
+                                        <h3>Track — {{ track.artists.all|join:", " }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <form method="POST"
+                                  action="{% url 'remove_track_from_playlist' playlist.id track.id %}"
+                                  class="remove-track-form">
+                                {% csrf_token %}
+                                <button type="submit" class="remove-track-btn">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                </section>
+            {% else %}
+                <p>This playlist doesn't have any songs yet.</p>
+            {% endif %}
+        </div>
+
+    </main>
+
+    <!-- ADD TO PLAYLIST MODAL -->
+    <div class="modal fade" id="addToPlaylistModal" tabindex="-1" aria-labelledby="addToPlaylistLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addToPlaylistLabel">Add to playlist</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex flex-column gap-3">
+                    {% for user_playlist in user_playlists %}
+                        <form method="POST" id="addToPlaylistForm-{{ user_playlist.id }}"
+                              class="add-to-playlist-form">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    class="custom-form-input text-start">{{ user_playlist.title }}</button>
+                        </form>
+                    {% empty %}
+                        <p class="custom-label">You don't have any other playlists yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'script/playlist_detail.js' %}">
+    </script>
+{% endblock %}

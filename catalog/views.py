@@ -13,9 +13,10 @@ import json
 
 class SearchView(View):
     def get(self, request):
+
         genre_list = list(Genre.objects.values_list('name', flat=True))
         return render(request, 'search.html', {
-            "db_genres_json": json.dumps(genre_list)
+            "db_genres_json": json.dumps(genre_list),
         })
 
 
@@ -28,6 +29,8 @@ class SearchResultsView(View):
             Q(listener=request.user) | Q(is_public=True)
         )
 
+        listener_playlists = Playlist.objects.filter(listener=request.user)
+
         context = dict()
         if request.GET.get('category') == 'all':
             context = {
@@ -36,6 +39,7 @@ class SearchResultsView(View):
                 'albums': AlbumFilter(request.GET, queryset=Album.objects.all()).qs,
                 'artists': ArtistFilter(request.GET, queryset=Artist.objects.all()).qs,
                 'playlists': PlaylistFilter(request.GET, queryset=allowed_playlists).qs,
+                'listener_playlists': listener_playlists,
                 'MEDIA_URL': settings.MEDIA_URL
             }
             return render(request, 'search_results.html', context)
@@ -48,8 +52,7 @@ class SearchResultsView(View):
             if request.GET.get('category') == 'artist':
                 context['artists'] = ArtistFilter(request.GET, queryset=Artist.objects.all()).qs
             if request.GET.get('category') == 'playlist':
-                context['playlists'] = PlaylistFilter(request.GET, queryset=Playlist.objects.all()).qs
+                context['playlists'] = PlaylistFilter(request.GET, queryset=allowed_playlists).qs
+            context['listener_playlists'] = listener_playlists
             context['MEDIA_URL'] = settings.MEDIA_URL
             return render(request, 'search_results.html', context)
-
-

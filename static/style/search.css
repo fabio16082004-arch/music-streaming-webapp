@@ -78,6 +78,17 @@ SEARCH BAR
   color: var(--text-primary);
 }
 
+.ma-filter-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ma-filter-btn:disabled:hover {
+  color: var(--text-muted);
+  background: var(--bg-surface);
+  border-color: var(--border);
+}
+
 /*
 ====================
 SEARCH RESULTS
@@ -98,6 +109,7 @@ SEARCH RESULTS
   border-bottom: 1px solid var(--border);
   padding: 15px;
   justify-content: space-between;
+  align-items: center;
   cursor: pointer;
 }
 
@@ -125,14 +137,7 @@ SEARCH RESULTS
   color: var(--text-muted);
 }
 
-.add-to-btn{
-  display: flex;
-  align-items: center;
-}
 
-.add-to-btn i{
-  color: var(--text-muted);
-}
 
 /*
 ============================
@@ -372,3 +377,80 @@ FILTER BTN HIDDEN STATE
   border: none;
 }
 
+/*
+==============================
+DROPDOWN
+==============================
+ */
+.dropdown-menu.dropdown-menu-dark {
+    max-height: 200px;
+    width: 220px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.dropdown-menu.dropdown-menu-dark::-webkit-scrollbar {
+    width: 6px;
+}
+.dropdown-menu.dropdown-menu-dark::-webkit-scrollbar-track {
+    background: transparent;
+}
+.dropdown-menu.dropdown-menu-dark::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+    border-radius: 3px;
+}
+
+.add-to-btn {
+  display: flex;
+  align-items: center;
+}
+
+.add-to-btn i {
+  color: var(--text-muted);
+}
+
+/* Reset totale del bottone, vince su Bootstrap */
+.add-to-btn .playlist-options-btn {
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-to-btn .playlist-options-btn:hover,
+.add-to-btn .playlist-options-btn:focus,
+.add-to-btn .playlist-options-btn:active,
+.add-to-btn .playlist-options-btn:focus-visible {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.add-to-btn .playlist-options-btn i {
+  color: var(--text-muted);
+}
+
+.add-to-btn .playlist-options-btn:hover i {
+  color: #fff;
+}
+
+#playlist-alert {
+    bottom: calc(var(--player-height, 0px) + 12px) !important;
+}
+
+.result-details{
+  justify-content: space-between;
+  flex: 1;
+}
+
+.result-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

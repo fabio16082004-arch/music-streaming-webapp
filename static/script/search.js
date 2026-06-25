@@ -1,96 +1,101 @@
-
 const filterState = {
-  track:  { genre: '', duration: { min: '', sec: '' }, year: '', explicit: null },
-  album:  { genre: '', year: '' },
-  artist: { initial: null, country: '' },
+    track: {genre: '', duration: {min: '', sec: ''}, year: '', explicit: null},
+    album: {genre: '', year: ''},
+    artist: {initial: null, country: ''},
 };
 
 tempState = {};
-
 
 
 // ==============================
 // FILTER BUTTON SELECTION
 // ==============================
 document.querySelectorAll('.ma-filter-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.ma-filter-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    const category = this.dataset.category;
+    btn.addEventListener('click', function () {
+        document.querySelectorAll('.ma-filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const category = this.dataset.category;
 
-    const filterBtn = document.querySelector('.adv-filter-btn');
-    if (category !== 'all' && category !== 'playlist') {
-      filterBtn.style.display = 'flex';
-    } else {
-      filterBtn.style.display = 'none';
-    }
+        const filterBtn = document.querySelector('.adv-filter-btn');
+        if (category !== 'all' && category !== 'playlist') {
+            filterBtn.style.display = 'flex';
+        } else {
+            filterBtn.style.display = 'none';
+        }
 
-    searchElements();
-  });
+        searchElements();
+    });
 });
 
 // ==============================
 // OPEN MODAL
 // ==============================
-document.querySelector('.adv-filter-btn').addEventListener('click', function() {
-  const activeBtn = document.querySelector('.ma-filter-btn.active');
-  const category = activeBtn ? activeBtn.dataset.category : null;
-  const modalBody = document.querySelector('.modal-body');
+document.querySelector('.adv-filter-btn').addEventListener('click', function () {
+    const activeBtn = document.querySelector('.ma-filter-btn.active');
+    const category = activeBtn ? activeBtn.dataset.category : null;
+    const modalBody = document.querySelector('.modal-body');
 
-  tempState = JSON.parse(JSON.stringify(filterState[category]));
+    tempState = JSON.parse(JSON.stringify(filterState[category]));
 
-  switch (category) {
-    case 'track':  modalBody.innerHTML = buildTrackFilters(tempState);  break;
-    case 'album':  modalBody.innerHTML = buildAlbumFilters(tempState);  break;
-    case 'artist': modalBody.innerHTML = buildArtistFilters(tempState); break;
-    default: modalBody.innerHTML = '';
-  }
+    switch (category) {
+        case 'track':
+            modalBody.innerHTML = buildTrackFilters(tempState);
+            break;
+        case 'album':
+            modalBody.innerHTML = buildAlbumFilters(tempState);
+            break;
+        case 'artist':
+            modalBody.innerHTML = buildArtistFilters(tempState);
+            break;
+        default:
+            modalBody.innerHTML = '';
+    }
 
-  bindInteractions(category);
+    bindInteractions(category);
 });
 
 //===============================
 // SEARCH AFTER USING THE NAVBAR
 //===============================
 let timer;
-document.querySelector('.search-bar input').addEventListener('input', function(){
-  clearTimeout(timer);
+document.querySelector('.search-bar input').addEventListener('input', function () {
+    clearTimeout(timer);
 
-  timer = setTimeout(() => {
-    const activeBtn = document.querySelector('.ma-filter-btn.active');
-    const category = activeBtn ? activeBtn.dataset.category : null;
-    if (category) {
-      filterState[category] = JSON.parse(JSON.stringify(tempState));
-    }
-  searchElements();
-  }, 300);
+    timer = setTimeout(() => {
+        const activeBtn = document.querySelector('.ma-filter-btn.active');
+        const category = activeBtn ? activeBtn.dataset.category : null;
+        if (category) {
+            filterState[category] = JSON.parse(JSON.stringify(tempState));
+        }
+        searchElements();
+    }, 300);
 
 })
 
 // ==============================
 // APPLY
 // ==============================
-document.querySelector('.modal-footer .btn-secondary').addEventListener('click', function() {
-  const activeBtn = document.querySelector('.ma-filter-btn.active');
-  const category = activeBtn ? activeBtn.dataset.category : null;
-  if (category) {
-    filterState[category] = JSON.parse(JSON.stringify(tempState));
-  }
-  const modal = bootstrap.Modal.getInstance(document.getElementById('filters'));
-  if (modal) modal.hide();
+document.querySelector('.modal-footer .btn-secondary').addEventListener('click', function () {
+    const activeBtn = document.querySelector('.ma-filter-btn.active');
+    const category = activeBtn ? activeBtn.dataset.category : null;
+    if (category) {
+        filterState[category] = JSON.parse(JSON.stringify(tempState));
+    }
+    const modal = bootstrap.Modal.getInstance(document.getElementById('filters'));
+    if (modal) modal.hide();
 
-  searchElements();
+    searchElements();
 });
 
 // ==============================
 // GENRE SELECT
 // ==============================
 function genreSelect(id, selectedValue) {
-  const btn = document.querySelector(".adv-filter-btn")
-  const rawGenres = btn.dataset.genres;
+    const btn = document.querySelector(".adv-filter-btn")
+    const rawGenres = btn.dataset.genres;
 
-const genres = (typeof rawGenres !== 'undefined') ? JSON.parse(rawGenres) : ['Pop','Rock','Hip-Hop','Jazz','Classical','Electronic','R&B','Country','Metal','Folk','Reggae','Blues'];
-  return `
+    const genres = (typeof rawGenres !== 'undefined') ? JSON.parse(rawGenres) : ['Pop', 'Rock', 'Hip-Hop', 'Jazz', 'Classical', 'Electronic', 'R&B', 'Country', 'Metal', 'Folk', 'Reggae', 'Blues'];
+    return `
     <select class="filter-select" id="${id}">
       <option value="">— Select genre —</option>
       ${genres.map(g => `<option value="${g}" ${selectedValue === g ? 'selected' : ''}>${g}</option>`).join('')}
@@ -101,8 +106,8 @@ const genres = (typeof rawGenres !== 'undefined') ? JSON.parse(rawGenres) : ['Po
 // TRACK FILTERS
 // ==============================
 function buildTrackFilters(s) {
-  const currentYear = new Date().getFullYear();
-  return `
+    const currentYear = new Date().getFullYear();
+    return `
     <div class="filter-group" id="fg-genre">
       <div class="filter-label-row">
         <label class="filter-label">Genre</label>
@@ -138,7 +143,7 @@ function buildTrackFilters(s) {
       </div>
       <div class="filter-chips">
         <button class="filter-chip ${s.explicit === 'yes' ? 'selected' : ''}" data-value="yes">Yes</button>
-        <button class="filter-chip ${s.explicit === 'no'  ? 'selected' : ''}" data-value="no">No</button>
+        <button class="filter-chip ${s.explicit === 'no' ? 'selected' : ''}" data-value="no">No</button>
       </div>
     </div>`;
 }
@@ -147,8 +152,8 @@ function buildTrackFilters(s) {
 // ALBUM FILTERS
 // ==============================
 function buildAlbumFilters(s) {
-  const currentYear = new Date().getFullYear();
-  return `
+    const currentYear = new Date().getFullYear();
+    return `
     <div class="filter-group" id="fg-genre">
       <div class="filter-label-row">
         <label class="filter-label">Genre</label>
@@ -170,9 +175,9 @@ function buildAlbumFilters(s) {
 // ARTIST FILTERS
 // ==============================
 function buildArtistFilters(s) {
-  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-  const countries = ['United States','United Kingdom','Italy','France','Germany','Canada','Australia','Brazil','Japan','Nigeria','Sweden','Spain','Jamaica','South Korea','Colombia'];
-  return `
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    const countries = ['United States', 'United Kingdom', 'Italy', 'France', 'Germany', 'Canada', 'Australia', 'Brazil', 'Japan', 'Nigeria', 'Sweden', 'Spain', 'Jamaica', 'South Korea', 'Colombia'];
+    return `
     <div class="filter-group" id="fg-initial">
       <div class="filter-label-row">
         <label class="filter-label">Name initial</label>
@@ -196,141 +201,222 @@ function buildArtistFilters(s) {
 }
 
 function bindInteractions(category) {
-  const s = tempState;
+    const s = tempState;
 
-  document.querySelectorAll('.filter-select').forEach(select => {
-    select.addEventListener('change', function() {
-      if (category === 'track'  && this.id === 'track-genre')    s.genre   = this.value;
-      if (category === 'album'  && this.id === 'album-genre')    s.genre   = this.value;
-      if (category === 'artist' && this.id === 'artist-country') s.country = this.value;
+    document.querySelectorAll('.filter-select').forEach(select => {
+        select.addEventListener('change', function () {
+            if (category === 'track' && this.id === 'track-genre') s.genre = this.value;
+            if (category === 'album' && this.id === 'album-genre') s.genre = this.value;
+            if (category === 'artist' && this.id === 'artist-country') s.country = this.value;
+        });
     });
-  });
 
-  document.querySelectorAll('.filter-chip').forEach(chip => {
-    chip.addEventListener('click', function() {
-      const siblings = this.closest('.filter-chips').querySelectorAll('.filter-chip');
-      siblings.forEach(c => c.classList.remove('selected'));
-      this.classList.toggle('selected');
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.addEventListener('click', function () {
+            const siblings = this.closest('.filter-chips').querySelectorAll('.filter-chip');
+            siblings.forEach(c => c.classList.remove('selected'));
+            this.classList.toggle('selected');
 
-      const groupId = this.closest('.filter-group').id;
-      const value = this.classList.contains('selected') ? this.dataset.value : null;
+            const groupId = this.closest('.filter-group').id;
+            const value = this.classList.contains('selected') ? this.dataset.value : null;
 
-      if (category === 'track'  && groupId === 'fg-explicit') s.explicit = value;
-      if (category === 'artist' && groupId === 'fg-initial')  s.initial  = value;
+            if (category === 'track' && groupId === 'fg-explicit') s.explicit = value;
+            if (category === 'artist' && groupId === 'fg-initial') s.initial = value;
+        });
     });
-  });
 
-  document.querySelectorAll('.filter-input').forEach(input => {
-    input.addEventListener('input', function() {
-      if (this.value !== '' && this.max && parseInt(this.value) > parseInt(this.max)) this.value = this.max;
-      if (this.value !== '' && this.min && parseInt(this.value) < parseInt(this.min)) this.value = this.min;
+    document.querySelectorAll('.filter-input').forEach(input => {
+        input.addEventListener('input', function () {
+            if (this.value !== '' && this.max && parseInt(this.value) > parseInt(this.max)) this.value = this.max;
+            if (this.value !== '' && this.min && parseInt(this.value) < parseInt(this.min)) this.value = this.min;
 
-      if (category === 'track') {
-        if (this.id === 'dur-min')    s.duration.min = this.value;
-        if (this.id === 'dur-sec')    s.duration.sec = this.value;
-        if (this.id === 'track-year') s.year         = this.value;
-      }
-      if (category === 'album' && this.id === 'album-year') s.year = this.value;
+            if (category === 'track') {
+                if (this.id === 'dur-min') s.duration.min = this.value;
+                if (this.id === 'dur-sec') s.duration.sec = this.value;
+                if (this.id === 'track-year') s.year = this.value;
+            }
+            if (category === 'album' && this.id === 'album-year') s.year = this.value;
+        });
     });
-  });
 
-  document.querySelectorAll('.filter-remove').forEach(btn => {
-    btn.addEventListener('click', function() {
-      const groupId = this.dataset.target;
-      const group = document.getElementById(groupId);
-      if (!group) return;
+    document.querySelectorAll('.filter-remove').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const groupId = this.dataset.target;
+            const group = document.getElementById(groupId);
+            if (!group) return;
 
-      group.querySelectorAll('.filter-select').forEach(sel => sel.value = '');
-      group.querySelectorAll('.filter-input').forEach(inp => inp.value = '');
-      group.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('selected'));
+            group.querySelectorAll('.filter-select').forEach(sel => sel.value = '');
+            group.querySelectorAll('.filter-input').forEach(inp => inp.value = '');
+            group.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('selected'));
 
-      if (category === 'track') {
-        if (groupId === 'fg-genre')    s.genre    = '';
-        if (groupId === 'fg-duration') s.duration = { min: '', sec: '' };
-        if (groupId === 'fg-year')     s.year     = '';
-        if (groupId === 'fg-explicit') s.explicit = null;
-      }
-      if (category === 'album') {
-        if (groupId === 'fg-genre') s.genre = '';
-        if (groupId === 'fg-year')  s.year  = '';
-      }
-      if (category === 'artist') {
-        if (groupId === 'fg-initial') s.initial = null;
-        if (groupId === 'fg-country') s.country = '';
-      }
+            if (category === 'track') {
+                if (groupId === 'fg-genre') s.genre = '';
+                if (groupId === 'fg-duration') s.duration = {min: '', sec: ''};
+                if (groupId === 'fg-year') s.year = '';
+                if (groupId === 'fg-explicit') s.explicit = null;
+            }
+            if (category === 'album') {
+                if (groupId === 'fg-genre') s.genre = '';
+                if (groupId === 'fg-year') s.year = '';
+            }
+            if (category === 'artist') {
+                if (groupId === 'fg-initial') s.initial = null;
+                if (groupId === 'fg-country') s.country = '';
+            }
+        });
     });
-  });
 }
 
-function searchElements(){
-  const activeBtn = document.querySelector('.ma-filter-btn.active');
-  const category = activeBtn?.dataset.category;
-  const query = document.querySelector('.search-bar input').value.trim();
-  const s = (category == 'all') ?  {} : filterState[category];
+function searchElements() {
+    const activeBtn = document.querySelector('.ma-filter-btn.active');
+    const category = activeBtn?.dataset.category;
+    const query = document.querySelector('.search-bar input').value.trim();
+    const s = (category == 'all') ? {} : filterState[category];
 
-  const params = new URLSearchParams({ q: query, category });
+    const params = new URLSearchParams({q: query, category});
 
-  if (category === 'track') {
-    if (s.genre)            params.append('genre', s.genre);
-    let min = parseInt(s.duration.min) || 0;
-    let sec = parseInt(s.duration.sec) || 0;
-    let totalSeconds = (min * 60) + sec;
+    if (category === 'track') {
+        if (s.genre) params.append('genre', s.genre);
+        let min = parseInt(s.duration.min) || 0;
+        let sec = parseInt(s.duration.sec) || 0;
+        let totalSeconds = (min * 60) + sec;
 
-    if (totalSeconds > 0) {
-        params.append('max_duration', totalSeconds);
+        if (totalSeconds > 0) {
+            params.append('max_duration', totalSeconds);
+        }
+
+        if (s.year) params.append('year', s.year);
+        if (s.explicit === 'yes') {
+            params.append('explicit', 'true');
+        } else if (s.explicit === 'no') {
+            params.append('explicit', 'false');
+        }
+    }
+    if (category === 'album') {
+        if (s.genre) params.append('genre', s.genre);
+        if (s.year) params.append('year', s.year);
+    }
+    if (category === 'artist') {
+        if (s.initial) params.append('stage_name_initial', s.initial);
+        if (s.country) params.append('country', s.country);
     }
 
-    if (s.year)             params.append('year', s.year);
-    if (s.explicit === 'yes') {
-        params.append('explicit', 'true');
-    } else if (s.explicit === 'no') {
-        params.append('explicit', 'false');
-    }
-  }
-  if (category === 'album') {
-    if (s.genre) params.append('genre', s.genre);
-    if (s.year)  params.append('year', s.year);
-  }
-  if (category === 'artist') {
-    if (s.initial) params.append('stage_name_initial', s.initial);
-    if (s.country) params.append('country', s.country);
-  }
-
-  fetch(`/catalog/search/results/?${params}`)
-    .then(res => res.text())
-    .then(html => {
-      document.querySelector('.results').innerHTML = html;
-    })
-    .catch(err => console.error('Search failed:', err));
+    fetch(`/catalog/search/results/?${params}`)
+        .then(res => res.text())
+        .then(html => {
+            document.querySelector('.results').innerHTML = html;
+        })
+        .catch(err => console.error('Search failed:', err));
 }
 
-document.querySelector(".results").addEventListener("click", function (e) {
+// ==============================
+// ADD SONG TO PLAYLIST
+// ==============================
+document.addEventListener('click', async function (e) {
+    const clickedElement = e.target.closest(".trigger-add-song");
+    if (!clickedElement) return;
 
-  const song = e.target.closest('.result-unit[data-type="track"]');
-  if (song){
-     const play_song_div = document.querySelector("footer .play-song");
-    play_song_div.classList.remove("d-none");
-    play_song_div.classList.add("d-flex");
-  } else{
-    return;
-  }
+    e.preventDefault();
 
-  const audioPlayer = document.getElementById("audioPlayer");
-  const id = song.dataset.id;
-  if (!id) return;
+    const playlistId = clickedElement.getAttribute('data-id');
+    const songId = clickedElement.getAttribute('data-song-id');
+    const fetchUrl = clickedElement.getAttribute('data-url');
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-  const cover = song.querySelector(".result-image");
-  const title = song.querySelector("h2");
-  const artist = song.querySelector("h3");
+    clickedElement.disabled = true;
 
-  const footerImage = document.querySelector(".left-play-song .result-image");
-  const footerTitle = document.querySelector(".song-detail h2");
-  const footerArtist = document.querySelector(".song-detail h3");
+    try {
+        const response = await fetch(fetchUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify({playlist_id: playlistId, song_id: songId})
+        });
 
-  if (cover && footerImage) footerImage.src = cover.src;
-  if (title && footerTitle) footerTitle.textContent = title.textContent;
-  if (artist && footerArtist) footerArtist.textContent = artist.textContent;
+        const data = await response.json();
 
-  audioPlayer.src = song.dataset.audioUrl;
-  audioPlayer.play().catch(err => console.error("Playback error:", err));
+        if (response.ok && data.success) {
+            showToast(data.message, "success");
+
+        } else if (response.status === 409) {
+            showToast(data.error, "warning");
+
+        } else {
+            showToast(data.error || "Unexpected error.", "danger");
+        }
+
+    } catch (error) {
+        console.error('Fetch error:', error);
+        showToast("Network error. Please try again", "danger");
+
+    } finally {
+        clickedElement.disabled = false;
+    }
 });
+
+// ==============================
+// SAVE PLAYLIST
+// ==============================
+document.addEventListener('click', async function (e) {
+    const clickedElement = e.target.closest(".trigger-save-playlist");
+    if (!clickedElement) return;
+
+    e.preventDefault();
+
+    const playlistId = clickedElement.getAttribute('data-playlist-id');
+    const fetchUrl = clickedElement.getAttribute('data-url');
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    clickedElement.disabled = true;
+
+    try {
+        const response = await fetch(fetchUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify({playlist_id: playlistId})
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            showToast(data.message, "success");
+            clickedElement.querySelector('i').classList.replace('fa-plus', 'fa-check');
+
+        } else if (response.status === 409) {
+            showToast(data.error, "warning");
+
+        } else {
+            showToast(data.error || "Unexpected error.", "danger");
+        }
+
+    } catch (error) {
+        console.error('Fetch error:', error);
+        showToast("Network error. Please try again.", "danger");
+
+    } finally {
+        clickedElement.disabled = false;
+    }
+});
+
+function showToast(message, type = 'success') {
+    const alertBox = document.getElementById('playlist-alert');
+
+    alertBox.classList.remove('alert-success', 'alert-warning', 'alert-danger', 'd-none', 'show');
+
+    if (type === 'success') alertBox.classList.add('alert-success');
+    else if (type === 'warning') alertBox.classList.add('alert-warning');
+    else alertBox.classList.add('alert-danger');
+
+    alertBox.textContent = message;
+
+    setTimeout(() => {
+        alertBox.classList.remove('show');
+        setTimeout(() => alertBox.classList.add('d-none'), 150);
+    }, 3000);
+
+}

@@ -1,38 +1,84 @@
-    .playlist-options-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        .playlist-options-btn:hover {
-            color: var(--text-primary);
-        }
-        .custom-form-input {
-            width: 100%;
-            background: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text-primary);
-            padding: 10px 14px;
-            outline: none;
-            margin-top: 5px;
-        }
-        .custom-form-input:focus {
-            border-color: var(--accent-mid);
-        }
-        .custom-label {
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-        }
-        .section-title {
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            margin-top: 40px;
-        }
+.playlist-options-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    .playlist-options-btn:hover {
+        color: var(--text-primary);
+    }
+    .custom-form-input {
+        width: 100%;
+        background: var(--bg-primary);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        color: var(--text-primary);
+        padding: 10px 14px;
+        outline: none;
+        margin-top: 5px;
+    }
+    .custom-form-input:focus {
+        border-color: var(--accent-mid);
+    }
+    .custom-label {
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+    }
+    .section-title {
+        color: var(--text-primary);
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        margin-top: 40px;
+    }
+
+    .remove-track-form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+    }
+
+   .result-unit .remove-track-btn {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        transition: opacity 0.2s, color 0.2s;
+        cursor: pointer;
+        padding: 0 8px;
+    }
+
+    .result-unit .remove-track-btn:hover {
+        color: var(--accent-from);
+        background: none;
+    }
+
+    .playlist-title{
+        color: var(--text-primary);
+        font-weight: 800;
+    }
+
+    .search-utilities{
+        display: flex;
+        flex-direction: row;
+    }
+
+   .adv-filter-btn  {
+    text-decoration: none;
+    margin-left: 0.8rem;
+       font-weight: 700;
+    }
+
+    .adv-filter-btn:hover{
+        color: var(--text-primary);
+    }
+
+    .nav-filter-container{
+        flex: 1;
+        display: flex;
+    }

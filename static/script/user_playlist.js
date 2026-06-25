@@ -1,13 +1,37 @@
 /*ADD THE PLAYLIST ID WHEN DELETING OR CHANGING A PLAYLIST*/
-document.querySelectorAll("#personal-playlists, #saved-playlists").forEach(container => {
+document.querySelectorAll("#personal-playlists").forEach(container => {
     container.addEventListener('click', function (e) {
         if (e.target.closest('.trigger-delete')) {
             const playlist = e.target.closest(".result-unit");
 
             if (playlist) {
                 const playlist_id = playlist.dataset.id;
-                const hiddenInput = document.getElementById("deletePlaylistId");
-                hiddenInput.value = playlist_id;
+                const hiddenPlaylistInput = document.getElementById("deletePlaylistId");
+                hiddenPlaylistInput.value = playlist_id;
+
+                const hiddenUserInput = document.getElementById("deleteUserId");
+                if(hiddenUserInput){
+                    hiddenUserInput.value = playlist.dataset.userId;
+                }
+            }
+        }
+    })
+})
+
+document.querySelectorAll("#saved-playlists").forEach(container => {
+    container.addEventListener('click', function (e) {
+        if (e.target.closest('.trigger-delete')) {
+            const playlist = e.target.closest(".result-unit");
+
+            if (playlist) {
+                const playlist_id = playlist.dataset.id;
+                const hiddenPlaylistInput = document.getElementById("deleteSavedPlaylistId");
+                hiddenPlaylistInput.value = playlist_id;
+
+                const hiddenUserInput = document.getElementById("deleteUserId");
+                if(hiddenUserInput){
+                    hiddenUserInput.value = playlist.dataset.userId;
+                }
             }
         }
     })
@@ -41,4 +65,15 @@ document.querySelectorAll("#personal-playlists").forEach(container => {
     })
 })
 
+document.querySelectorAll("#personal-playlists .result-unit, #saved-playlists .result-unit").forEach(unit => {
+    unit.addEventListener('click', function (e) {
+        if(e.target.closest(".dropdown")){
+            return;
+        }
 
+        const href = unit.dataset.href;
+        if (href) {
+            window.location.href = href;
+        }
+    });
+});
