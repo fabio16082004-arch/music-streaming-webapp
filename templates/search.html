@@ -54,5 +54,9 @@
 {% endblock %}
 
 {% block js %}
+    <script>
+        const START_LOG_URL = "{% url 'start_playback' %}";
+        const STOP_LOG_URL = "{% url 'stop_playback' %}";
+    </script>
     <script src="{% static 'script/search.js' %}"></script>
 {% endblock %}

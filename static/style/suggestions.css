@@ -1,0 +1,191 @@
+/*
+============================
+HEADER
+============================
+*/
+
+.suggestions-header {
+    padding: 36px 0 28px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+}
+
+.suggestions-title {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+/*
+============================
+GRID
+============================
+*/
+
+.suggestions-grid {
+    margin-top: 0;
+}
+
+/*
+============================
+CARD
+============================
+*/
+
+.suggestion-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    padding: 0;
+    position: relative;
+}
+
+.suggestion-card:hover {
+    background: var(--bg-hover);
+    border-color: #4a4a4a;
+    transform: translateY(-2px);
+}
+
+/*
+============================
+COVER
+============================
+*/
+
+.suggestion-cover-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--bg-hover);
+}
+
+.suggestion-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.suggestion-card:hover .suggestion-cover {
+    transform: scale(1.04);
+}
+
+.suggestion-cover--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: var(--text-hint);
+    background: var(--bg-hover);
+}
+
+.suggestion-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.suggestion-card:hover .suggestion-overlay {
+    opacity: 1;
+}
+
+.suggestion-overlay i {
+    font-size: 2rem;
+    color: #fff;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+}
+
+/*
+============================
+INFO
+============================
+*/
+
+.suggestion-info {
+    padding: 12px 14px 6px;
+    flex: 1;
+}
+
+.suggestion-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.suggestion-sub {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0;
+}
+
+/*
+============================
+ACTIONS (+ button)
+============================
+*/
+
+.suggestion-actions {
+    padding: 6px 10px 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/*
+============================
+EMPTY STATE
+============================
+*/
+
+.suggestions-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 80px 20px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.suggestions-empty i {
+    font-size: 3rem;
+    color: var(--text-hint);
+}
+
+.suggestions-empty p {
+    font-size: 0.95rem;
+}
+
+/*
+============================
+RESPONSIVE
+============================
+*/
+
+@media (max-width: 480px) {
+    .suggestions-title {
+        font-size: 1.5rem;
+    }
+}

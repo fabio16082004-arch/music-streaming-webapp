@@ -1,23 +1,23 @@
 from multiprocessing import context
 
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import render, get_object_or_404
+from django.utils.dateparse import parse_datetime
 from django.utils.decorators import method_decorator
 from django.views import View, generic
 from django.shortcuts import redirect
 from django.views.decorators.cache import never_cache
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
+import uuid
 import json
+from django.core.cache import cache
 
-from catalog.models import Track
-from listeners.models import Playlist
-
-
-# Create your views here.
-def get_suggestions(request):
-    return render(request, 'suggestions.html')
+from catalog.models import Track, Artist
+from listeners.models import Playlist, MonthlyListeningStatistic
+from listeners.recommendations import get_recommendations
 
 class PlaylistView(LoginRequiredMixin, generic.ListView):
     model = Playlist
@@ -92,6 +92,7 @@ class PlaylistSongsView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
         context['playlist'] = self.playlist
         context['user_playlists'] = Playlist.objects.filter(
             listener=self.request.user
@@ -154,3 +155,83 @@ class SavePlaylistView(LoginRequiredMixin, View):
 
         playlist.saved_by.add(request.user)
         return JsonResponse({'success': True, 'message': f'"{playlist.title}" saved to your library!'})
+
+
+class StartPlaybackView(LoginRequiredMixin, View):
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+            track_id = data.get('track_id')
+
+            track = get_object_or_404(Track, id=track_id)
+
+            session_token = str(uuid.uuid4())
+            cache_key = f"playback:{session_token}"
+
+            cache.set(
+                cache_key,
+                {
+                    'user_id': request.user.id,
+                    'track_id': track_id,
+                    'started_at': timezone.now().isoformat()
+                },
+                timeout=track.duration + 60  #60 seconds of security margin before the timeout of the session
+            )
+
+            return JsonResponse({'status': 'success', 'session_token': session_token})
+
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+
+class StopPlaybackView(LoginRequiredMixin, View):
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+            session_token = data.get('session_token')
+
+            cache_key = f"playback:{session_token}"
+            playback_data = cache.get(cache_key)
+
+            if not playback_data:
+                return JsonResponse({'status': 'error', 'message': 'session not found or expired'}, status=400)
+
+            if playback_data['user_id'] != request.user.id:
+                return JsonResponse({'status': 'error', 'message': 'forbidden'}, status=403)
+
+            started_at = parse_datetime(playback_data['started_at'])
+            seconds = (timezone.now() - started_at).total_seconds()
+
+            track = get_object_or_404(Track, id=playback_data['track_id'])
+            seconds = min(seconds, track.duration)
+
+            now = timezone.now()
+
+            obj, created = MonthlyListeningStatistic.objects.get_or_create(
+                listener=request.user,
+                track_id=playback_data['track_id'],
+                month=now.month,
+                year=now.year
+            )
+
+            obj.seconds_listened += seconds
+            obj.save()
+
+            cache.delete(cache_key)
+
+            return JsonResponse({'status': 'success', 'total': obj.seconds_listened})
+
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+class RecommendationsView(LoginRequiredMixin, TemplateView):
+    template_name = "suggestions.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['tracks'] = get_recommendations(self.request.user)
+
+        listener_playlists = Playlist.objects.filter(listener=self.request.user)
+        context['listener_playlists'] = listener_playlists
+        return context
+
+

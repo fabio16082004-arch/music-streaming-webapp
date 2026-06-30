@@ -2,10 +2,11 @@ import os
 from multiprocessing import context
 
 from django.conf import settings
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 
-from .models import Track, Album, Artist, Genre
+from .models import Track, Album, Artist, Genre, AlbumTrack
 from listeners.models import Playlist
 from .filters import TrackFilter, AlbumFilter, ArtistFilter, PlaylistFilter
 from django.db.models import Q
@@ -56,3 +57,47 @@ class SearchResultsView(View):
             context['listener_playlists'] = listener_playlists
             context['MEDIA_URL'] = settings.MEDIA_URL
             return render(request, 'search_results.html', context)
+
+class AlbumView(LoginRequiredMixin, View):
+    template_name = 'album_detail.html'
+
+    def get(self, request, album_id):
+        album = get_object_or_404(Album, id=album_id)
+
+        tracks = (
+            Track.objects
+            .filter(albums=album)
+            .order_by('albumtrack__track_number')
+        )
+
+        listener_playlists = Playlist.objects.filter(listener=request.user)
+
+        context = {
+            'album': album,
+            'tracks': tracks,
+            'listener_playlists': listener_playlists,
+            'MEDIA_URL': settings.MEDIA_URL,
+        }
+        return render(request, self.template_name, context)
+
+
+class ArtistView(LoginRequiredMixin, View):
+    template_name = 'artist_detail.html'
+
+    def get(self, request, artist_id):
+        artist = get_object_or_404(Artist, id=artist_id)
+
+        tracks = Track.objects.filter(artists=artist).order_by('-release_date')[:5]
+
+        albums = Album.objects.filter(artists=artist).order_by('-release_date')
+
+        listener_playlists = Playlist.objects.filter(listener=request.user)
+
+        context = {
+            'artist': artist,
+            'tracks': tracks,
+            'albums': albums,
+            'listener_playlists': listener_playlists,
+            'MEDIA_URL': settings.MEDIA_URL,
+        }
+        return render(request, self.template_name, context)

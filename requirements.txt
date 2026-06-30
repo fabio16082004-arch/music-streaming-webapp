@@ -1,4 +1,4 @@
 pillow
-faker
+whitenoise
 django-filter
 django

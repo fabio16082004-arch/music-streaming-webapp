@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ artist.stage_name }} — Music App{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'style/search.css' %}">
+    <link rel="stylesheet" href="{% static 'style/artist_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+
+    <!-- ARTIST HERO -->
+    <div class="artist-hero">
+        <div class="artist-avatar-wrap">
+            {% if artist.photo %}
+                <img class="artist-avatar" src="{{ MEDIA_URL }}{{ artist.photo }}" alt="{{ artist.stage_name }}">
+            {% else %}
+                <div class="artist-avatar artist-avatar--placeholder">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            {% endif %}
+        </div>
+        <div class="artist-meta">
+            <span class="artist-eyebrow">Artist</span>
+            <h1 class="artist-name">{{ artist.stage_name }}</h1>
+            <p class="artist-realname">{{ artist.first_name }} {{ artist.last_name }}</p>
+            <div class="artist-tags">
+                {% if artist.country %}
+                    <span class="artist-tag"><i class="fa-solid fa-location-dot"></i> {{ artist.country }}</span>
+                {% endif %}
+                <span class="artist-tag"><i class="fa-solid fa-record-vinyl"></i> {{ albums|length }} album{{ albums|length|pluralize }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- BIO -->
+    {% if artist.biography %}
+    <section class="artist-section">
+        <h2 class="section-title">About</h2>
+        <p class="artist-bio">{{ artist.biography }}</p>
+    </section>
+    {% endif %}
+
+    <!-- TOP TRACKS -->
+    <section class="artist-section">
+        <h2 class="section-title">Top Tracks</h2>
+
+        <div class="results">
+            {% for track in tracks %}
+                <div class="result-unit" data-type="track" data-id="{{ track.id }}"
+                     data-audio-url="{{ track.audio_file.url }}">
+                    <div class="result-details">
+                        <div class="result-container">
+                            <img class="result-image" src="{{ MEDIA_URL }}{{ track.single_cover }}" alt="{{ track.title }}">
+                            <div class="result-description">
+                                <h2>{{ track.title }}</h2>
+                                <h3>Track{% if track.duration %} · {{ track.duration }}{% endif %}</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="add-to-btn dropdown me-3">
+                        <button class="playlist-options-btn" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false" aria-label="Add to playlist">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark"
+                            style="background-color: var(--bg-surface); border-color: var(--border);">
+                            {% for playlist in listener_playlists %}
+                                <li>
+                                    <a class="dropdown-item trigger-add-song"
+                                       data-id="{{ playlist.id }}"
+                                       data-song-id="{{ track.id }}"
+                                       data-url="{% url 'add_song' %}"
+                                       data-csrf="{{ csrf_token }}">
+                                        {{ playlist.title }}
+                                    </a>
+                                </li>
+                                {% if not forloop.last %}
+                                    <li><hr class="dropdown-divider" style="border-color: var(--border);"></li>
+                                {% endif %}
+                            {% empty %}
+                                <li><span class="dropdown-item-text text-muted">No playlist found</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="empty-state">No tracks yet.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- DISCOGRAPHY -->
+    <section class="artist-section">
+        <h2 class="section-title">Discography</h2>
+
+        {% if albums %}
+            <div class="albums-grid">
+                {% for album in albums %}
+                    <a class="album-card" href="{% url 'album_detail' album.id %}" aria-label="{{ album.title }}">
+                        <div class="album-card-cover-wrap">
+                            <img class="album-card-cover" src="{{ MEDIA_URL }}{{ album.cover_file }}" alt="{{ album.title }}">
+                            <div class="album-card-overlay">
+                                <i class="fa-solid fa-play"></i>
+                            </div>
+                        </div>
+                        <p class="album-card-title">{{ album.title }}</p>
+                        {% if album.release_date %}
+                            <p class="album-card-year">{{ album.release_date|date:"Y" }}</p>
+                        {% endif %}
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="empty-state">No albums yet.</p>
+        {% endif %}
+    </section>
+
+</main>
+{% endblock %}
+
+{% block js %}
+     <script>
+         const START_LOG_URL = "{% url 'start_playback' %}";
+        const STOP_LOG_URL = "{% url 'stop_playback' %}";
+    </script>
+    <script src="{% static 'script/search.js' %}"></script>
+{% endblock %}

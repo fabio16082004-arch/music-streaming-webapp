@@ -1,0 +1,174 @@
+/*
+============================
+ALBUM HERO
+============================
+*/
+
+.album-hero {
+    display: flex;
+    align-items: flex-end;
+    gap: 28px;
+    padding: 36px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 8px;
+}
+
+.album-cover-wrap {
+    flex-shrink: 0;
+}
+
+.album-cover {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+}
+
+.album-eyebrow {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.album-title {
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.1;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+}
+
+.album-sub {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+
+.album-artists {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.album-dot {
+    color: var(--text-hint);
+}
+
+/*
+============================
+TRACKLIST
+============================
+*/
+
+.tracklist-section {
+    margin-top: 16px;
+}
+
+.tracklist-header {
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    align-items: center;
+    padding: 0 15px 10px 15px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-hint);
+}
+
+.tracklist-col-duration {
+    text-align: right;
+    padding-right: 48px; /* allineato col bottone + */
+}
+
+.tracklist-row {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    align-items: center;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* Override del result-unit per la tracklist */
+.tracklist-row.result-unit {
+    padding: 0 15px;
+}
+
+.tracklist-num {
+    font-size: 0.88rem;
+    color: var(--text-hint);
+    font-weight: 500;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.tracklist-row:hover .tracklist-num {
+    color: var(--text-primary);
+}
+
+/* result-details riusa stili da search.css, qui estendiamo */
+.tracklist-row .result-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+}
+
+.tracklist-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.track-duration {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.empty-state {
+    color: var(--text-muted);
+    margin-top: 20px;
+    font-size: 0.95rem;
+}
+
+/*
+============================
+RESPONSIVE
+============================
+*/
+
+@media screen and (max-width: 600px) {
+    .album-hero {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .album-cover {
+        width: 140px;
+        height: 140px;
+    }
+
+    .tracklist-header {
+        display: none;
+    }
+}
+
+.result-details{
+    margin: 10px 0;
+}
+
+
+

@@ -1,32 +1,97 @@
 {% extends "base.html" %}
-
-{% block title %}Home - Music App{% endblock %}
+{% load static %}
+{% block title %}Suggestions — Music App{% endblock %}
 
 {% block css %}
+    <link rel="stylesheet" href="{% static 'style/search.css' %}">
+    <link rel="stylesheet" href="{% static 'style/suggestions.css' %}">
 {% endblock %}
 
 {% block content %}
-<main class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 text-center py-5" style="margin-top: 80px;">
-            <div class="mb-4">
-                <i class="fa-solid fa-music fa-4x text-danger animate-pulse"></i>
-            </div>
-            <h1 class="display-4 fw-bold mb-3">Benvenuto su Music App! 🎵</h1>
+<main>
 
-            <p class="lead text-muted mb-4">
-                Il login è andato a buon fine. Questa è la tua dashboard principale, pronta per essere popolata con il lettore musicale, i suggerimenti e le tue statistiche.
-            </p>
-
-            <hr class="my-4" style="border-color: rgba(0,0,0,0.1);">
-
-            <p class="text-secondary">
-                Usa la barra laterale o il menu in alto per esplorare il catalogo o gestire le tue playlist.
-            </p>
-        </div>
+    <div class="suggestions-header">
+        <span class="text-white">Picked for you</span>
+        <h1 class="suggestions-title">Suggestions</h1>
     </div>
+
+    {% if tracks %}
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4 suggestions-grid">
+        {% for track in tracks %}
+        <div class="col">
+            <div class="suggestion-card result-unit"
+                 data-type="track"
+                 data-id="{{ track.id }}"
+                 data-audio-url="{{ track.audio_file.url }}">
+
+                <div class="suggestion-cover-wrap">
+                    {% if track.get_cover_url %}
+                        <img class="suggestion-cover"
+                             src="{{ track.get_cover_url }}"
+                             alt="{{ track.title }}">
+                    {% else %}
+                        <div class="suggestion-cover suggestion-cover--placeholder">
+                            <i class="fa-solid fa-music"></i>
+                        </div>
+                    {% endif %}
+                    <div class="suggestion-overlay">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                </div>
+
+                <div class="suggestion-info">
+                    <h2 class="suggestion-title">{{ track.title }}</h2>
+                    <h3 class="suggestion-sub">{{ track.artists.all|join:", " }}</h3>
+                </div>
+
+                <div class="suggestion-actions add-to-btn dropdown">
+                    <button class="playlist-options-btn"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            aria-label="Add to playlist">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark"
+                        style="background-color: var(--bg-surface); border-color: var(--border);">
+                        {% for playlist in listener_playlists %}
+                            <li>
+                                <a class="dropdown-item trigger-add-song"
+                                   data-id="{{ playlist.id }}"
+                                   data-song-id="{{ track.id }}"
+                                   data-url="{% url 'add_song' %}"
+                                   data-csrf="{{ csrf_token }}">
+                                    {{ playlist.title }}
+                                </a>
+                            </li>
+                            {% if not forloop.last %}
+                                <li><hr class="dropdown-divider" style="border-color: var(--border);"></li>
+                            {% endif %}
+                        {% empty %}
+                            <li><span class="dropdown-item-text text-muted">No playlist found</span></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+        <div class="suggestions-empty">
+            <i class="fa-solid fa-headphones"></i>
+            <p>Start listening to get personalized suggestions.</p>
+        </div>
+    {% endif %}
+
 </main>
 {% endblock %}
 
 {% block js %}
+    <script>
+        const START_LOG_URL = "{% url 'start_playback' %}";
+        const STOP_LOG_URL = "{% url 'stop_playback' %}";
+    </script>
+    <script src="{% static 'script/search.js' %}"></script>
 {% endblock %}

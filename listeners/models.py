@@ -12,6 +12,7 @@ class Playlist(models.Model):
     tracks = models.ManyToManyField('catalog.Track', blank=True, related_name='playlists')
     is_public = models.BooleanField(default=False)
 
+
 class MonthlyListeningStatistic(models.Model):
     listener = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -24,7 +25,11 @@ class MonthlyListeningStatistic(models.Model):
         related_name='listening_statistics'
     )
     seconds_listened = models.IntegerField(default=0)
-    month = models.DateField(db_index=True)
+
+    month = models.PositiveSmallIntegerField()
+    year = models.PositiveSmallIntegerField(db_index=True)
 
     class Meta:
-        unique_together = ('listener', 'track', 'month')
+        unique_together = ('listener', 'track', 'month', 'year')
+
+

@@ -402,3 +402,21 @@ main{
       display: flex;
     }
 }
+
+/*
+============================
+TOAST ALERT
+============================
+*/
+#playlist-alert {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#playlist-alert.show {
+    opacity: 1;
+}
+
+#playlist-alert.d-none {
+    display: none !important;
+}

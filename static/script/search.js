@@ -4,7 +4,7 @@ const filterState = {
     artist: {initial: null, country: ''},
 };
 
-tempState = {};
+let tempState = {};
 
 
 // ==============================
@@ -17,90 +17,101 @@ document.querySelectorAll('.ma-filter-btn').forEach(btn => {
         const category = this.dataset.category;
 
         const filterBtn = document.querySelector('.adv-filter-btn');
-        if (category !== 'all' && category !== 'playlist') {
-            filterBtn.style.display = 'flex';
-        } else {
-            filterBtn.style.display = 'none';
+        if (filterBtn) {
+            filterBtn.style.display = (category !== 'all' && category !== 'playlist') ? 'flex' : 'none';
         }
 
         searchElements();
     });
 });
 
+
 // ==============================
 // OPEN MODAL
 // ==============================
-document.querySelector('.adv-filter-btn').addEventListener('click', function () {
-    const activeBtn = document.querySelector('.ma-filter-btn.active');
-    const category = activeBtn ? activeBtn.dataset.category : null;
-    const modalBody = document.querySelector('.modal-body');
-
-    tempState = JSON.parse(JSON.stringify(filterState[category]));
-
-    switch (category) {
-        case 'track':
-            modalBody.innerHTML = buildTrackFilters(tempState);
-            break;
-        case 'album':
-            modalBody.innerHTML = buildAlbumFilters(tempState);
-            break;
-        case 'artist':
-            modalBody.innerHTML = buildArtistFilters(tempState);
-            break;
-        default:
-            modalBody.innerHTML = '';
-    }
-
-    bindInteractions(category);
-});
-
-//===============================
-// SEARCH AFTER USING THE NAVBAR
-//===============================
-let timer;
-document.querySelector('.search-bar input').addEventListener('input', function () {
-    clearTimeout(timer);
-
-    timer = setTimeout(() => {
+const advFilterBtn = document.querySelector('.adv-filter-btn');
+if (advFilterBtn) {
+    advFilterBtn.addEventListener('click', function () {
         const activeBtn = document.querySelector('.ma-filter-btn.active');
         const category = activeBtn ? activeBtn.dataset.category : null;
-        if (category) {
+        const modalBody = document.querySelector('.modal-body');
+
+        tempState = JSON.parse(JSON.stringify(filterState[category]));
+
+        switch (category) {
+            case 'track':
+                modalBody.innerHTML = buildTrackFilters(tempState);
+                break;
+            case 'album':
+                modalBody.innerHTML = buildAlbumFilters(tempState);
+                break;
+            case 'artist':
+                modalBody.innerHTML = buildArtistFilters(tempState);
+                break;
+            default:
+                modalBody.innerHTML = '';
+        }
+
+        bindInteractions(category);
+    });
+}
+
+
+// ==============================
+// SEARCH INPUT
+// ==============================
+let timer;
+const searchInput = document.querySelector('.search-bar input');
+if (searchInput) {
+    searchInput.addEventListener('input', function () {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            const activeBtn = document.querySelector('.ma-filter-btn.active');
+            const category = activeBtn ? activeBtn.dataset.category : null;
+            if (category && filterState[category]) {
+                filterState[category] = JSON.parse(JSON.stringify(tempState));
+            }
+            searchElements();
+        }, 300);
+    });
+}
+
+
+// ==============================
+// APPLY FILTERS
+// ==============================
+const applyBtn = document.querySelector('.modal-footer .btn-secondary');
+if (applyBtn) {
+    applyBtn.addEventListener('click', function () {
+        const activeBtn = document.querySelector('.ma-filter-btn.active');
+        const category = activeBtn ? activeBtn.dataset.category : null;
+        if (category && filterState[category]) {
             filterState[category] = JSON.parse(JSON.stringify(tempState));
         }
+        const modal = bootstrap.Modal.getInstance(document.getElementById('filters'));
+        if (modal) modal.hide();
         searchElements();
-    }, 300);
+    });
+}
 
-})
-
-// ==============================
-// APPLY
-// ==============================
-document.querySelector('.modal-footer .btn-secondary').addEventListener('click', function () {
-    const activeBtn = document.querySelector('.ma-filter-btn.active');
-    const category = activeBtn ? activeBtn.dataset.category : null;
-    if (category) {
-        filterState[category] = JSON.parse(JSON.stringify(tempState));
-    }
-    const modal = bootstrap.Modal.getInstance(document.getElementById('filters'));
-    if (modal) modal.hide();
-
-    searchElements();
-});
 
 // ==============================
 // GENRE SELECT
 // ==============================
 function genreSelect(id, selectedValue) {
-    const btn = document.querySelector(".adv-filter-btn")
-    const rawGenres = btn.dataset.genres;
+    const btn = document.querySelector('.adv-filter-btn');
+    const rawGenres = btn ? btn.dataset.genres : undefined;
+    const genres = (typeof rawGenres !== 'undefined')
+        ? JSON.parse(rawGenres)
+        : ['Pop', 'Rock', 'Hip-Hop', 'Jazz', 'Classical', 'Electronic', 'R&B', 'Country', 'Metal', 'Folk', 'Reggae', 'Blues'];
 
-    const genres = (typeof rawGenres !== 'undefined') ? JSON.parse(rawGenres) : ['Pop', 'Rock', 'Hip-Hop', 'Jazz', 'Classical', 'Electronic', 'R&B', 'Country', 'Metal', 'Folk', 'Reggae', 'Blues'];
     return `
     <select class="filter-select" id="${id}">
       <option value="">— Select genre —</option>
       ${genres.map(g => `<option value="${g}" ${selectedValue === g ? 'selected' : ''}>${g}</option>`).join('')}
     </select>`;
 }
+
 
 // ==============================
 // TRACK FILTERS
@@ -148,6 +159,7 @@ function buildTrackFilters(s) {
     </div>`;
 }
 
+
 // ==============================
 // ALBUM FILTERS
 // ==============================
@@ -170,6 +182,7 @@ function buildAlbumFilters(s) {
       <input type="number" class="filter-input full" id="album-year" min="1900" max="${currentYear}" placeholder="e.g. 2019" value="${s.year}">
     </div>`;
 }
+
 
 // ==============================
 // ARTIST FILTERS
@@ -200,6 +213,10 @@ function buildArtistFilters(s) {
     </div>`;
 }
 
+
+// ==============================
+// BIND FILTER INTERACTIONS
+// ==============================
 function bindInteractions(category) {
     const s = tempState;
 
@@ -267,30 +284,28 @@ function bindInteractions(category) {
     });
 }
 
+
+// ==============================
+// SEARCH ELEMENTS
+// ==============================
 function searchElements() {
     const activeBtn = document.querySelector('.ma-filter-btn.active');
     const category = activeBtn?.dataset.category;
-    const query = document.querySelector('.search-bar input').value.trim();
-    const s = (category == 'all') ? {} : filterState[category];
+    const searchBar = document.querySelector('.search-bar input');
+    const query = searchBar ? searchBar.value.trim() : '';
+    const s = (category === 'all') ? {} : filterState[category];
 
     const params = new URLSearchParams({q: query, category});
 
     if (category === 'track') {
         if (s.genre) params.append('genre', s.genre);
-        let min = parseInt(s.duration.min) || 0;
-        let sec = parseInt(s.duration.sec) || 0;
-        let totalSeconds = (min * 60) + sec;
-
-        if (totalSeconds > 0) {
-            params.append('max_duration', totalSeconds);
-        }
-
+        const min = parseInt(s.duration.min) || 0;
+        const sec = parseInt(s.duration.sec) || 0;
+        const totalSeconds = (min * 60) + sec;
+        if (totalSeconds > 0) params.append('max_duration', totalSeconds);
         if (s.year) params.append('year', s.year);
-        if (s.explicit === 'yes') {
-            params.append('explicit', 'true');
-        } else if (s.explicit === 'no') {
-            params.append('explicit', 'false');
-        }
+        if (s.explicit === 'yes') params.append('explicit', 'true');
+        else if (s.explicit === 'no') params.append('explicit', 'false');
     }
     if (category === 'album') {
         if (s.genre) params.append('genre', s.genre);
@@ -304,16 +319,18 @@ function searchElements() {
     fetch(`/catalog/search/results/?${params}`)
         .then(res => res.text())
         .then(html => {
-            document.querySelector('.results').innerHTML = html;
+            const resultsDiv = document.querySelector('.results');
+            if (resultsDiv) resultsDiv.innerHTML = html;
         })
         .catch(err => console.error('Search failed:', err));
 }
+
 
 // ==============================
 // ADD SONG TO PLAYLIST
 // ==============================
 document.addEventListener('click', async function (e) {
-    const clickedElement = e.target.closest(".trigger-add-song");
+    const clickedElement = e.target.closest('.trigger-add-song');
     if (!clickedElement) return;
 
     e.preventDefault();
@@ -338,29 +355,27 @@ document.addEventListener('click', async function (e) {
         const data = await response.json();
 
         if (response.ok && data.success) {
-            showToast(data.message, "success");
-
+            showToast(data.message, 'success');
         } else if (response.status === 409) {
-            showToast(data.error, "warning");
-
+            showToast(data.error, 'warning');
         } else {
-            showToast(data.error || "Unexpected error.", "danger");
+            showToast(data.error || 'Unexpected error.', 'danger');
         }
 
     } catch (error) {
         console.error('Fetch error:', error);
-        showToast("Network error. Please try again", "danger");
-
+        showToast('Network error. Please try again.', 'danger');
     } finally {
         clickedElement.disabled = false;
     }
 });
 
+
 // ==============================
 // SAVE PLAYLIST
 // ==============================
 document.addEventListener('click', async function (e) {
-    const clickedElement = e.target.closest(".trigger-save-playlist");
+    const clickedElement = e.target.closest('.trigger-save-playlist');
     if (!clickedElement) return;
 
     e.preventDefault();
@@ -384,29 +399,31 @@ document.addEventListener('click', async function (e) {
         const data = await response.json();
 
         if (response.ok && data.success) {
-            showToast(data.message, "success");
+            showToast(data.message, 'success');
             clickedElement.querySelector('i').classList.replace('fa-plus', 'fa-check');
-
         } else if (response.status === 409) {
-            showToast(data.error, "warning");
-
+            showToast(data.error, 'warning');
         } else {
-            showToast(data.error || "Unexpected error.", "danger");
+            showToast(data.error || 'Unexpected error.', 'danger');
         }
 
     } catch (error) {
         console.error('Fetch error:', error);
-        showToast("Network error. Please try again.", "danger");
-
+        showToast('Network error. Please try again.', 'danger');
     } finally {
         clickedElement.disabled = false;
     }
 });
 
+
+// ==============================
+// SHOW TOAST
+// ==============================
 function showToast(message, type = 'success') {
     const alertBox = document.getElementById('playlist-alert');
+    if (!alertBox) return;
 
-    alertBox.classList.remove('alert-success', 'alert-warning', 'alert-danger', 'd-none', 'show');
+    alertBox.classList.remove('alert-success', 'alert-warning', 'alert-danger', 'show', 'd-none');
 
     if (type === 'success') alertBox.classList.add('alert-success');
     else if (type === 'warning') alertBox.classList.add('alert-warning');
@@ -414,9 +431,81 @@ function showToast(message, type = 'success') {
 
     alertBox.textContent = message;
 
+    void alertBox.offsetHeight; // forza reflow per la transizione CSS
+
+    alertBox.classList.add('show');
+
     setTimeout(() => {
         alertBox.classList.remove('show');
-        setTimeout(() => alertBox.classList.add('d-none'), 150);
+        setTimeout(() => alertBox.classList.add('d-none'), 300);
     }, 3000);
+}
 
+
+// ==============================
+// AUDIO PLAYER
+// ==============================
+document.addEventListener('click', function (e) {
+    if (e.target.closest('.add-to-btn') || e.target.closest('.remove-track-form')) return;
+
+    const song = e.target.closest('.result-unit[data-type="track"]');
+    if (!song) return;
+
+    const playSongDiv = document.querySelector('footer .play-song');
+    if (!playSongDiv) return;
+
+    playSongDiv.classList.remove('d-none');
+    playSongDiv.classList.add('d-flex');
+
+    const playerHeight = playSongDiv.offsetHeight;
+    document.documentElement.style.setProperty('--player-height', playerHeight + 'px');
+
+    const audioPlayer = document.getElementById('audioPlayer');
+    if (!song.dataset.id || !audioPlayer) return;
+
+    const title = song.querySelector('h2');
+    const artist = song.querySelector('h3');
+    const coverUrl = song.dataset.coverUrl || song.querySelector('.result-image')?.src;
+
+    const footerImage = document.querySelector('.left-play-song .result-image');
+    const footerTitle = document.querySelector('.song-detail h2');
+    const footerArtist = document.querySelector('.song-detail h3');
+
+    if (coverUrl && footerImage) footerImage.src = coverUrl;
+    if (title && footerTitle) footerTitle.textContent = title.textContent;
+    if (artist && footerArtist) footerArtist.textContent = artist.textContent;
+
+    audioPlayer.src = song.dataset.audioUrl;
+    audioPlayer.play().catch(err => console.error('Playback error:', err));
+});
+
+
+// ==============================
+// CLICK ON ALBUM / ARTIST
+// ==============================
+const resultsDiv = document.querySelector('.results');
+if (resultsDiv) {
+    resultsDiv.addEventListener('click', function (e) {
+        if (e.target.closest('.add-to-btn')) return;
+
+        const selectedElement = e.target.closest('.result-unit');
+        if (!selectedElement) return;
+
+        const type = selectedElement.dataset.type;
+
+        if (type === 'album') {
+            const albumId = selectedElement.dataset.id;
+            window.location.href = `/catalog/album/${albumId}/`;
+        }
+
+        if (type === 'artist') {
+            const artistId = selectedElement.dataset.id;
+            window.location.href = `/catalog/artist/${artistId}/`;
+        }
+
+        if (type === 'playlist') {
+            const playlistId = selectedElement.dataset.id;
+            window.location.href = `/me/playlists/${playlistId}/`
+        }
+    });
 }

@@ -1,0 +1,228 @@
+/*
+============================
+ARTIST HERO
+============================
+*/
+
+.artist-hero {
+    display: flex;
+    align-items: flex-end;
+    gap: 28px;
+    padding: 36px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 8px;
+}
+
+.artist-avatar-wrap {
+    flex-shrink: 0;
+}
+
+.artist-avatar {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+    display: block;
+}
+
+.artist-avatar--placeholder {
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: var(--text-hint);
+}
+
+.artist-eyebrow {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.artist-name {
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.1;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+}
+
+.artist-realname {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+}
+
+.artist-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.artist-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--bg-hover);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.artist-tag i {
+    color: var(--accent-mid);
+    font-size: 0.75rem;
+}
+
+/*
+============================
+SECTIONS
+============================
+*/
+
+.artist-section {
+    margin-top: 36px;
+}
+
+.section-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+/*
+============================
+BIO
+============================
+*/
+
+.artist-bio {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 680px;
+}
+
+/*
+============================
+DISCOGRAPHY GRID
+============================
+*/
+
+.albums-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.album-card {
+    text-decoration: none;
+    display: block;
+    transition: opacity 0.2s;
+}
+
+.album-card:hover {
+    opacity: 0.85;
+}
+
+.album-card-cover-wrap {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 10px;
+    background: var(--bg-hover);
+}
+
+.album-card-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.album-card:hover .album-card-cover {
+    transform: scale(1.04);
+}
+
+.album-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.album-card:hover .album-card-overlay {
+    opacity: 1;
+}
+
+.album-card-overlay i {
+    font-size: 2rem;
+    color: #fff;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+}
+
+.album-card-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.album-card-year {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.empty-state {
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-size: 0.95rem;
+}
+
+/*
+============================
+RESPONSIVE
+============================
+*/
+
+@media screen and (max-width: 600px) {
+    .artist-hero {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .artist-avatar {
+        width: 130px;
+        height: 130px;
+    }
+
+    .albums-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+}

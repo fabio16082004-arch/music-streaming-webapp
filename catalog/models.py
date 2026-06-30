@@ -4,29 +4,27 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.db import models
 
+
 def track_upload_path(instance, filename):
     artist = instance.artists.first()
-    artist_id = artist.id if artist else "0"
+    artist_id = str(artist.id) if artist else "0"
 
-    if instance.pk and instance.albums.exists():
-        album_id = instance.albums.first().id
-        album_folder = f"{album_id}"
+    if instance.albums.exists():
+        album_id = str(instance.albums.first().id)
+        album_folder = album_id
     else:
         album_folder = "singles"
 
-    return os.path.join('catalog', 'tracks', f"{artist_id}", album_folder, filename)
+    return os.path.join('catalog', 'tracks', artist_id, album_folder, filename)
 
 
 def track_cover_upload_path(instance, filename):
-    artist = instance.artists.first()
-    artist_id = artist.id if artist else "0"
-    return os.path.join('catalog', 'single_covers', f"{artist_id}", filename)
-
+    track_id = instance.pk or "0"
+    return os.path.join('catalog', 'covers', 'track', f"{track_id}", filename)
 
 def album_cover_upload_path(instance, filename):
-    artist = instance.artists.first()
-    artist_id = artist.id if artist else "0"
-    return os.path.join('catalog', 'album_covers', f"{artist_id}", filename)
+    album_id = instance.pk or "0"
+    return os.path.join('catalog', 'covers', 'album', f"{album_id}", filename)
 
 
 class Artist(models.Model):
@@ -69,7 +67,6 @@ class Track(models.Model):
 
 
 class Album(models.Model):
-    name = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
     cover_file = models.ImageField(upload_to=album_cover_upload_path, blank=True, null=True)
     release_date = models.DateField()

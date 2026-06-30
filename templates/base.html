@@ -1,9 +1,10 @@
-ù{% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <title>{% block title %}Music App{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'style/base.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -28,7 +29,6 @@
         <a href="{% url 'suggestions' %}" class="sidebar-nav-link"><i class="fa-solid fa-compass"></i> Suggestions</a>
         <a href="{% url 'user_playlists' %}" class="sidebar-nav-link"><i class="fa-solid fa-folder"></i> Playlists</a>
         <a href="{% url 'search' %}" class="sidebar-nav-link"><i class="fa-solid fa-music"></i> Catalog</a>
-        <a href="#" class="sidebar-nav-link"><i class="fa-solid fa-chart-bar"></i> Listening statistics</a>
     </nav>
     <div class="sidebar-footer">
         <a href="#" class="sidebar-profile-link">
@@ -122,7 +122,6 @@
         <a href="{% url 'suggestions' %}" class="ma-nav-link" role="listitem">Suggestions</a>
         <a href="{% url 'user_playlists' %}" class="ma-nav-link" role="listitem">Playlists</a>
         <a href="{% url 'search' %}" class="ma-nav-link" role="listitem">Catalog</a>
-        <a href="#" class="ma-nav-link" role="listitem">Listening statistics</a>
     </div>
 
     <div class="nav-right">
@@ -148,12 +147,11 @@
                 <h3></h3>
             </div>
         </div>
-        <audio id="audioPlayer" src="" controls controlsList="nodownload"></audio>
+        <audio id="audioPlayer" src="" controls controlsList="nodownload" data-track_id=""></audio>
     </div>
 </footer>
 
-<div id="playlist-alert" class="alert alert-success position-fixed bottom-0 end-0 m-3" role="alert"
-     style="display:none; opacity:0; transition: opacity 0.3s;">
+<div id="playlist-alert" class="alert alert-success position-fixed bottom-0 end-0 m-3" role="alert">
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

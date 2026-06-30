@@ -3,7 +3,7 @@
 {% if artists %}
     <section>
         {% for artist in artists %}
-            <div class="result-unit" data-type="artist">
+            <div class="result-unit" data-type="artist" data-id="{{ artist.id }}">
                 <div class="result-details">
                     <div class="result-description">
                         <h2>{{ artist.stage_name }}</h2>
@@ -76,7 +76,11 @@
                  data-audio-url="{{ track.audio_file.url }}">
                 <div class="result-details">
                     <div class="result-container">
-                        <img class="result-image" src="{{ MEDIA_URL }}{{ track.single_cover }}" alt="{{ track.title }}">
+                        {% if track.single_cover %}
+    <img class="result-image" src="{{ MEDIA_URL }}{{ track.single_cover }}" alt="{{ track.title }}">
+{% else %}
+    <img class="result-image" src="{{ track.get_cover_url }}" alt="{{ track.title }}">
+{% endif %}
                         <div class="result-description">
                             <h2>{{ track.title }}</h2>
                             <h3>Track — {{ track.artists.all|join:", " }}</h3>
