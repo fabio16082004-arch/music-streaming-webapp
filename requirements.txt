@@ -1,4 +1,4 @@
 pillow
-whitenoise
 django-filter
 django
+mutagen

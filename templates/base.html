@@ -26,9 +26,18 @@
         <span class="sidebar-brand">MUSIC APP</span>
     </div>
     <nav class="sidebar-body">
-        <a href="{% url 'suggestions' %}" class="sidebar-nav-link"><i class="fa-solid fa-compass"></i> Suggestions</a>
-        <a href="{% url 'user_playlists' %}" class="sidebar-nav-link"><i class="fa-solid fa-folder"></i> Playlists</a>
+        {% if user.is_listener %}
+            <a href="{% url 'suggestions' %}" class="sidebar-nav-link"><i class="fa-solid fa-compass"></i>
+                Suggestions</a>
+            <a href="{% url 'user_playlists' %}" class="sidebar-nav-link"><i class="fa-solid fa-folder"></i>
+                Playlists</a>
+        {% endif %}
+
         <a href="{% url 'search' %}" class="sidebar-nav-link"><i class="fa-solid fa-music"></i> Catalog</a>
+
+        {% if perms.catalog.add_track %}
+            <a href="{% url 'track_create' %}" class="sidebar-nav-link"><i class="fa-solid fa-plus"></i> Add Resource</a>
+        {% endif %}
     </nav>
     <div class="sidebar-footer">
         <a href="#" class="sidebar-profile-link">
@@ -119,9 +128,16 @@
     </div>
 
     <div class="nav-links" role="list">
-        <a href="{% url 'suggestions' %}" class="ma-nav-link" role="listitem">Suggestions</a>
-        <a href="{% url 'user_playlists' %}" class="ma-nav-link" role="listitem">Playlists</a>
+        {% if user.is_listener %}
+            <a href="{% url 'suggestions' %}" class="ma-nav-link" role="listitem">Suggestions</a>
+            <a href="{% url 'user_playlists' %}" class="ma-nav-link" role="listitem">Playlists</a>
+        {% endif %}
+
         <a href="{% url 'search' %}" class="ma-nav-link" role="listitem">Catalog</a>
+
+        {% if perms.catalog.add_track %}
+            <a href="{% url 'track_create' %}" class="ma-nav-link" role="listitem">Add Resource</a>
+        {% endif %}
     </div>
 
     <div class="nav-right">

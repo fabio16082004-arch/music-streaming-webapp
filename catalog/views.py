@@ -2,10 +2,13 @@ import os
 from multiprocessing import context
 
 from django.conf import settings
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic import CreateView, UpdateView, DeleteView
 
+from .forms import ArtistForm, GenreForm, TrackForm, AlbumForm
 from .models import Track, Album, Artist, Genre, AlbumTrack
 from listeners.models import Playlist
 from .filters import TrackFilter, AlbumFilter, ArtistFilter, PlaylistFilter
@@ -101,3 +104,157 @@ class ArtistView(LoginRequiredMixin, View):
             'MEDIA_URL': settings.MEDIA_URL,
         }
         return render(request, self.template_name, context)
+
+
+class ResourceFormContextMixin:
+    resource_type = None
+    template_name = 'manage_resources.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['mode'] = 'edit' if self.object and self.object.pk else 'create'
+        context['resource_type'] = self.resource_type
+        context['all_artists'] = Artist.objects.all().order_by('stage_name')
+        context['all_genres'] = Genre.objects.all().order_by('name')
+        context['all_albums'] = Album.objects.all().order_by('title')
+        print(context)
+        return context
+# ===========================
+# TRACK
+# ===========================
+
+class TrackCreateView(PermissionRequiredMixin, ResourceFormContextMixin, CreateView):
+    model = Track
+    form_class = TrackForm
+    permission_required = 'catalog.add_track'
+    resource_type = 'track'
+    success_url = reverse_lazy('search')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        album = form.cleaned_data.get('album')
+        track_number = form.cleaned_data.get('track_number')
+        if album:
+            AlbumTrack.objects.create(album=album, track=self.object, track_number=track_number)
+        return response
+
+
+class TrackUpdateView(PermissionRequiredMixin, ResourceFormContextMixin, UpdateView):
+    model = Track
+    form_class = TrackForm
+    permission_required = 'catalog.change_track'
+    resource_type = 'track'
+    pk_url_kwarg = 'track_id'
+    success_url = reverse_lazy('search')
+
+    def get_initial(self):
+        initial = super().get_initial()
+        album_track = AlbumTrack.objects.filter(track=self.object).first()
+        if album_track:
+            initial['album'] = album_track.album_id
+            initial['track_number'] = album_track.track_number
+        return initial
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        album = form.cleaned_data.get('album')
+        track_number = form.cleaned_data.get('track_number')
+
+        AlbumTrack.objects.filter(track=self.object).delete()
+        if album:
+            AlbumTrack.objects.create(album=album, track=self.object, track_number=track_number)
+        return response
+
+
+class TrackDeleteView(PermissionRequiredMixin, DeleteView):
+    model = Track
+    permission_required = 'catalog.delete_track'
+    pk_url_kwarg = 'track_id'
+    success_url = reverse_lazy('search')
+    http_method_names = ['post']
+
+
+# ===========================
+# ALBUM
+# ===========================
+
+class AlbumCreateView(PermissionRequiredMixin, ResourceFormContextMixin, CreateView):
+    model = Album
+    form_class = AlbumForm
+    permission_required = 'catalog.add_album'
+    resource_type = 'album'
+    success_url = reverse_lazy('search')
+
+
+class AlbumUpdateView(PermissionRequiredMixin, ResourceFormContextMixin, UpdateView):
+    model = Album
+    form_class = AlbumForm
+    permission_required = 'catalog.change_album'
+    resource_type = 'album'
+    pk_url_kwarg = 'album_id'
+    success_url = reverse_lazy('search')
+
+
+class AlbumDeleteView(PermissionRequiredMixin, DeleteView):
+    model = Album
+    permission_required = 'catalog.delete_album'
+    pk_url_kwarg = 'album_id'
+    success_url = reverse_lazy('search')
+    http_method_names = ['post']
+
+# ===========================
+# ARTIST
+# ===========================
+class ArtistCreateView(PermissionRequiredMixin, ResourceFormContextMixin, CreateView):
+    model = Artist
+    form_class = ArtistForm
+    permission_required = 'catalog.add_artist'
+    resource_type = 'artist'
+    success_url = reverse_lazy('search')
+
+
+
+class ArtistUpdateView(PermissionRequiredMixin, ResourceFormContextMixin, UpdateView):
+    model = Artist
+    form_class = ArtistForm
+    permission_required = 'catalog.change_artist'
+    resource_type = 'artist'
+    pk_url_kwarg = 'artist_id'
+    success_url = reverse_lazy('search')
+
+
+class ArtistDeleteView(PermissionRequiredMixin, DeleteView):
+    model = Artist
+    permission_required = 'catalog.delete_artist'
+    pk_url_kwarg = 'artist_id'
+    success_url = reverse_lazy('search')
+    http_method_names = ['post']
+
+
+# ===========================
+# GENRE
+# ===========================
+
+class GenreCreateView(PermissionRequiredMixin, ResourceFormContextMixin, CreateView):
+    model = Genre
+    form_class = GenreForm
+    permission_required = 'catalog.add_genre'
+    resource_type = 'genre'
+    success_url = reverse_lazy('search')
+
+
+class GenreUpdateView(PermissionRequiredMixin, ResourceFormContextMixin, UpdateView):
+    model = Genre
+    form_class = GenreForm
+    permission_required = 'catalog.change_genre'
+    resource_type = 'genre'
+    pk_url_kwarg = 'genre_id'
+    success_url = reverse_lazy('search')
+
+
+class GenreDeleteView(PermissionRequiredMixin, DeleteView):
+    model = Genre
+    permission_required = 'catalog.delete_genre'
+    pk_url_kwarg = 'genre_id'
+    success_url = reverse_lazy('search')
+    http_method_names = ['post']

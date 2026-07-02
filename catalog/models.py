@@ -28,12 +28,11 @@ def album_cover_upload_path(instance, filename):
 
 
 class Artist(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    email = models.EmailField()
-    stage_name = models.CharField(max_length=100)
-    biography = models.TextField()
-    country = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100, blank=True)
+    last_name = models.CharField(max_length=100, blank=True)
+    stage_name = models.CharField(max_length=100, unique=True)
+    biography = models.TextField(blank=True)
+    country = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.stage_name

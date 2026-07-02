@@ -1,0 +1,393 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    {% if mode == 'edit' %}Edit {{ resource_type|capfirst }}{% else %}Add Resource{% endif %} — Music App
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'style/user_playlists.css' %}">
+    <link rel="stylesheet" href="{% static 'style/search.css' %}">
+    <link rel="stylesheet" href="{% static 'style/manage_resource.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main class="resource-page">
+
+        <h1 class="playlist-title">
+            {% if mode == 'edit' %}Edit {{ resource_type|capfirst }}{% else %}Add Resource{% endif %}
+        </h1>
+
+        {% if mode != 'edit' %}
+            <div class="ma-buttons-filter" id="resource-type-switcher">
+                <a href="{% url 'track_create' %}"
+                   class="ma-filter-btn resource-type-btn {% if resource_type == 'track' %}active{% endif %}"
+                   data-target="track-form">
+                    <i class="fa-solid fa-music"></i> Track
+                </a>
+                <a href="{% url 'album_create' %}"
+                   class="ma-filter-btn resource-type-btn {% if resource_type == 'album' %}active{% endif %}"
+                   data-target="album-form">
+                    <i class="fa-solid fa-compact-disc"></i> Album
+                </a>
+                <a href="{% url 'artist_create' %}"
+                   class="ma-filter-btn resource-type-btn {% if resource_type == 'artist' %}active{% endif %}"
+                   data-target="artist-form">
+                    <i class="fa-solid fa-microphone"></i> Artist
+                </a>
+                <a href="{% url 'genre_create' %}"
+                   class="ma-filter-btn resource-type-btn {% if resource_type == 'genre' %}active{% endif %}"
+                   data-target="genre-form">
+                    <i class="fa-solid fa-tag"></i> Genre
+                </a>
+            </div>
+        {% endif %}
+
+        <!-- ===========================
+             TRACK FORM
+             =========================== -->
+        <section id="track-form" class="resource-form-section
+        {% if resource_type != 'track' %}d-none{% endif %}">
+
+            <h2 class="section-title">{% if mode == 'edit' %}Edit{% else %}New{% endif %} Track</h2>
+
+            <form method="POST"
+                  action="
+
+
+                          {% if mode == 'edit' %}{% url 'track_edit' track.id %}{% else %}{% url 'track_create' %}{% endif %}"
+                  enctype="multipart/form-data" class="resource-form">
+                {% csrf_token %}
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label class="custom-label" for="track-title">Title</label>
+                        <input type="text" id="track-title" name="title" class="custom-form-input"
+                               value="{{ track.title|default:'' }}" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label class="custom-label" for="track-release-date">Release date</label>
+                        <input type="date" id="track-release-date" name="release_date" class="custom-form-input"
+                               value="{{ track.release_date|date:'Y-m-d'|default:'' }}" required>
+                    </div>
+                </div>
+
+                <div class="form-field form-field--inline">
+                    <label class="custom-checkbox-label" for="track-explicit">
+                        <input type="checkbox" id="track-explicit" name="explicit"
+                               {% if track.explicit %}checked{% endif %}>
+                        Explicit content
+                    </label>
+                </div>
+
+                <div class="form-row form-row--align-end">
+                    <div class="form-field">
+                        <label class="custom-label">Audio file</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="track-audio-file" name="audio_file" class="custom-file-input"
+                                   accept=".mp3,.mp4,audio/mpeg,video/mp4" {% if mode != 'edit' %}required{% endif %}>
+                            <label for="track-audio-file" class="custom-file-trigger">Choose file</label>
+                            <span class="custom-file-name" data-default="No file selected">No file selected</span>
+                        </div>
+                        <p class="current-file-hint file-hint-slot" id="track-duration-preview">{% if track.duration %}
+                            Duration: {{ track.duration|stringformat:"d" }}s{% else %}&nbsp;{% endif %}</p>
+                        {% if track.audio_file %}
+                            <p class="current-file-hint">Current: {{ track.audio_file.name }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-field">
+                        <label class="custom-label">Cover (used only singles)</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="track-single-cover" name="single_cover" class="custom-file-input"
+                                   accept=".png,.jpg,.jpeg,image/png,image/jpeg">
+                            <label for="track-single-cover" class="custom-file-trigger">Choose file</label>
+                            <span class="custom-file-name" data-default="No file selected">No file selected</span>
+                        </div>
+                        <p class="current-file-hint file-hint-slot">&nbsp;</p>
+                        {% if track.single_cover %}
+                            <p class="current-file-hint">Current: {{ track.single_cover.name }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label class="custom-label">Artists</label>
+                    <div class="dropdown multiselect-dropdown">
+                        <button type="button" class="custom-form-input filter-select multiselect-toggle dropdown-toggle"
+                                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <span class="multiselect-toggle-label"
+                                  data-placeholder="Select artists">Select artists</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark multiselect-menu">
+                            {% for artist in all_artists %}
+                                <li>
+                                    <label class="multiselect-option dropdown-item">
+                                        <input type="checkbox" name="artists" value="{{ artist.id }}"
+                                               class="multiselect-checkbox"
+                                               {% if artist in track.artists.all %}checked{% endif %}>
+                                        <span>{{ artist.stage_name }}</span>
+                                    </label>
+                                </li>
+                            {% empty %}
+                                <li><span class="dropdown-item-text text-muted">No artists yet.</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label class="custom-label">Genres</label>
+                    <div class="dropdown multiselect-dropdown">
+                        <button type="button" class="custom-form-input filter-select multiselect-toggle dropdown-toggle"
+                                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <span class="multiselect-toggle-label" data-placeholder="Select genres">Select genres</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark multiselect-menu">
+                            {% for genre in all_genres %}
+                                <li>
+                                    <label class="multiselect-option dropdown-item">
+                                        <input type="checkbox" name="genres" value="{{ genre.id }}"
+                                               class="multiselect-checkbox"
+                                               {% if genre in track.genres.all %}checked{% endif %}>
+                                        <span>{{ genre.name }}</span>
+                                    </label>
+                                </li>
+                            {% empty %}
+                                <li><span class="dropdown-item-text text-muted">No genres yet.</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label class="custom-label" for="track-album">Album (optional)</label>
+                    <div class="dropdown singleselect-dropdown">
+                        <button type="button"
+                                class="custom-form-input filter-select singleselect-toggle dropdown-toggle"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="singleselect-toggle-label" data-placeholder="Select album">
+            {% if track.albums.all %}{{ track.albums.first.title }}{% else %}Select album{% endif %}
+        </span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark singleselect-menu">
+                            <li>
+                                <label class="singleselect-option dropdown-item">
+                                    <input type="radio" name="album" value="" class="singleselect-radio"
+                                           {% if not track.albums.all %}checked{% endif %}>
+                                    <span>— Single (no album) —</span>
+                                </label>
+                            </li>
+                            {% for album in all_albums %}
+                                <li>
+                                    <label class="singleselect-option dropdown-item">
+                                        <input type="radio" name="album" value="{{ album.id }}"
+                                               class="singleselect-radio"
+                                               {% if album in track.albums.all %}checked{% endif %}>
+                                        <span>{{ album.title }}</span>
+                                    </label>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-field d-none" id="track-number-field">
+                    <label class="custom-label" for="track-number">Track number (in album)</label>
+                    <input type="number" id="track-number" name="track_number" class="custom-form-input"
+                           min="1" value="{{ track_number|default:'' }}">
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    {% if mode == 'edit' %}Save changes{% else %}Create track{% endif %}
+                </button>
+            </form>
+        </section>
+
+        <!-- ===========================
+             ALBUM FORM
+             =========================== -->
+        <section id="album-form" class="resource-form-section
+        {% if resource_type != 'album' %}d-none{% endif %}">
+
+            <h2 class="section-title">{% if mode == 'edit' %}Edit{% else %}New{% endif %} Album</h2>
+
+            <form method="POST"
+                  action="
+
+
+                          {% if mode == 'edit' %}{% url 'album_edit' album.id %}{% else %}{% url 'album_create' %}{% endif %}"
+                  enctype="multipart/form-data" class="resource-form">
+                {% csrf_token %}
+
+                <div class="form-field">
+                    <label class="custom-label" for="album-title">Title</label>
+                    <input type="text" id="album-title" name="title" class="custom-form-input"
+                           value="{{ album.title|default:'' }}" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label class="custom-label" for="album-release-date">Release date</label>
+                        <input type="date" id="album-release-date" name="release_date" class="custom-form-input"
+                               value="{{ album.release_date|date:'Y-m-d'|default:'' }}" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label class="custom-label">Cover</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="album-cover" name="cover_file" class="custom-file-input"
+                                   accept=".png,.jpg,.jpeg,image/png,image/jpeg">
+                            <label for="album-cover" class="custom-file-trigger">Choose file</label>
+                            <span class="custom-file-name" data-default="No file selected">No file selected</span>
+                        </div>
+                        {% if album.cover_file %}
+                            <p class="current-file-hint">Current: {{ album.cover_file.name }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label class="custom-label">Artists</label>
+                    <div class="dropdown multiselect-dropdown">
+                        <button type="button" class="custom-form-input filter-select multiselect-toggle dropdown-toggle"
+                                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <span class="multiselect-toggle-label"
+                                  data-placeholder="Select artists">Select artists</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark multiselect-menu">
+                            {% for artist in all_artists %}
+                                <li>
+                                    <label class="multiselect-option dropdown-item">
+                                        <input type="checkbox" name="artists" value="{{ artist.id }}"
+                                               class="multiselect-checkbox"
+                                               {% if artist in album.artists.all %}checked{% endif %}>
+                                        <span>{{ artist.stage_name }}</span>
+                                    </label>
+                                </li>
+                            {% empty %}
+                                <li><span class="dropdown-item-text text-muted">No artists yet.</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label class="custom-label">Genres</label>
+                    <div class="dropdown multiselect-dropdown">
+                        <button type="button" class="custom-form-input filter-select multiselect-toggle dropdown-toggle"
+                                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <span class="multiselect-toggle-label" data-placeholder="Select genres">Select genres</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark multiselect-menu">
+                            {% for genre in all_genres %}
+                                <li>
+                                    <label class="multiselect-option dropdown-item">
+                                        <input type="checkbox" name="genres" value="{{ genre.id }}"
+                                               class="multiselect-checkbox"
+                                               {% if genre in album.genres.all %}checked{% endif %}>
+                                        <span>{{ genre.name }}</span>
+                                    </label>
+                                </li>
+                            {% empty %}
+                                <li><span class="dropdown-item-text text-muted">No genres yet.</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    {% if mode == 'edit' %}Save changes{% else %}Create album{% endif %}
+                </button>
+            </form>
+        </section>
+
+        <!-- ===========================
+             ARTIST FORM
+             =========================== -->
+        <section id="artist-form" class="resource-form-section
+        {% if resource_type != 'artist' %}d-none{% endif %}">
+
+            <h2 class="section-title">{% if mode == 'edit' %}Edit{% else %}New{% endif %} Artist</h2>
+
+            <form method="POST"
+                  action="
+
+
+                          {% if mode == 'edit' %}{% url 'artist_edit' artist.id %}{% else %}{% url 'artist_create' %}{% endif %}"
+                  class="resource-form">
+                {% csrf_token %}
+
+                <div class="form-field">
+                    <label class="custom-label" for="artist-stage-name">Stage name</label>
+                    <input type="text" id="artist-stage-name" name="stage_name" class="custom-form-input"
+                           value="{{ artist.stage_name|default:'' }}" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label class="custom-label" for="artist-first-name">First name</label>
+                        <input type="text" id="artist-first-name" name="first_name" class="custom-form-input"
+                               value="{{ artist.first_name|default:'' }}">
+                    </div>
+
+                    <div class="form-field">
+                        <label class="custom-label" for="artist-last-name">Last name</label>
+                        <input type="text" id="artist-last-name" name="last_name" class="custom-form-input"
+                               value="{{ artist.last_name|default:'' }}">
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label class="custom-label" for="artist-country">Country</label>
+                    <input type="text" id="artist-country" name="country" class="custom-form-input"
+                           value="{{ artist.country|default:'' }}">
+                </div>
+
+                <div class="form-field">
+                    <label class="custom-label" for="artist-biography">Biography</label>
+                    <textarea id="artist-biography" name="biography" class="custom-form-input"
+                              rows="5">{{ artist.biography|default:'' }}</textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    {% if mode == 'edit' %}Save changes{% else %}Create artist{% endif %}
+                </button>
+            </form>
+        </section>
+
+        <!-- ===========================
+             GENRE FORM
+             =========================== -->
+        <section id="genre-form" class="resource-form-section
+        {% if resource_type != 'genre' %}d-none{% endif %}">
+
+            <h2 class="section-title">{% if mode == 'edit' %}Edit{% else %}New{% endif %} Genre</h2>
+
+            <form method="POST"
+                  action="
+
+
+                          {% if mode == 'edit' %}{% url 'genre_edit' genre.id %}{% else %}{% url 'genre_create' %}{% endif %}"
+                  class="resource-form">
+                {% csrf_token %}
+
+                <div class="form-field">
+                    <label class="custom-label" for="genre-name">Name</label>
+                    <input type="text" id="genre-name" name="name" class="custom-form-input"
+                           value="{{ genre.name|default:'' }}" required>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    {% if mode == 'edit' %}Save changes{% else %}Create genre{% endif %}
+                </button>
+            </form>
+        </section>
+
+    </main>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'script/manage_resource.js' %}"></script>
+{% endblock %}

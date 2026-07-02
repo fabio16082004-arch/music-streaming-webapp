@@ -1,25 +1,20 @@
-from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import UserManager, Group
 
-class CustomUserManager(BaseUserManager):
 
+class CustomUserManager(UserManager):
     def create_user(self, username, email=None, password=None, **extra_fields):
-        if not username:
-            raise ValueError("Username cannot be empty")
-        if not password:
-            raise ValueError("Password cannot be empty")
-        if email:
-            email = self.normalize_email(email)
+        user = super().create_user(username, email, password, **extra_fields)
+        listener_group, _ = Group.objects.get_or_create(name='Listeners')
+        user.groups.add(listener_group)
+        return user
 
-        extra_fields.setdefault('role', 'listener')
-
-        user = self.model(username=username, email=email, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
+    def create_curator(self, username, email=None, password=None, **extra_fields):
+        user = super().create_user(username, email, password, **extra_fields)
+        curators_group, _ = Group.objects.get_or_create(name='Curators')
+        user.groups.add(curators_group)
         return user
 
     def create_superuser(self, username, email=None, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('role', None) #The superadmin is not a curator
-
-        return self.create_user(username, email, password, **extra_fields)
+        return super().create_superuser(username, email, password, **extra_fields)

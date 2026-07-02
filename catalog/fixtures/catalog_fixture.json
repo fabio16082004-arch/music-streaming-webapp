@@ -54,7 +54,6 @@
     "fields": {
       "first_name": "James",
       "last_name": "Carter",
-      "email": "james.carter@example.com",
       "stage_name": "The Mountain",
       "biography": "Producer and multi-genre artist from Bristol, blending dubstep with cinematic textures.",
       "country": "UK"
@@ -66,7 +65,6 @@
     "fields": {
       "first_name": "Lena",
       "last_name": "Aberrant",
-      "email": "lena.aberrant@example.com",
       "stage_name": "AberrantRealities",
       "biography": "Experimental rap producer known for organic soundscapes and flow.",
       "country": "US"
@@ -78,7 +76,6 @@
     "fields": {
       "first_name": "Kyle",
       "last_name": "Kontra",
-      "email": "kyle.kontra@example.com",
       "stage_name": "Kontraa",
       "biography": "Underground rapper with sleepless nights and gritty beats.",
       "country": "US"
@@ -90,7 +87,6 @@
     "fields": {
       "first_name": "Marco",
       "last_name": "Bombin",
-      "email": "marco.bombin@example.com",
       "stage_name": "BombinSound",
       "biography": "Deep house architect from Barcelona fusing classic grooves with modern production.",
       "country": "ES"
@@ -102,7 +98,6 @@
     "fields": {
       "first_name": "Diego",
       "last_name": "Sunset",
-      "email": "diego.sunset@example.com",
       "stage_name": "Sunset House Grooves",
       "biography": "House DJ and producer chasing the perfect sunset groove.",
       "country": "IT"
@@ -114,7 +109,6 @@
     "fields": {
       "first_name": "Ivan",
       "last_name": "Gvidon",
-      "email": "ivan.gvidon@example.com",
       "stage_name": "Gvidon",
       "biography": "Russian pop songwriter with melodic hooks and introspective lyrics.",
       "country": "RU"
@@ -126,7 +120,6 @@
     "fields": {
       "first_name": "Viktor",
       "last_name": "Galaxiev",
-      "email": "viktor.galaxy@example.com",
       "stage_name": "VJGalaxy",
       "biography": "Berlin-based techno producer known for dark melodic journeys.",
       "country": "DE"
@@ -138,7 +131,6 @@
     "fields": {
       "first_name": "Roman",
       "last_name": "Saturn",
-      "email": "roman.saturn@example.com",
       "stage_name": "Saturn-3",
       "biography": "Dark dub-techno explorer from Eastern Europe.",
       "country": "UA"
@@ -150,7 +142,6 @@
     "fields": {
       "first_name": "Mike",
       "last_name": "Rone",
-      "email": "mike.rone@example.com",
       "stage_name": "MrOneILoveALot",
       "biography": "Industrial techno producer with a love for iron velocity.",
       "country": "PL"
@@ -162,7 +153,6 @@
     "fields": {
       "first_name": "Alex",
       "last_name": "Apalon",
-      "email": "alex.apalon@example.com",
       "stage_name": "ApalonBeats",
       "biography": "Hard aggressive techno from the underground.",
       "country": "DE"
@@ -174,7 +164,6 @@
     "fields": {
       "first_name": "Lukas",
       "last_name": "Leberch",
-      "email": "lukas.leberch@example.com",
       "stage_name": "Leberch",
       "biography": "Minimalist techno producer with hypnotic loops.",
       "country": "CZ"
@@ -186,7 +175,6 @@
     "fields": {
       "first_name": "Alex",
       "last_name": "Morgan",
-      "email": "alex.morgan@example.com",
       "stage_name": "Alex Morgan",
       "biography": "Multi-genre producer across techno, house and dubstep.",
       "country": "US"
@@ -198,7 +186,6 @@
     "fields": {
       "first_name": "Alex",
       "last_name": "Grohl",
-      "email": "alex.grohl@example.com",
       "stage_name": "AlexGrohl",
       "biography": "Energetic rock guitarist channeling raw power into every riff.",
       "country": "US"
@@ -210,7 +197,6 @@
     "fields": {
       "first_name": "Thomas",
       "last_name": "Mountain",
-      "email": "thomas.mountain@example.com",
       "stage_name": "The Mountain (Rock)",
       "biography": "Hard rock alter-ego of the Bristol producer.",
       "country": "UK"
@@ -222,7 +208,6 @@
     "fields": {
       "first_name": "Nathan",
       "last_name": "Nastel",
-      "email": "nathan.nastel@example.com",
       "stage_name": "Nastelbom",
       "biography": "Indie rock multi-instrumentalist with upbeat guitar-driven anthems.",
       "country": "AU"
@@ -234,7 +219,6 @@
     "fields": {
       "first_name": "Greg",
       "last_name": "Bombin",
-      "email": "greg.bombin@example.com",
       "stage_name": "BombinSound Rock",
       "biography": "Action rock specialist bringing heavy riffs and cinematic energy.",
       "country": "ES"
@@ -246,7 +230,6 @@
     "fields": {
       "first_name": "Claire",
       "last_name": "Mountain",
-      "email": "claire.mountain@example.com",
       "stage_name": "The Mountain (Pop)",
       "biography": "Club pop artist with neon-drenched productions.",
       "country": "UK"
@@ -258,7 +241,6 @@
     "fields": {
       "first_name": "Pavel",
       "last_name": "Yudin",
-      "email": "pavel.yudin@example.com",
       "stage_name": "PaulYudin",
       "biography": "Electric swing and pop-dance fusion artist from Moscow.",
       "country": "RU"
@@ -270,7 +252,6 @@
     "fields": {
       "first_name": "Vladislav",
       "last_name": "Zavorin",
-      "email": "vladislav.zavorin@example.com",
       "stage_name": "Vladislav Zavorin",
       "biography": "Indietronica and trip-hop composer with a dreamy, lo-fi aesthetic.",
       "country": "RU"
@@ -282,7 +263,6 @@
     "fields": {
       "first_name": "Kenji",
       "last_name": "Mondau",
-      "email": "kenji.mondau@example.com",
       "stage_name": "MondaMusic",
       "biography": "Lofi and ambient architect, co-founder of the Lofi Night collective.",
       "country": "JP"
@@ -294,7 +274,6 @@
     "fields": {
       "first_name": "Sophie",
       "last_name": "Penguin",
-      "email": "sophie.penguin@example.com",
       "stage_name": "PenguinMusic",
       "biography": "Chill and trip-hop producer, co-founder of the Lofi Night collective.",
       "country": "FR"
