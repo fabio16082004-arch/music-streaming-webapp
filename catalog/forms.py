@@ -1,7 +1,6 @@
 from django import forms
 from django.core.files.uploadedfile import UploadedFile
 from django.core.validators import FileExtensionValidator
-from mutagen import File as MutagenFile
 
 from .models import Track, Album, Artist, Genre, AlbumTrack
 
@@ -22,6 +21,12 @@ class TrackForm(forms.ModelForm):
         validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg'])],
     )
 
+    client_duration = forms.IntegerField(
+        required=False,
+        min_value=1,
+        widget=forms.HiddenInput(),
+    )
+
     class Meta:
         model = Track
         fields = [
@@ -29,35 +34,18 @@ class TrackForm(forms.ModelForm):
             'single_cover', 'release_date', 'artists', 'genres',
         ]
 
-    def clean_audio_file(self):
-        audio_file = self.cleaned_data.get('audio_file')
-
-        if audio_file and isinstance(audio_file, UploadedFile):
-            audio_file.seek(0)
-            audio = MutagenFile(audio_file)
-            audio_file.seek(0)
-
-            if audio is None or audio.info is None or not getattr(audio.info, 'length', None):
-                raise forms.ValidationError(
-                    "Impossible to determine the file's duration. "
-                    "Make sure if the file is a valid .mp4 or .mp3"
-                )
-
-            self._computed_duration = round(audio.info.length)
-
-        return audio_file
-
-    def save(self, commit=True):
-        instance = super().save(commit=False)
-        if hasattr(self, '_computed_duration'):
-            instance.duration = self._computed_duration
-        if commit:
-            instance.save()
-            self.save_m2m()
-        return instance
-
     def clean(self):
         cleaned_data = super().clean()
+
+        audio_file = cleaned_data.get('audio_file')
+        client_duration = cleaned_data.get('client_duration')
+
+        if audio_file and isinstance(audio_file, UploadedFile) and not client_duration:
+            self.add_error(
+                'audio_file',
+                "Impossible to get the durations of the audio in the browser. "
+            )
+
         album = cleaned_data.get('album')
         track_number = cleaned_data.get('track_number')
 
@@ -75,6 +63,25 @@ class TrackForm(forms.ModelForm):
                 )
 
         return cleaned_data
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+
+        client_duration = self.cleaned_data.get('client_duration')
+        if client_duration:
+            instance.duration = client_duration
+
+        if commit:
+            instance.save()
+            self.save_m2m()
+
+            album = self.cleaned_data.get('album')
+            track_number = self.cleaned_data.get('track_number')
+            AlbumTrack.objects.filter(track=instance).delete()
+            if album:
+                AlbumTrack.objects.create(album=album, track=instance, track_number=track_number)
+
+        return instance
 
 
 class AlbumForm(forms.ModelForm):

@@ -5,12 +5,18 @@ def setup_roles(sender, **kwargs):
     listeners_group, _ = Group.objects.get_or_create(name='Listeners')
     curators_group, _ = Group.objects.get_or_create(name='Curators')
 
-    listeners_group.permissions.set(
+    listener_permissions = list(
         Permission.objects.filter(
             content_type__app_label='catalog',
             codename__startswith='view_'
         )
+    ) + list(
+        Permission.objects.filter(
+            content_type__app_label='listeners',
+            codename__in=['log_playback']
+        )
     )
+    listeners_group.permissions.set(listener_permissions)
 
     curators_group.permissions.set(
         Permission.objects.filter(

@@ -67,7 +67,7 @@ body{
   top: 0;
   left: 0;
   height: 100%;
-  width: 100%;          /* full width come richiesto */
+  width: 100%;
   background: var(--bg-surface);
   z-index: 1999;
   transform: translateX(-100%);
@@ -210,7 +210,7 @@ body{
 }
 
 /* ===========================
-   NAVBAR PRINCIPALE
+   MAIN NAVBAR
    =========================== */
 .nav-content {
   position: fixed;

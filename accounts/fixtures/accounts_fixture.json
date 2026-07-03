@@ -1,0 +1,47 @@
+[
+  {
+    "model": "accounts.user",
+    "pk": 1,
+    "fields": {
+      "username": "listener_one",
+      "email": "marco.rossi@example.com",
+      "first_name": "Marco",
+      "last_name": "Rossi",
+      "password": "pbkdf2_sha256$1200000$5DxHIMZLF64rv6CkjeNdXe$DACmVWTpA3n7UtIwcxKUigRN/aZHgoC8eSuYgWEEvow=",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "groups": [1]
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": 2,
+    "fields": {
+      "username": "listener_two",
+      "email": "mario.bianchi@example.com",
+      "first_name": "Mario",
+      "last_name": "Bianchi",
+      "password": "pbkdf2_sha256$1200000$5DxHIMZLF64rv6CkjeNdXe$DACmVWTpA3n7UtIwcxKUigRN/aZHgoC8eSuYgWEEvow=",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "groups": [1]
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": 3,
+    "fields": {
+      "username": "curator_one",
+      "email": "luca.verdi@example.com",
+      "first_name": "Luca",
+      "last_name": "Verdi",
+      "password": "pbkdf2_sha256$1200000$5DxHIMZLF64rv6CkjeNdXe$DACmVWTpA3n7UtIwcxKUigRN/aZHgoC8eSuYgWEEvow=",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "groups": [2]
+    }
+  }
+]

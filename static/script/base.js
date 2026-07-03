@@ -65,7 +65,6 @@ async function closePlaybackSession() {
     }
 }
 
-// chiusura naturale della traccia (arrivata alla fine da sola)
 audioPlayer.addEventListener('ended', async function () {
     await closePlaybackSession();
 });
@@ -109,7 +108,7 @@ document.addEventListener('click', async function (e) {
 });
 
 // ==============================
-// AVVIO LOG ALLA PARTENZA DELLA RIPRODUZIONE
+// LOG INITIALIZATION
 // ==============================
 
 audioPlayer.addEventListener('play', async function () {

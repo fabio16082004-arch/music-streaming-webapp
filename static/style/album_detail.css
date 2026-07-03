@@ -116,7 +116,6 @@ TRACKLIST
     color: var(--text-primary);
 }
 
-/* result-details riusa stili da search.css, qui estendiamo */
 .tracklist-row .result-details {
     display: flex;
     justify-content: space-between;

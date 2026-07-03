@@ -15,7 +15,15 @@
                     <input type="text" placeholder="What do you want to listen?">
                 </div>
 
-                <button class="adv-filter-btn" data-bs-toggle="modal" data-bs-target="#filters" data-genres="{{ db_genres_json }}">
+                <button class="adv-filter-btn" id="track-filter-btn" data-bs-toggle="modal" data-bs-target="#trackFiltersModal">
+                    <i class="fa-solid fa-filter"></i>
+                    <span>Filters</span>
+                </button>
+                <button class="adv-filter-btn" id="album-filter-btn" data-bs-toggle="modal" data-bs-target="#albumFiltersModal">
+                    <i class="fa-solid fa-filter"></i>
+                    <span>Filters</span>
+                </button>
+                <button class="adv-filter-btn" id="artist-filter-btn" data-bs-toggle="modal" data-bs-target="#artistFiltersModal">
                     <i class="fa-solid fa-filter"></i>
                     <span>Filters</span>
                 </button>
@@ -34,18 +42,151 @@
         </div>
     </main>
 
-    <div class="modal fade" id="filters" tabindex="-1" aria-labelledby="filtersLabel" aria-hidden="true">
+    <!-- ===========================
+         TRACK FILTERS MODAL
+         =========================== -->
+    <div class="modal fade" id="trackFiltersModal" tabindex="-1" aria-labelledby="trackFiltersLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="trackFiltersLabel">Track filters</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <div class="filter-group" id="fg-track-genre">
+                        <div class="filter-label-row">
+                            <label class="filter-label">Genre</label>
+                            <button class="filter-remove" data-target="fg-track-genre">✕ Remove</button>
+                        </div>
+                        <select class="filter-select" id="track-genre" data-genres-source>
+                            <option value="">— Select genre —</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group" id="fg-track-duration">
+                        <div class="filter-label-row">
+                            <label class="filter-label">Max duration</label>
+                            <button class="filter-remove" data-target="fg-track-duration">✕ Remove</button>
+                        </div>
+                        <div class="filter-duration">
+                            <input type="number" class="filter-input" id="dur-min" min="0" max="59" placeholder="mm">
+                            <span class="filter-sep">:</span>
+                            <input type="number" class="filter-input" id="dur-sec" min="0" max="59" placeholder="ss">
+                        </div>
+                    </div>
+
+                    <div class="filter-group" id="fg-track-year">
+                        <div class="filter-label-row">
+                            <label class="filter-label">Release year</label>
+                            <button class="filter-remove" data-target="fg-track-year">✕ Remove</button>
+                        </div>
+                        <input type="number" class="filter-input full" id="track-year" min="1900" max="2100" placeholder="e.g. 2019">
+                    </div>
+
+                    <div class="filter-group" id="fg-track-explicit">
+                        <div class="filter-label-row">
+                            <label class="filter-label">Explicit</label>
+                            <button class="filter-remove" data-target="fg-track-explicit">✕ Remove</button>
+                        </div>
+                        <div class="filter-chips">
+                            <button type="button" class="filter-chip" data-value="yes">Yes</button>
+                            <button type="button" class="filter-chip" data-value="no">No</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary">Apply</button>
+                    <button type="button" class="btn btn-secondary" data-apply-category="track">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===========================
+         ALBUM FILTERS MODAL
+         =========================== -->
+    <div class="modal fade" id="albumFiltersModal" tabindex="-1" aria-labelledby="albumFiltersLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="albumFiltersLabel">Album filters</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="filter-group" id="fg-album-genre">
+                        <div class="filter-label-row">
+                            <label class="filter-label">Genre</label>
+                            <button class="filter-remove" data-target="fg-album-genre">✕ Remove</button>
+                        </div>
+                        <select class="filter-select" id="album-genre" data-genres-source>
+                            <option value="">— Select genre —</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group" id="fg-album-year">
+                        <div class="filter-label-row">
+                            <label class="filter-label">Release year</label>
+                            <button class="filter-remove" data-target="fg-album-year">✕ Remove</button>
+                        </div>
+                        <input type="number" class="filter-input full" id="album-year" min="1900" max="2100" placeholder="e.g. 2019">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-apply-category="album">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===========================
+         ARTIST FILTERS MODAL
+         =========================== -->
+    <div class="modal fade" id="artistFiltersModal" tabindex="-1" aria-labelledby="artistFiltersLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="artistFiltersLabel">Artist filters</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="filter-group" id="fg-artist-initial">
+                        <div class="filter-label-row">
+                            <label class="filter-label">Name initial</label>
+                            <button class="filter-remove" data-target="fg-artist-initial">✕ Remove</button>
+                        </div>
+                        <div class="filter-chips filter-chips--letters">
+                            {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
+                                <button type="button" class="filter-chip" data-value="{{ letter }}">{{ letter }}</button>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="filter-group" id="fg-artist-country">
+                        <div class="filter-label-row">
+                            <label class="filter-label">Country</label>
+                            <button class="filter-remove" data-target="fg-artist-country">✕ Remove</button>
+                        </div>
+                        <select class="filter-select" id="artist-country">
+                            <option value="">— Select country —</option>
+                            <option value="United States">United States</option>
+                            <option value="United Kingdom">United Kingdom</option>
+                            <option value="Italy">Italy</option>
+                            <option value="France">France</option>
+                            <option value="Germany">Germany</option>
+                            <option value="Canada">Canada</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Brazil">Brazil</option>
+                            <option value="Japan">Japan</option>
+                            <option value="Nigeria">Nigeria</option>
+                            <option value="Sweden">Sweden</option>
+                            <option value="Spain">Spain</option>
+                            <option value="Jamaica">Jamaica</option>
+                            <option value="South Korea">South Korea</option>
+                            <option value="Colombia">Colombia</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-apply-category="artist">Apply</button>
                 </div>
             </div>
         </div>
@@ -57,6 +198,7 @@
     <script>
         const START_LOG_URL = "{% url 'start_playback' %}";
         const STOP_LOG_URL = "{% url 'stop_playback' %}";
+        const DB_GENRES = {{ db_genres_json|default:"[]"|safe }};
     </script>
     <script src="{% static 'script/search.js' %}"></script>
 {% endblock %}

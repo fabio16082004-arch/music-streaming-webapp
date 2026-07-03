@@ -192,7 +192,7 @@ CHECKBOX (explicit, ecc.)
 
 /*
 ============================
-MULTI-SELECT DROPDOWN (artisti / generi)
+MULTI-SELECT DROPDOWN
 ============================
 */
 .multiselect-dropdown {
@@ -407,4 +407,30 @@ RESPONSIVE
         align-self: stretch;
         text-align: center;
     }
+}
+
+/* ===========================
+  ERRORS
+   =========================== */
+.form-errors {
+    background: rgba(232, 81, 122, 0.12);
+    border: 1px solid var(--accent-from);
+    border-radius: 10px;
+    padding: 14px 18px;
+}
+
+.form-errors ul {
+    margin: 0;
+    padding-left: 18px;
+    list-style: disc;
+}
+
+.form-errors li {
+    color: var(--accent-from);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.form-errors li strong {
+    color: var(--accent-from);
 }

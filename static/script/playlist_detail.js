@@ -8,7 +8,6 @@
     });
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Selezioniamo tutti i form di rimozione presenti nella pagina
     const removeForms = document.querySelectorAll('.remove-track-form');
 
     removeForms.forEach(form => {

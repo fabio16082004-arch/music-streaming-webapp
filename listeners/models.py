@@ -14,6 +14,7 @@ class Playlist(models.Model):
 
 
 class MonthlyListeningStatistic(models.Model):
+
     listener = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -31,5 +32,8 @@ class MonthlyListeningStatistic(models.Model):
 
     class Meta:
         unique_together = ('listener', 'track', 'month', 'year')
+        permissions = [
+            ("log_playback", "Can log playback / listening statistics"),
+        ]
 
 

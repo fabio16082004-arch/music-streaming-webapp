@@ -1,4 +1,5 @@
 import os
+import uuid
 
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -6,25 +7,18 @@ from django.db import models
 
 
 def track_upload_path(instance, filename):
-    artist = instance.artists.first()
-    artist_id = str(artist.id) if artist else "0"
-
-    if instance.albums.exists():
-        album_id = str(instance.albums.first().id)
-        album_folder = album_id
-    else:
-        album_folder = "singles"
-
-    return os.path.join('catalog', 'tracks', artist_id, album_folder, filename)
+    ext = filename.split('.')[-1]
+    return os.path.join('catalog', 'tracks', f"{uuid.uuid4()}.{ext}")
 
 
 def track_cover_upload_path(instance, filename):
-    track_id = instance.pk or "0"
-    return os.path.join('catalog', 'covers', 'track', f"{track_id}", filename)
+    ext = filename.split('.')[-1]
+    return os.path.join('catalog', 'covers', 'track', f"{uuid.uuid4()}.{ext}")
+
 
 def album_cover_upload_path(instance, filename):
-    album_id = instance.pk or "0"
-    return os.path.join('catalog', 'covers', 'album', f"{album_id}", filename)
+    ext = filename.split('.')[-1]
+    return os.path.join('catalog', 'covers', 'album', f"{uuid.uuid4()}.{ext}")
 
 
 class Artist(models.Model):
@@ -37,14 +31,16 @@ class Artist(models.Model):
     def __str__(self):
         return self.stage_name
 
+
 class Genre(models.Model):
     name = models.CharField(max_length=100)
+
 
 class Track(models.Model):
     title = models.CharField(max_length=100)
     duration = models.IntegerField()
     explicit = models.BooleanField()
-    audio_file = models.FileField(upload_to=track_upload_path,max_length=500)
+    audio_file = models.FileField(upload_to=track_upload_path, max_length=500)
 
     single_cover = models.ImageField(upload_to=track_cover_upload_path, blank=True, null=True)
     release_date = models.DateField()
@@ -56,9 +52,9 @@ class Track(models.Model):
     @property
     def get_cover_url(self):
         if self.albums.exists():
-            album_principale = self.albums.first()
-            if album_principale.cover_file:
-                return album_principale.cover_file.url
+            main_album = self.albums.first()
+            if main_album.cover_file:
+                return main_album.cover_file.url
 
         if self.single_cover:
             return self.single_cover.url

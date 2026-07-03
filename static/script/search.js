@@ -1,60 +1,92 @@
-const filterState = {
-    track: {genre: '', duration: {min: '', sec: ''}, year: '', explicit: null},
-    album: {genre: '', year: ''},
-    artist: {initial: null, country: ''},
-};
-
-let tempState = {};
-
-
 // ==============================
-// FILTER BUTTON SELECTION
+// CATEGORY SWITCH
 // ==============================
+function updateFilterButtonVisibility(category) {
+    ['track', 'album', 'artist'].forEach(cat => {
+        const btn = document.getElementById(`${cat}-filter-btn`);
+        if (btn) btn.style.display = (cat === category) ? 'flex' : 'none';
+    });
+}
+
 document.querySelectorAll('.ma-filter-btn').forEach(btn => {
     btn.addEventListener('click', function () {
         document.querySelectorAll('.ma-filter-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
         const category = this.dataset.category;
 
-        const filterBtn = document.querySelector('.adv-filter-btn');
-        if (filterBtn) {
-            filterBtn.style.display = (category !== 'all' && category !== 'playlist') ? 'flex' : 'none';
-        }
+        updateFilterButtonVisibility(category);
 
         searchElements();
     });
 });
 
+updateFilterButtonVisibility(document.querySelector('.ma-filter-btn.active')?.dataset.category);
+
 
 // ==============================
-// OPEN MODAL
+// GENRE SELECTS
 // ==============================
-const advFilterBtn = document.querySelector('.adv-filter-btn');
-if (advFilterBtn) {
-    advFilterBtn.addEventListener('click', function () {
-        const activeBtn = document.querySelector('.ma-filter-btn.active');
-        const category = activeBtn ? activeBtn.dataset.category : null;
-        const modalBody = document.querySelector('.modal-body');
-
-        tempState = JSON.parse(JSON.stringify(filterState[category]));
-
-        switch (category) {
-            case 'track':
-                modalBody.innerHTML = buildTrackFilters(tempState);
-                break;
-            case 'album':
-                modalBody.innerHTML = buildAlbumFilters(tempState);
-                break;
-            case 'artist':
-                modalBody.innerHTML = buildArtistFilters(tempState);
-                break;
-            default:
-                modalBody.innerHTML = '';
-        }
-
-        bindInteractions(category);
+document.querySelectorAll('[data-genres-source]').forEach(select => {
+    (DB_GENRES || []).forEach(genre => {
+        const option = document.createElement('option');
+        option.value = genre;
+        option.textContent = genre;
+        select.appendChild(option);
     });
-}
+});
+
+
+// ==============================
+// FILTER CHIPS
+// ==============================
+document.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', function () {
+        const siblings = this.closest('.filter-chips').querySelectorAll('.filter-chip');
+        const wasSelected = this.classList.contains('selected');
+        siblings.forEach(c => c.classList.remove('selected'));
+        if (!wasSelected) this.classList.add('selected');
+    });
+});
+
+
+// ==============================
+// FILTER INPUT
+// ==============================
+document.querySelectorAll('.filter-input').forEach(input => {
+    input.addEventListener('input', function () {
+        if (this.value !== '' && this.max && parseInt(this.value) > parseInt(this.max)) this.value = this.max;
+        if (this.value !== '' && this.min && parseInt(this.value) < parseInt(this.min)) this.value = this.min;
+    });
+});
+
+
+// ==============================
+// FILTER REMOVE
+// ==============================
+document.querySelectorAll('.filter-remove').forEach(btn => {
+    btn.addEventListener('click', function () {
+        const groupId = this.dataset.target;
+        const group = document.getElementById(groupId);
+        if (!group) return;
+
+        group.querySelectorAll('.filter-select').forEach(sel => sel.value = '');
+        group.querySelectorAll('.filter-input').forEach(inp => inp.value = '');
+        group.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('selected'));
+    });
+});
+
+
+// ==============================
+// APPLY FILTERS
+// ==============================
+document.querySelectorAll('[data-apply-category]').forEach(btn => {
+    btn.addEventListener('click', function () {
+        const modalEl = this.closest('.modal');
+        const modal = modalEl ? bootstrap.Modal.getInstance(modalEl) : null;
+        if (modal) modal.hide();
+        searchElements();
+    });
+});
 
 
 // ==============================
@@ -66,11 +98,6 @@ if (searchInput) {
     searchInput.addEventListener('input', function () {
         clearTimeout(timer);
         timer = setTimeout(() => {
-            const activeBtn = document.querySelector('.ma-filter-btn.active');
-            const category = activeBtn ? activeBtn.dataset.category : null;
-            if (category && filterState[category]) {
-                filterState[category] = JSON.parse(JSON.stringify(tempState));
-            }
             searchElements();
         }, 300);
     });
@@ -78,243 +105,51 @@ if (searchInput) {
 
 
 // ==============================
-// APPLY FILTERS
-// ==============================
-const applyBtn = document.querySelector('.modal-footer .btn-secondary');
-if (applyBtn) {
-    applyBtn.addEventListener('click', function () {
-        const activeBtn = document.querySelector('.ma-filter-btn.active');
-        const category = activeBtn ? activeBtn.dataset.category : null;
-        if (category && filterState[category]) {
-            filterState[category] = JSON.parse(JSON.stringify(tempState));
-        }
-        const modal = bootstrap.Modal.getInstance(document.getElementById('filters'));
-        if (modal) modal.hide();
-        searchElements();
-    });
-}
-
-
-// ==============================
-// GENRE SELECT
-// ==============================
-function genreSelect(id, selectedValue) {
-    const btn = document.querySelector('.adv-filter-btn');
-    const rawGenres = btn ? btn.dataset.genres : undefined;
-    const genres = (typeof rawGenres !== 'undefined')
-        ? JSON.parse(rawGenres)
-        : ['Pop', 'Rock', 'Hip-Hop', 'Jazz', 'Classical', 'Electronic', 'R&B', 'Country', 'Metal', 'Folk', 'Reggae', 'Blues'];
-
-    return `
-    <select class="filter-select" id="${id}">
-      <option value="">— Select genre —</option>
-      ${genres.map(g => `<option value="${g}" ${selectedValue === g ? 'selected' : ''}>${g}</option>`).join('')}
-    </select>`;
-}
-
-
-// ==============================
-// TRACK FILTERS
-// ==============================
-function buildTrackFilters(s) {
-    const currentYear = new Date().getFullYear();
-    return `
-    <div class="filter-group" id="fg-genre">
-      <div class="filter-label-row">
-        <label class="filter-label">Genre</label>
-        <button class="filter-remove" data-target="fg-genre">✕ Remove</button>
-      </div>
-      ${genreSelect('track-genre', s.genre)}
-    </div>
-
-    <div class="filter-group" id="fg-duration">
-      <div class="filter-label-row">
-        <label class="filter-label">Max duration</label>
-        <button class="filter-remove" data-target="fg-duration">✕ Remove</button>
-      </div>
-      <div class="filter-duration">
-        <input type="number" class="filter-input" id="dur-min" min="0" max="59" placeholder="mm" value="${s.duration.min}">
-        <span class="filter-sep">:</span>
-        <input type="number" class="filter-input" id="dur-sec" min="0" max="59" placeholder="ss" value="${s.duration.sec}">
-      </div>
-    </div>
-
-    <div class="filter-group" id="fg-year">
-      <div class="filter-label-row">
-        <label class="filter-label">Release year</label>
-        <button class="filter-remove" data-target="fg-year">✕ Remove</button>
-      </div>
-      <input type="number" class="filter-input full" id="track-year" min="1900" max="${currentYear}" placeholder="e.g. 2019" value="${s.year}">
-    </div>
-
-    <div class="filter-group" id="fg-explicit">
-      <div class="filter-label-row">
-        <label class="filter-label">Explicit</label>
-        <button class="filter-remove" data-target="fg-explicit">✕ Remove</button>
-      </div>
-      <div class="filter-chips">
-        <button class="filter-chip ${s.explicit === 'yes' ? 'selected' : ''}" data-value="yes">Yes</button>
-        <button class="filter-chip ${s.explicit === 'no' ? 'selected' : ''}" data-value="no">No</button>
-      </div>
-    </div>`;
-}
-
-
-// ==============================
-// ALBUM FILTERS
-// ==============================
-function buildAlbumFilters(s) {
-    const currentYear = new Date().getFullYear();
-    return `
-    <div class="filter-group" id="fg-genre">
-      <div class="filter-label-row">
-        <label class="filter-label">Genre</label>
-        <button class="filter-remove" data-target="fg-genre">✕ Remove</button>
-      </div>
-      ${genreSelect('album-genre', s.genre)}
-    </div>
-
-    <div class="filter-group" id="fg-year">
-      <div class="filter-label-row">
-        <label class="filter-label">Release year</label>
-        <button class="filter-remove" data-target="fg-year">✕ Remove</button>
-      </div>
-      <input type="number" class="filter-input full" id="album-year" min="1900" max="${currentYear}" placeholder="e.g. 2019" value="${s.year}">
-    </div>`;
-}
-
-
-// ==============================
-// ARTIST FILTERS
-// ==============================
-function buildArtistFilters(s) {
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-    const countries = ['United States', 'United Kingdom', 'Italy', 'France', 'Germany', 'Canada', 'Australia', 'Brazil', 'Japan', 'Nigeria', 'Sweden', 'Spain', 'Jamaica', 'South Korea', 'Colombia'];
-    return `
-    <div class="filter-group" id="fg-initial">
-      <div class="filter-label-row">
-        <label class="filter-label">Name initial</label>
-        <button class="filter-remove" data-target="fg-initial">✕ Remove</button>
-      </div>
-      <div class="filter-chips filter-chips--letters">
-        ${letters.map(l => `<button class="filter-chip ${s.initial === l ? 'selected' : ''}" data-value="${l}">${l}</button>`).join('')}
-      </div>
-    </div>
-
-    <div class="filter-group" id="fg-country">
-      <div class="filter-label-row">
-        <label class="filter-label">Country</label>
-        <button class="filter-remove" data-target="fg-country">✕ Remove</button>
-      </div>
-      <select class="filter-select" id="artist-country">
-        <option value="">— Select country —</option>
-        ${countries.map(c => `<option value="${c}" ${s.country === c ? 'selected' : ''}>${c}</option>`).join('')}
-      </select>
-    </div>`;
-}
-
-
-// ==============================
-// BIND FILTER INTERACTIONS
-// ==============================
-function bindInteractions(category) {
-    const s = tempState;
-
-    document.querySelectorAll('.filter-select').forEach(select => {
-        select.addEventListener('change', function () {
-            if (category === 'track' && this.id === 'track-genre') s.genre = this.value;
-            if (category === 'album' && this.id === 'album-genre') s.genre = this.value;
-            if (category === 'artist' && this.id === 'artist-country') s.country = this.value;
-        });
-    });
-
-    document.querySelectorAll('.filter-chip').forEach(chip => {
-        chip.addEventListener('click', function () {
-            const siblings = this.closest('.filter-chips').querySelectorAll('.filter-chip');
-            siblings.forEach(c => c.classList.remove('selected'));
-            this.classList.toggle('selected');
-
-            const groupId = this.closest('.filter-group').id;
-            const value = this.classList.contains('selected') ? this.dataset.value : null;
-
-            if (category === 'track' && groupId === 'fg-explicit') s.explicit = value;
-            if (category === 'artist' && groupId === 'fg-initial') s.initial = value;
-        });
-    });
-
-    document.querySelectorAll('.filter-input').forEach(input => {
-        input.addEventListener('input', function () {
-            if (this.value !== '' && this.max && parseInt(this.value) > parseInt(this.max)) this.value = this.max;
-            if (this.value !== '' && this.min && parseInt(this.value) < parseInt(this.min)) this.value = this.min;
-
-            if (category === 'track') {
-                if (this.id === 'dur-min') s.duration.min = this.value;
-                if (this.id === 'dur-sec') s.duration.sec = this.value;
-                if (this.id === 'track-year') s.year = this.value;
-            }
-            if (category === 'album' && this.id === 'album-year') s.year = this.value;
-        });
-    });
-
-    document.querySelectorAll('.filter-remove').forEach(btn => {
-        btn.addEventListener('click', function () {
-            const groupId = this.dataset.target;
-            const group = document.getElementById(groupId);
-            if (!group) return;
-
-            group.querySelectorAll('.filter-select').forEach(sel => sel.value = '');
-            group.querySelectorAll('.filter-input').forEach(inp => inp.value = '');
-            group.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('selected'));
-
-            if (category === 'track') {
-                if (groupId === 'fg-genre') s.genre = '';
-                if (groupId === 'fg-duration') s.duration = {min: '', sec: ''};
-                if (groupId === 'fg-year') s.year = '';
-                if (groupId === 'fg-explicit') s.explicit = null;
-            }
-            if (category === 'album') {
-                if (groupId === 'fg-genre') s.genre = '';
-                if (groupId === 'fg-year') s.year = '';
-            }
-            if (category === 'artist') {
-                if (groupId === 'fg-initial') s.initial = null;
-                if (groupId === 'fg-country') s.country = '';
-            }
-        });
-    });
-}
-
-
-// ==============================
 // SEARCH ELEMENTS
 // ==============================
+function readTrackFilters(params) {
+    const genre = document.getElementById('track-genre')?.value;
+    const min = parseInt(document.getElementById('dur-min')?.value) || 0;
+    const sec = parseInt(document.getElementById('dur-sec')?.value) || 0;
+    const year = document.getElementById('track-year')?.value;
+    const explicitChip = document.querySelector('#trackFiltersModal .filter-chip.selected');
+
+    if (genre) params.append('genre', genre);
+    const totalSeconds = (min * 60) + sec;
+    if (totalSeconds > 0) params.append('max_duration', totalSeconds);
+    if (year) params.append('year', year);
+    if (explicitChip) {
+        params.append('explicit', explicitChip.dataset.value === 'yes' ? 'true' : 'false');
+    }
+}
+
+function readAlbumFilters(params) {
+    const genre = document.getElementById('album-genre')?.value;
+    const year = document.getElementById('album-year')?.value;
+
+    if (genre) params.append('genre', genre);
+    if (year) params.append('year', year);
+}
+
+function readArtistFilters(params) {
+    const initialChip = document.querySelector('#artistFiltersModal .filter-chip.selected');
+    const country = document.getElementById('artist-country')?.value;
+
+    if (initialChip) params.append('stage_name_initial', initialChip.dataset.value);
+    if (country) params.append('country', country);
+}
+
 function searchElements() {
     const activeBtn = document.querySelector('.ma-filter-btn.active');
     const category = activeBtn?.dataset.category;
     const searchBar = document.querySelector('.search-bar input');
     const query = searchBar ? searchBar.value.trim() : '';
-    const s = (category === 'all') ? {} : filterState[category];
 
     const params = new URLSearchParams({q: query, category});
 
-    if (category === 'track') {
-        if (s.genre) params.append('genre', s.genre);
-        const min = parseInt(s.duration.min) || 0;
-        const sec = parseInt(s.duration.sec) || 0;
-        const totalSeconds = (min * 60) + sec;
-        if (totalSeconds > 0) params.append('max_duration', totalSeconds);
-        if (s.year) params.append('year', s.year);
-        if (s.explicit === 'yes') params.append('explicit', 'true');
-        else if (s.explicit === 'no') params.append('explicit', 'false');
-    }
-    if (category === 'album') {
-        if (s.genre) params.append('genre', s.genre);
-        if (s.year) params.append('year', s.year);
-    }
-    if (category === 'artist') {
-        if (s.initial) params.append('stage_name_initial', s.initial);
-        if (s.country) params.append('country', s.country);
-    }
+    if (category === 'track') readTrackFilters(params);
+    if (category === 'album') readAlbumFilters(params);
+    if (category === 'artist') readArtistFilters(params);
 
     fetch(`/catalog/search/results/?${params}`)
         .then(res => res.text())
@@ -431,7 +266,7 @@ function showToast(message, type = 'success') {
 
     alertBox.textContent = message;
 
-    void alertBox.offsetHeight; // forza reflow per la transizione CSS
+    void alertBox.offsetHeight;
 
     alertBox.classList.add('show');
 

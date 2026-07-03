@@ -387,6 +387,22 @@ DROPDOWN
     width: 220px;
     overflow-y: auto;
     overflow-x: hidden;
+    background-color: var(--bg-surface);
+    border-color: var(--border);
+}
+
+.dropdown-menu-dark .dropdown-divider {
+    border-color: var(--border);
+}
+
+.no-results-text {
+    color: var(--text-muted);
+    margin-top: 20px;
+}
+
+.result-actions {
+    display: flex;
+    align-items: center;
 }
 
 .dropdown-menu.dropdown-menu-dark::-webkit-scrollbar {
@@ -409,7 +425,6 @@ DROPDOWN
   color: var(--text-muted);
 }
 
-/* Reset totale del bottone, vince su Bootstrap */
 .add-to-btn .playlist-options-btn {
   background-color: transparent !important;
   border: none !important;

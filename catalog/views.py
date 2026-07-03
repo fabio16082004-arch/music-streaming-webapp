@@ -155,17 +155,6 @@ class TrackUpdateView(PermissionRequiredMixin, ResourceFormContextMixin, UpdateV
             initial['track_number'] = album_track.track_number
         return initial
 
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        album = form.cleaned_data.get('album')
-        track_number = form.cleaned_data.get('track_number')
-
-        AlbumTrack.objects.filter(track=self.object).delete()
-        if album:
-            AlbumTrack.objects.create(album=album, track=self.object, track_number=track_number)
-        return response
-
-
 class TrackDeleteView(PermissionRequiredMixin, DeleteView):
     model = Track
     permission_required = 'catalog.delete_track'

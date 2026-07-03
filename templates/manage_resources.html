@@ -59,6 +59,21 @@
                   enctype="multipart/form-data" class="resource-form">
                 {% csrf_token %}
 
+                {% if form.errors %}
+                    <div class="form-errors">
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
                 <div class="form-row">
                     <div class="form-field">
                         <label class="custom-label" for="track-title">Title</label>
@@ -90,6 +105,8 @@
                             <label for="track-audio-file" class="custom-file-trigger">Choose file</label>
                             <span class="custom-file-name" data-default="No file selected">No file selected</span>
                         </div>
+                        <input type="hidden" id="track-client-duration" name="client_duration"
+                               value="{{ track.duration|default:'' }}">
                         <p class="current-file-hint file-hint-slot" id="track-duration-preview">{% if track.duration %}
                             Duration: {{ track.duration|stringformat:"d" }}s{% else %}&nbsp;{% endif %}</p>
                         {% if track.audio_file %}
@@ -221,6 +238,21 @@
                   enctype="multipart/form-data" class="resource-form">
                 {% csrf_token %}
 
+                {% if form.errors %}
+                    <div class="form-errors">
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
                 <div class="form-field">
                     <label class="custom-label" for="album-title">Title</label>
                     <input type="text" id="album-title" name="title" class="custom-form-input"
@@ -319,6 +351,21 @@
                   class="resource-form">
                 {% csrf_token %}
 
+                {% if form.errors %}
+                    <div class="form-errors">
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
                 <div class="form-field">
                     <label class="custom-label" for="artist-stage-name">Stage name</label>
                     <input type="text" id="artist-stage-name" name="stage_name" class="custom-form-input"
@@ -372,6 +419,21 @@
                           {% if mode == 'edit' %}{% url 'genre_edit' genre.id %}{% else %}{% url 'genre_create' %}{% endif %}"
                   class="resource-form">
                 {% csrf_token %}
+
+                {% if form.errors %}
+                    <div class="form-errors">
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
 
                 <div class="form-field">
                     <label class="custom-label" for="genre-name">Name</label>

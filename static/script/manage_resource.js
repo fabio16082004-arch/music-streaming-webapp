@@ -1,16 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     /* ===========================
-       ANTEPRIMA DURATA AUDIO (solo UX — il valore reale viene calcolato dal server)
+       DURATA AUDIO
        =========================== */
     const audioInput = document.getElementById('track-audio-file');
     const durationPreview = document.getElementById('track-duration-preview');
+    const durationInput = document.getElementById('track-client-duration');
 
     if (audioInput && durationPreview) {
         audioInput.addEventListener('change', () => {
             const file = audioInput.files && audioInput.files[0];
             if (!file) {
                 durationPreview.textContent = '';
+                if (durationInput) durationInput.value = '';
                 return;
             }
 
@@ -23,11 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const minutes = Math.floor(totalSeconds / 60);
                 const seconds = String(totalSeconds % 60).padStart(2, '0');
                 durationPreview.textContent = `Duration: ${minutes}:${seconds}`;
+                if (durationInput) durationInput.value = totalSeconds;
                 URL.revokeObjectURL(objectUrl);
             });
 
             probe.addEventListener('error', () => {
                 durationPreview.textContent = 'Could not read duration from this file.';
+                if (durationInput) durationInput.value = '';
                 URL.revokeObjectURL(objectUrl);
             });
 
@@ -36,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ===========================
-       CUSTOM FILE INPUT — mostra il nome del file scelto
+       CUSTOM FILE INPUT
        =========================== */
     document.querySelectorAll('.custom-file-input').forEach(input => {
         const wrapper = input.closest('.file-input-wrapper');
@@ -53,8 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ===========================
-       MULTI-SELECT DROPDOWN (artisti / generi)
-       Aggiorna l'etichetta del bottone in base a cosa è selezionato nel menu.
+       MULTI-SELECT DROPDOWN
        =========================== */
     document.querySelectorAll('.multiselect-dropdown').forEach(wrapper => {
         const toggleLabel = wrapper.querySelector('.multiselect-toggle-label');
@@ -76,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         checkboxes.forEach(cb => cb.addEventListener('change', updateLabel));
-        updateLabel(); // stato iniziale, utile in modifica con valori già selezionati
+        updateLabel();
     });
 
     /* ===========================

@@ -2,7 +2,7 @@ from multiprocessing import context
 
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.utils.dateparse import parse_datetime
@@ -157,7 +157,8 @@ class SavePlaylistView(LoginRequiredMixin, View):
         return JsonResponse({'success': True, 'message': f'"{playlist.title}" saved to your library!'})
 
 
-class StartPlaybackView(LoginRequiredMixin, View):
+class StartPlaybackView(PermissionRequiredMixin, View):
+    permission_required = 'listeners.log_playback'
     def post(self, request):
         try:
             data = json.loads(request.body)
@@ -184,7 +185,8 @@ class StartPlaybackView(LoginRequiredMixin, View):
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
 
-class StopPlaybackView(LoginRequiredMixin, View):
+class StopPlaybackView(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = 'listeners.log_playback'
     def post(self, request):
         try:
             data = json.loads(request.body)
