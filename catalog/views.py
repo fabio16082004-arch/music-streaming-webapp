@@ -1,12 +1,14 @@
 import os
+from datetime import date
 from multiprocessing import context
 
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView, TemplateView
 
 from .forms import ArtistForm, GenreForm, TrackForm, AlbumForm
 from .models import Track, Album, Artist, Genre, AlbumTrack
@@ -117,7 +119,7 @@ class ResourceFormContextMixin:
         context['all_artists'] = Artist.objects.all().order_by('stage_name')
         context['all_genres'] = Genre.objects.all().order_by('name')
         context['all_albums'] = Album.objects.all().order_by('title')
-        print(context)
+        context['today_date'] = date.today().strftime('%Y-%m-%d')
         return context
 # ===========================
 # TRACK
@@ -129,14 +131,8 @@ class TrackCreateView(PermissionRequiredMixin, ResourceFormContextMixin, CreateV
     permission_required = 'catalog.add_track'
     resource_type = 'track'
     success_url = reverse_lazy('search')
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        album = form.cleaned_data.get('album')
-        track_number = form.cleaned_data.get('track_number')
-        if album:
-            AlbumTrack.objects.create(album=album, track=self.object, track_number=track_number)
-        return response
+    # form_valid di default: TrackForm.save() gestisce già M2M, AlbumTrack
+    # (con shift automatico delle posizioni) e la scrittura dei file.
 
 
 class TrackUpdateView(PermissionRequiredMixin, ResourceFormContextMixin, UpdateView):
@@ -154,6 +150,12 @@ class TrackUpdateView(PermissionRequiredMixin, ResourceFormContextMixin, UpdateV
             initial['album'] = album_track.album_id
             initial['track_number'] = album_track.track_number
         return initial
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        album_track = AlbumTrack.objects.filter(track=self.object).first()
+        context['track_number'] = album_track.track_number if album_track else None
+        return context
 
 class TrackDeleteView(PermissionRequiredMixin, DeleteView):
     model = Track
@@ -247,3 +249,42 @@ class GenreDeleteView(PermissionRequiredMixin, DeleteView):
     pk_url_kwarg = 'genre_id'
     success_url = reverse_lazy('search')
     http_method_names = ['post']
+
+
+class GenreDeleteSelectView(PermissionRequiredMixin, TemplateView):
+    template_name = 'delete_genres.html'
+    permission_required = 'catalog.delete_genre'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['all_genres'] = Genre.objects.all().order_by('name')
+        return context
+
+
+class TracksOfAlbumView(LoginRequiredMixin, ListView):
+    model = AlbumTrack
+    pk_url_kwarg = 'album_id'
+
+    def get_queryset(self):
+        album_id = self.kwargs.get(self.pk_url_kwarg)
+
+        return AlbumTrack.objects.filter(album_id=album_id).order_by('track_number')
+
+    def render_to_response(self, context, **response_kwargs):
+        album_id = self.kwargs.get(self.pk_url_kwarg)
+        album = get_object_or_404(Album, id=album_id)
+        queryset = self.get_queryset()
+
+        data = [
+            {
+                'track_id': at.track.id,
+                'title': at.track.title,
+                'track_number': at.track_number
+            }
+            for at in queryset
+        ]
+
+        return JsonResponse({
+            'tracks': data,
+            'artists': list(album.artists.values_list('id', flat=True)),
+        }, safe=False)

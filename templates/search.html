@@ -192,6 +192,32 @@
         </div>
     </div>
 
+    <!-- ===========================
+         DELETE RESOURCE MODAL (artist / album / track)
+         =========================== -->
+    <div class="modal fade" id="deleteResourceModal" tabindex="-1" aria-labelledby="deleteResourceLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form method="POST" id="deleteResourceForm">
+                    {% csrf_token %}
+                    <div class="modal-header border-bottom-0">
+                        <h5 class="modal-title text-danger" id="deleteResourceLabel">Delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body pb-0">
+                        Are you sure you want to delete <strong id="deleteResourceName"></strong>? This action cannot be undone.
+                    </div>
+                    <div class="modal-footer border-top-0 mt-3">
+                        <button type="button" class="btn btn-outline-secondary rounded-pill fw-bold"
+                                data-bs-dismiss="modal">Cancel
+                        </button>
+                        <button type="submit" class="btn btn-danger rounded-pill fw-bold">Yes, Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block js %}

@@ -34,6 +34,8 @@ class Artist(models.Model):
 
 class Genre(models.Model):
     name = models.CharField(max_length=100)
+    class Meta:
+        unique_together = ('name',)
 
 
 class Track(models.Model):

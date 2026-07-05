@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Delete Genre — Music App{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'style/user_playlists.css' %}">
+    <link rel="stylesheet" href="{% static 'style/search.css' %}">
+    <link rel="stylesheet" href="{% static 'style/manage_resource.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main class="resource-page">
+
+        <h1 class="playlist-title">Delete Genre</h1>
+
+        <div class="ma-buttons-filter" id="resource-type-switcher">
+            <a href="{% url 'genre_create' %}" class="ma-filter-btn resource-type-btn">
+                <i class="fa-solid fa-plus"></i> Create
+            </a>
+            <a href="{% url 'genre_delete_select' %}" class="ma-filter-btn resource-type-btn active">
+                <i class="fa-solid fa-trash"></i> Delete
+            </a>
+        </div>
+
+        <section class="resource-form-section">
+            <h2 class="section-title">Delete an existing genre</h2>
+
+            <form method="POST" id="genre-delete-form" class="resource-form">
+                {% csrf_token %}
+
+                <div class="form-field">
+                    <label class="custom-label" for="genre-to-delete">Genre</label>
+                    <select id="genre-to-delete" class="custom-form-input filter-select" required>
+                        <option value="" disabled selected>— Select a genre —</option>
+                        {% for genre in all_genres %}
+                            <option value="{% url 'genre_delete' genre.id %}">{{ genre.name }}</option>
+                        {% empty %}
+                            <option value="" disabled>No genres yet.</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="button" class="submit-btn" id="genre-delete-trigger"
+                        data-bs-toggle="modal" data-bs-target="#deleteGenreModal">
+                    Delete genre
+                </button>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- ===========================
+         DELETE GENRE CONFIRMATION MODAL
+         =========================== -->
+    <div class="modal fade" id="deleteGenreModal" tabindex="-1" aria-labelledby="deleteGenreLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title text-danger" id="deleteGenreLabel">Delete Genre</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pb-0">
+                    Are you sure you want to delete <strong id="deleteGenreName"></strong>? This action cannot be undone.
+                </div>
+                <div class="modal-footer border-top-0 mt-3">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill fw-bold"
+                            data-bs-dismiss="modal">Cancel
+                    </button>
+                    <button type="button" class="btn btn-danger rounded-pill fw-bold" id="confirm-genre-delete">
+                        Yes, Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'script/delete_genres.js' %}">
+    </script>
+{% endblock %}

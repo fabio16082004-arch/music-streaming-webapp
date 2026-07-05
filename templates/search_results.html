@@ -18,11 +18,12 @@
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                            <li><a class="dropdown-item trigger-edit" href="#" data-bs-toggle="modal"
-                                   data-bs-target="#editPlaylistModal" data-id="{{ artist.id }}">Edit</a></li>
+                            <li><a class="dropdown-item" href="{% url 'artist_edit' artist.id %}">Edit</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item text-danger trigger-delete" href="#" data-bs-toggle="modal"
-                                   data-bs-target="#deletePlaylistModal">Delete</a></li>
+                                   data-bs-target="#deleteResourceModal"
+                                   data-url="{% url 'artist_delete' artist.id %}"
+                                   data-name="{{ artist.stage_name }}">Delete</a></li>
                         </ul>
                     </div>
                 {% endif %}
@@ -88,11 +89,12 @@
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                            <li><a class="dropdown-item trigger-edit" href="#" data-bs-toggle="modal"
-                                   data-bs-target="#editPlaylistModal" data-id="{{ album.id }}">Edit</a></li>
+                            <li><a class="dropdown-item" href="{% url 'album_edit' album.id %}">Edit</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item text-danger trigger-delete" href="#" data-bs-toggle="modal"
-                                   data-bs-target="#deletePlaylistModal">Delete</a></li>
+                                   data-bs-target="#deleteResourceModal"
+                                   data-url="{% url 'album_delete' album.id %}"
+                                   data-name="{{ album.title }}">Delete</a></li>
                         </ul>
                     </div>
                 {% endif %}
@@ -129,11 +131,12 @@
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                                <li><a class="dropdown-item trigger-edit" href="#" data-bs-toggle="modal"
-                                       data-bs-target="#editPlaylistModal" data-id="{{ track.id }}">Edit</a></li>
+                                <li><a class="dropdown-item" href="{% url 'track_edit' track.id %}">Edit</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item text-danger trigger-delete" href="#"
-                                       data-bs-toggle="modal" data-bs-target="#deletePlaylistModal">Delete</a></li>
+                                       data-bs-toggle="modal" data-bs-target="#deleteResourceModal"
+                                       data-url="{% url 'track_delete' track.id %}"
+                                       data-name="{{ track.title }}">Delete</a></li>
                             </ul>
                         </div>
                     {% endif %}

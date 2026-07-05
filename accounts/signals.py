@@ -1,6 +1,7 @@
 from django.contrib.auth.models import Group, Permission
 
 
+
 def setup_roles(sender, **kwargs):
     listeners_group, _ = Group.objects.get_or_create(name='Listeners')
     curators_group, _ = Group.objects.get_or_create(name='Curators')

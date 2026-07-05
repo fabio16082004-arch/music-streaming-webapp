@@ -55,7 +55,8 @@
                   action="
 
 
-                          {% if mode == 'edit' %}{% url 'track_edit' track.id %}{% else %}{% url 'track_create' %}{% endif %}"
+
+                          {% if mode == 'edit' and resource_type == 'track' %}{% url 'track_edit' track.id %}{% else %}{% url 'track_create' %}{% endif %}"
                   enctype="multipart/form-data" class="resource-form">
                 {% csrf_token %}
 
@@ -84,7 +85,7 @@
                     <div class="form-field">
                         <label class="custom-label" for="track-release-date">Release date</label>
                         <input type="date" id="track-release-date" name="release_date" class="custom-form-input"
-                               value="{{ track.release_date|date:'Y-m-d'|default:'' }}" required>
+                               value="{{ track.release_date|date:'Y-m-d'|default:today_date }}" max="{{ today_date }}" required>
                     </div>
                 </div>
 
@@ -107,24 +108,27 @@
                         </div>
                         <input type="hidden" id="track-client-duration" name="client_duration"
                                value="{{ track.duration|default:'' }}">
-                        <p class="current-file-hint file-hint-slot" id="track-duration-preview">{% if track.duration %}
-                            Duration: {{ track.duration|stringformat:"d" }}s{% else %}&nbsp;{% endif %}</p>
-                        {% if track.audio_file %}
-                            <p class="current-file-hint">Current: {{ track.audio_file.name }}</p>
-                        {% endif %}
+                        <div class="file-hints-row">
+                            <p class="current-file-hint file-hint-slot" id="track-duration-preview">{% if track.duration %}
+                                Duration: {{ track.duration|stringformat:"d" }}s{% else %}&nbsp;{% endif %}</p>
+                            {% if track.single_cover %}
+                                <p class="current-file-hint" title="{{ track.single_cover.name }}">Current: {{ track.single_cover.name }}</p>
+                            {% endif %}
+                        </div>
                     </div>
 
                     <div class="form-field">
-                        <label class="custom-label">Cover (used only singles)</label>
+                        <label class="custom-label">Cover (used only for singles)</label>
                         <div class="file-input-wrapper">
                             <input type="file" id="track-single-cover" name="single_cover" class="custom-file-input"
                                    accept=".png,.jpg,.jpeg,image/png,image/jpeg">
                             <label for="track-single-cover" class="custom-file-trigger">Choose file</label>
                             <span class="custom-file-name" data-default="No file selected">No file selected</span>
                         </div>
-                        <p class="current-file-hint file-hint-slot">&nbsp;</p>
-                        {% if track.single_cover %}
-                            <p class="current-file-hint">Current: {{ track.single_cover.name }}</p>
+                        {% if track.audio_file %}
+                            <p class="current-file-hint file-hint-slot" title="{{ track.audio_file.name }}">Current: {{ track.audio_file.name }}</p>
+                        {% else %}
+                            <p class="current-file-hint file-hint-slot">&nbsp;</p>
                         {% endif %}
                     </div>
                 </div>
@@ -132,7 +136,8 @@
                 <div class="form-field">
                     <label class="custom-label">Artists</label>
                     <div class="dropdown multiselect-dropdown">
-                        <button type="button" class="custom-form-input filter-select multiselect-toggle dropdown-toggle"
+                        <button type="button" id="track-artists-toggle"
+                                class="custom-form-input filter-select multiselect-toggle dropdown-toggle"
                                 data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                             <span class="multiselect-toggle-label"
                                   data-placeholder="Select artists">Select artists</span>
@@ -197,7 +202,8 @@
                                 </label>
                             </li>
                             {% for album in all_albums %}
-                                <li>
+                                <li class="album-option"
+                                    data-artist-ids="{% for a in album.artists.all %}{{ a.id }}{% if not forloop.last %},{% endif %}{% endfor %}">
                                     <label class="singleselect-option dropdown-item">
                                         <input type="radio" name="album" value="{{ album.id }}"
                                                class="singleselect-radio"
@@ -211,9 +217,15 @@
                 </div>
 
                 <div class="form-field d-none" id="track-number-field">
-                    <label class="custom-label" for="track-number">Track number (in album)</label>
-                    <input type="number" id="track-number" name="track_number" class="custom-form-input"
-                           min="1" value="{{ track_number|default:'' }}">
+                    <label class="custom-label">Track position in album</label>
+
+                    <input type="hidden" id="track-number" name="track_number" value="{{ track_number|default:'' }}">
+                    <input type="hidden" id="current-track-id" value="{{ track.id|default:'' }}">
+
+                    <div class="tracklist-ui-wrapper">
+                        <ul id="album-tracklist" class="tracklist-ui">
+                        </ul>
+                    </div>
                 </div>
 
                 <button type="submit" class="submit-btn">
@@ -234,7 +246,8 @@
                   action="
 
 
-                          {% if mode == 'edit' %}{% url 'album_edit' album.id %}{% else %}{% url 'album_create' %}{% endif %}"
+
+                          {% if mode == 'edit' and resource_type == 'album' %}{% url 'album_edit' album.id %}{% else %}{% url 'album_create' %}{% endif %}"
                   enctype="multipart/form-data" class="resource-form">
                 {% csrf_token %}
 
@@ -263,7 +276,7 @@
                     <div class="form-field">
                         <label class="custom-label" for="album-release-date">Release date</label>
                         <input type="date" id="album-release-date" name="release_date" class="custom-form-input"
-                               value="{{ album.release_date|date:'Y-m-d'|default:'' }}" required>
+                               value="{{ album.release_date|date:'Y-m-d'|default:'' }}" max="{{ today_date }}" required>
                     </div>
 
                     <div class="form-field">
@@ -347,7 +360,8 @@
                   action="
 
 
-                          {% if mode == 'edit' %}{% url 'artist_edit' artist.id %}{% else %}{% url 'artist_create' %}{% endif %}"
+
+                          {% if mode == 'edit' and resource_type == 'artist' %}{% url 'artist_edit' artist.id %}{% else %}{% url 'artist_create' %}{% endif %}"
                   class="resource-form">
                 {% csrf_token %}
 
@@ -412,11 +426,23 @@
 
             <h2 class="section-title">{% if mode == 'edit' %}Edit{% else %}New{% endif %} Genre</h2>
 
+            {% if mode != 'edit' and perms.catalog.delete_genre %}
+                <div class="ma-buttons-filter">
+                    <a href="{% url 'genre_create' %}" class="ma-filter-btn resource-type-btn active">
+                        <i class="fa-solid fa-plus"></i> Create
+                    </a>
+                    <a href="{% url 'genre_delete_select' %}" class="ma-filter-btn resource-type-btn">
+                        <i class="fa-solid fa-trash"></i> Delete
+                    </a>
+                </div>
+            {% endif %}
+
             <form method="POST"
                   action="
 
 
-                          {% if mode == 'edit' %}{% url 'genre_edit' genre.id %}{% else %}{% url 'genre_create' %}{% endif %}"
+
+                          {% if mode == 'edit' and resource_type == 'genre' %}{% url 'genre_edit' genre.id %}{% else %}{% url 'genre_create' %}{% endif %}"
                   class="resource-form">
                 {% csrf_token %}
 

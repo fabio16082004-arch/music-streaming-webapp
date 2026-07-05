@@ -1,6 +1,9 @@
+from datetime import date
+
 from django import forms
 from django.core.files.uploadedfile import UploadedFile
 from django.core.validators import FileExtensionValidator
+from django.db import transaction
 
 from .models import Track, Album, Artist, Genre, AlbumTrack
 
@@ -34,6 +37,12 @@ class TrackForm(forms.ModelForm):
             'single_cover', 'release_date', 'artists', 'genres',
         ]
 
+    def clean_release_date(self):
+        release_date = self.cleaned_data.get('release_date')
+        if release_date and release_date > date.today():
+            raise forms.ValidationError("Release date cannot be in the future.")
+        return release_date
+
     def clean(self):
         cleaned_data = super().clean()
 
@@ -43,7 +52,7 @@ class TrackForm(forms.ModelForm):
         if audio_file and isinstance(audio_file, UploadedFile) and not client_duration:
             self.add_error(
                 'audio_file',
-                "Impossible to get the durations of the audio in the browser. "
+                "Impossible to get the duration in the browser "
             )
 
         album = cleaned_data.get('album')
@@ -51,16 +60,6 @@ class TrackForm(forms.ModelForm):
 
         if album and not track_number:
             self.add_error('track_number', "Track number is required when an album is selected.")
-
-        if album and track_number:
-            conflict_qs = AlbumTrack.objects.filter(album=album, track_number=track_number)
-            if self.instance.pk:
-                conflict_qs = conflict_qs.exclude(track_id=self.instance.pk)
-            if conflict_qs.exists():
-                self.add_error(
-                    'track_number',
-                    f"Track number {track_number} is already used in this album."
-                )
 
         return cleaned_data
 
@@ -72,14 +71,29 @@ class TrackForm(forms.ModelForm):
             instance.duration = client_duration
 
         if commit:
-            instance.save()
-            self.save_m2m()
+            with transaction.atomic():
+                instance.save()
+                self.save_m2m()
 
-            album = self.cleaned_data.get('album')
-            track_number = self.cleaned_data.get('track_number')
-            AlbumTrack.objects.filter(track=instance).delete()
-            if album:
-                AlbumTrack.objects.create(album=album, track=instance, track_number=track_number)
+                album = self.cleaned_data.get('album')
+                track_number = self.cleaned_data.get('track_number')
+
+                AlbumTrack.objects.filter(track=instance).delete()
+
+                if album and track_number:
+                    max_valid_position = AlbumTrack.objects.filter(album=album).count() + 1
+                    if track_number > max_valid_position:
+                        track_number = max_valid_position
+
+                    existing = AlbumTrack.objects.filter(
+                        album=album, track_number__gte=track_number
+                    ).order_by('-track_number')
+
+                    for album_track in existing:
+                        album_track.track_number += 1
+                        album_track.save(update_fields=['track_number'])
+
+                    AlbumTrack.objects.create(album=album, track=instance, track_number=track_number)
 
         return instance
 
@@ -88,6 +102,12 @@ class AlbumForm(forms.ModelForm):
     class Meta:
         model = Album
         fields = ['title', 'cover_file', 'release_date', 'artists', 'genres']
+
+    def clean_release_date(self):
+        release_date = self.cleaned_data.get('release_date')
+        if release_date and release_date > date.today():
+            raise forms.ValidationError("Release date cannot be in the future.")
+        return release_date
 
 
 class ArtistForm(forms.ModelForm):

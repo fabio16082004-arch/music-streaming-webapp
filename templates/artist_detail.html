@@ -67,21 +67,20 @@
                         </div>
 
                         {% if perms.catalog.change_track and perms.catalog.delete_track %}
-                            <div class="add-to-btn dropdown me-3">
-                                <button class="playlist-options-btn" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false" aria-label="Track options">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                                    <li><a class="dropdown-item trigger-edit" href="#" data-bs-toggle="modal"
-                                           data-bs-target="#editPlaylistModal" data-id="{{ track.id }}">Edit</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item text-danger trigger-delete" href="#"
-                                           data-bs-toggle="modal" data-bs-target="#deletePlaylistModal">Delete</a></li>
-                                </ul>
-                            </div>
+                                <div class="add-to-btn dropdown me-3">
+                            <button class="playlist-options-btn" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{% url 'track_edit' track.id %}">Edit</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger trigger-delete" href="#"
+                                       data-bs-toggle="modal" data-bs-target="#deleteResourceModal"
+                                       data-url="{% url 'track_delete' track.id %}"
+                                       data-name="{{ track.title }}">Delete</a></li>
+                            </ul>
+                        </div>
                         {% elif request.user.is_listener %}
                             <div class="add-to-btn dropdown me-3">
                                 <button class="playlist-options-btn" type="button" data-bs-toggle="dropdown"

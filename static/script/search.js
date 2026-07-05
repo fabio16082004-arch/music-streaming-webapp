@@ -90,6 +90,28 @@ document.querySelectorAll('[data-apply-category]').forEach(btn => {
 
 
 // ==============================
+// DELETE RESOURCE MODAL — imposta dinamicamente action e nome risorsa
+// ==============================
+const deleteResourceModal = document.getElementById('deleteResourceModal');
+if (deleteResourceModal) {
+    deleteResourceModal.addEventListener('show.bs.modal', function (event) {
+        const trigger = event.relatedTarget;
+        if (!trigger) return;
+
+        const form = document.getElementById('deleteResourceForm');
+        const nameEl = document.getElementById('deleteResourceName');
+
+        if (form && trigger.dataset.url) {
+            form.action = trigger.dataset.url;
+        }
+        if (nameEl) {
+            nameEl.textContent = trigger.dataset.name || 'this item';
+        }
+    });
+}
+
+
+// ==============================
 // SEARCH INPUT
 // ==============================
 let timer;
