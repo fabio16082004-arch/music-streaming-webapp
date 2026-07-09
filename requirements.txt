@@ -5,3 +5,4 @@ mutagen
 psycopg2-binary
 python-dotenv
 gunicorn
+dj-database-url
