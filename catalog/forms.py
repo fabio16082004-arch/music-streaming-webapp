@@ -9,6 +9,18 @@ from .models import Track, Album, Artist, Genre, AlbumTrack
 
 
 class TrackForm(forms.ModelForm):
+    """
+    Form per Track. 'album' e 'track_number' non sono campi diretti del modello
+    (la relazione passa dalla tabella intermedia AlbumTrack), quindi vengono
+    dichiarati qui a parte e gestiti manualmente in save().
+
+    'duration' NON è un campo del form: arriva da 'client_duration', un campo
+    hidden compilato via JS con la durata calcolata dal browser (vedi
+    resource_form.js). Non usiamo più mutagen: alcuni file hanno un
+    contenitore con la durata a 0 nell'header nonostante il file suoni
+    correttamente, e il browser (che decodifica davvero lo stream) è più
+    affidabile in quei casi.
+    """
     album = forms.ModelChoiceField(
         queryset=Album.objects.all(),
         required=False,
@@ -52,7 +64,7 @@ class TrackForm(forms.ModelForm):
         if audio_file and isinstance(audio_file, UploadedFile) and not client_duration:
             self.add_error(
                 'audio_file',
-                "Impossible to get the duration in the browser "
+                "Impossible to calculate the track duration in the browser. "
             )
 
         album = cleaned_data.get('album')
@@ -84,21 +96,24 @@ class TrackForm(forms.ModelForm):
                     max_valid_position = AlbumTrack.objects.filter(album=album).count() + 1
                     if track_number > max_valid_position:
                         track_number = max_valid_position
+                    if track_number < 1:
+                        track_number = 1
 
-                    slot_occupied = AlbumTrack.objects.filter(
-                        album=album, track_number=track_number
-                    ).exists()
+                    other_tracks = list(
+                        AlbumTrack.objects.filter(album=album).order_by('track_number')
+                    )
+                    insert_index = track_number - 1
+                    other_tracks.insert(insert_index, None)
 
-                    if slot_occupied:
-                        existing = AlbumTrack.objects.filter(
-                            album=album, track_number__gte=track_number
-                        ).order_by('-track_number')
-
-                        for album_track in existing:
-                            album_track.track_number += 1
+                    for i, album_track in enumerate(other_tracks, start=1):
+                        if album_track is None:
+                            continue
+                        if album_track.track_number != i:
+                            album_track.track_number = i
                             album_track.save(update_fields=['track_number'])
 
-                    AlbumTrack.objects.create(album=album, track=instance, track_number=track_number)
+                    final_position = other_tracks.index(None) + 1
+                    AlbumTrack.objects.create(album=album, track=instance, track_number=final_position)
 
         return instance
 
