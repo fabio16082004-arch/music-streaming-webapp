@@ -37,6 +37,19 @@ document.querySelectorAll('[data-genres-source]').forEach(select => {
 
 
 // ==============================
+// COUNTRY SELECT
+// ==============================
+document.querySelectorAll('[data-countries-source]').forEach(select => {
+    (COUNTRY_LIST || []).forEach(country => {
+        const option = document.createElement('option');
+        option.value = country;
+        option.textContent = country;
+        select.appendChild(option);
+    });
+});
+
+
+// ==============================
 // FILTER CHIPS
 // ==============================
 document.querySelectorAll('.filter-chip').forEach(chip => {

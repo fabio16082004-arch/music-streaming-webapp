@@ -18,7 +18,3 @@ class User(AbstractUser):
     @property
     def is_admin(self):
         return self.is_superuser
-
-    def __str__(self):
-        role = 'Admin' if self.is_admin else ('Curator' if self.is_curator else 'Listener')
-        return f"{self.username} ({role})"

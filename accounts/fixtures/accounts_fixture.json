@@ -3,6 +3,21 @@
     "model": "accounts.user",
     "pk": 1,
     "fields": {
+      "username": "main_admin",
+      "email": "admin@example.com",
+      "first_name": "Admin",
+      "last_name": "System",
+      "password": "pbkdf2_sha256$1200000$5DxHIMZLF64rv6CkjeNdXe$DACmVWTpA3n7UtIwcxKUigRN/aZHgoC8eSuYgWEEvow=",
+      "is_active": true,
+      "is_staff": true,
+      "is_superuser": true,
+      "groups": []
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": 2,
+    "fields": {
       "username": "listener_one",
       "email": "marco.rossi@example.com",
       "first_name": "Marco",
@@ -16,7 +31,7 @@
   },
   {
     "model": "accounts.user",
-    "pk": 2,
+    "pk": 3,
     "fields": {
       "username": "listener_two",
       "email": "mario.bianchi@example.com",
@@ -31,7 +46,7 @@
   },
   {
     "model": "accounts.user",
-    "pk": 3,
+    "pk": 4,
     "fields": {
       "username": "curator_one",
       "email": "luca.verdi@example.com",

@@ -56,7 +56,7 @@
       "last_name": "Carter",
       "stage_name": "The Mountain",
       "biography": "Producer and multi-genre artist from Bristol, blending dubstep with cinematic textures.",
-      "country": "UK"
+      "country": "United Kingdom"
     }
   },
   {
@@ -67,7 +67,7 @@
       "last_name": "Aberrant",
       "stage_name": "AberrantRealities",
       "biography": "Experimental rap producer known for organic soundscapes and flow.",
-      "country": "US"
+      "country": "United States"
     }
   },
   {
@@ -78,7 +78,7 @@
       "last_name": "Kontra",
       "stage_name": "Kontraa",
       "biography": "Underground rapper with sleepless nights and gritty beats.",
-      "country": "US"
+      "country": "United States"
     }
   },
   {
@@ -89,7 +89,7 @@
       "last_name": "Bombin",
       "stage_name": "BombinSound",
       "biography": "Deep house architect from Barcelona fusing classic grooves with modern production.",
-      "country": "ES"
+      "country": "Spain"
     }
   },
   {
@@ -100,7 +100,7 @@
       "last_name": "Sunset",
       "stage_name": "Sunset House Grooves",
       "biography": "House DJ and producer chasing the perfect sunset groove.",
-      "country": "IT"
+      "country": "Italy"
     }
   },
   {
@@ -111,7 +111,7 @@
       "last_name": "Gvidon",
       "stage_name": "Gvidon",
       "biography": "Russian pop songwriter with melodic hooks and introspective lyrics.",
-      "country": "RU"
+      "country": "Russia"
     }
   },
   {
@@ -122,7 +122,7 @@
       "last_name": "Galaxiev",
       "stage_name": "VJGalaxy",
       "biography": "Berlin-based techno producer known for dark melodic journeys.",
-      "country": "DE"
+      "country": "Germany"
     }
   },
   {
@@ -133,7 +133,7 @@
       "last_name": "Saturn",
       "stage_name": "Saturn-3",
       "biography": "Dark dub-techno explorer from Eastern Europe.",
-      "country": "UA"
+      "country": "Ukraine"
     }
   },
   {
@@ -144,7 +144,7 @@
       "last_name": "Rone",
       "stage_name": "MrOneILoveALot",
       "biography": "Industrial techno producer with a love for iron velocity.",
-      "country": "PL"
+      "country": "Poland"
     }
   },
   {
@@ -155,7 +155,7 @@
       "last_name": "Apalon",
       "stage_name": "ApalonBeats",
       "biography": "Hard aggressive techno from the underground.",
-      "country": "DE"
+      "country": "Germany"
     }
   },
   {
@@ -166,7 +166,7 @@
       "last_name": "Leberch",
       "stage_name": "Leberch",
       "biography": "Minimalist techno producer with hypnotic loops.",
-      "country": "CZ"
+      "country": "Czech Republic"
     }
   },
   {
@@ -177,7 +177,7 @@
       "last_name": "Morgan",
       "stage_name": "Alex Morgan",
       "biography": "Multi-genre producer across techno, house and dubstep.",
-      "country": "US"
+      "country": "United States"
     }
   },
   {
@@ -188,7 +188,7 @@
       "last_name": "Grohl",
       "stage_name": "AlexGrohl",
       "biography": "Energetic rock guitarist channeling raw power into every riff.",
-      "country": "US"
+      "country": "United States"
     }
   },
   {
@@ -199,7 +199,7 @@
       "last_name": "Mountain",
       "stage_name": "The Mountain (Rock)",
       "biography": "Hard rock alter-ego of the Bristol producer.",
-      "country": "UK"
+      "country": "United Kingdom"
     }
   },
   {
@@ -210,7 +210,7 @@
       "last_name": "Nastel",
       "stage_name": "Nastelbom",
       "biography": "Indie rock multi-instrumentalist with upbeat guitar-driven anthems.",
-      "country": "AU"
+      "country": "Australia"
     }
   },
   {
@@ -221,7 +221,7 @@
       "last_name": "Bombin",
       "stage_name": "BombinSound Rock",
       "biography": "Action rock specialist bringing heavy riffs and cinematic energy.",
-      "country": "ES"
+      "country": "Spain"
     }
   },
   {
@@ -232,7 +232,7 @@
       "last_name": "Mountain",
       "stage_name": "The Mountain (Pop)",
       "biography": "Club pop artist with neon-drenched productions.",
-      "country": "UK"
+      "country": "United Kingdom"
     }
   },
   {
@@ -243,7 +243,7 @@
       "last_name": "Yudin",
       "stage_name": "PaulYudin",
       "biography": "Electric swing and pop-dance fusion artist from Moscow.",
-      "country": "RU"
+      "country": "Russia"
     }
   },
   {
@@ -254,7 +254,7 @@
       "last_name": "Zavorin",
       "stage_name": "Vladislav Zavorin",
       "biography": "Indietronica and trip-hop composer with a dreamy, lo-fi aesthetic.",
-      "country": "RU"
+      "country": "Russia"
     }
   },
   {
@@ -265,7 +265,7 @@
       "last_name": "Mondau",
       "stage_name": "MondaMusic",
       "biography": "Lofi and ambient architect, co-founder of the Lofi Night collective.",
-      "country": "JP"
+      "country": "Japan"
     }
   },
   {
@@ -276,7 +276,7 @@
       "last_name": "Penguin",
       "stage_name": "PenguinMusic",
       "biography": "Chill and trip-hop producer, co-founder of the Lofi Night collective.",
-      "country": "FR"
+      "country": "France"
     }
   },
   {
@@ -362,7 +362,7 @@
       "title": "Soulsweeper",
       "duration": 214,
       "explicit": false,
-      "audio_file": "catalog/tracks/2/101/itswatr-soulsweeper-252499.mp3",
+      "audio_file": "catalog/tracks/2/101/9da6ee9d-17e0-4647-ac47-59453a332575.mp3",
       "single_cover": null,
       "release_date": "2022-03-15",
       "artists": [
@@ -380,7 +380,7 @@
       "title": "Dubstep Heavy Bass",
       "duration": 198,
       "explicit": false,
-      "audio_file": "catalog/tracks/2/101/alex-morgan-dubstep-heavy-bass-537443.mp3",
+      "audio_file": "catalog/tracks/2/101/420f3fcd-fd04-47f9-94cf-2836a1932080.mp3",
       "single_cover": null,
       "release_date": "2022-03-15",
       "artists": [
@@ -399,7 +399,7 @@
       "title": "Dubstep Music",
       "duration": 187,
       "explicit": false,
-      "audio_file": "catalog/tracks/2/101/the_mountain-dubstep-dubstep-music-492803.mp3",
+      "audio_file": "catalog/tracks/2/101/cb028231-337d-404f-8ea2-2f798526343e.mp3",
       "single_cover": null,
       "release_date": "2022-03-15",
       "artists": [
@@ -417,7 +417,7 @@
       "title": "Organic Flow 1015 Remastered",
       "duration": 203,
       "explicit": false,
-      "audio_file": "catalog/tracks/3/singles/aberrantrealities-organic-flow-1015-remastered-485950.mp3",
+      "audio_file": "catalog/tracks/3/singles/4d7c2ded-9af9-47c6-bfd1-bad690cd8fce.mp3",
       "single_cover": "catalog/covers/track/4/venti-views-8WJqVwDnV54-unsplash.jpg",
       "release_date": "2022-08-10",
       "artists": [
@@ -435,7 +435,7 @@
       "title": "No Sleep",
       "duration": 176,
       "explicit": true,
-      "audio_file": "catalog/tracks/4/singles/kontraa-no-sleep-hiphop-music-473847.mp3",
+      "audio_file": "catalog/tracks/4/singles/f28e6682-39bd-4e4e-9a8e-0778bfdb84e0.mp3",
       "single_cover": "catalog/covers/track/5/nemo-V0r2HVrGrto-unsplash.jpg",
       "release_date": "2023-01-15",
       "artists": [
@@ -453,7 +453,7 @@
       "title": "House Music Classic",
       "duration": 312,
       "explicit": false,
-      "audio_file": "catalog/tracks/5/singles/alex-morgan-house-music-classic-537489.mp3",
+      "audio_file": "catalog/tracks/5/singles/5dcab1fd-e833-4bc3-9daa-71c5b49dc0f0.mp3",
       "single_cover": "catalog/covers/track/6/vitaliy-shevchenko-8YWkDeN2HbQ-unsplash.jpg",
       "release_date": "2022-05-20",
       "artists": [
@@ -472,7 +472,7 @@
       "title": "House",
       "duration": 287,
       "explicit": false,
-      "audio_file": "catalog/tracks/5/singles/bombinsound-house-514136.mp3",
+      "audio_file": "catalog/tracks/5/singles/3cc1ec12-b11c-4a99-bf1c-3340b1229d1e.mp3",
       "single_cover": "catalog/covers/track/7/sheng-hu-77-5h7dxgPI-unsplash.jpg",
       "release_date": "2022-06-01",
       "artists": [
@@ -490,7 +490,7 @@
       "title": "House Version 1",
       "duration": 295,
       "explicit": false,
-      "audio_file": "catalog/tracks/5/singles/bombinsound-house-version-1-537877.mp3",
+      "audio_file": "catalog/tracks/5/singles/88e30c0d-128f-4e85-a02c-a162fff72528.mp3",
       "single_cover": "catalog/covers/track/8/nathan-Tdoi2OjaOpQ-unsplash.jpg",
       "release_date": "2022-06-15",
       "artists": [
@@ -508,7 +508,7 @@
       "title": "House Version 2",
       "duration": 301,
       "explicit": false,
-      "audio_file": "catalog/tracks/5/singles/bombinsound-house-version-2-537878.mp3",
+      "audio_file": "catalog/tracks/5/singles/6e6121d6-7ce5-4903-9eaf-c58da1f488fb.mp3",
       "single_cover": "catalog/covers/track/9/h-ng-ph-m-9xPjoOnzsfA-unsplash.jpg",
       "release_date": "2022-06-15",
       "artists": [
@@ -526,7 +526,7 @@
       "title": "House Pretty",
       "duration": 278,
       "explicit": false,
-      "audio_file": "catalog/tracks/5/singles/prettyjohn1-house-526226.mp3",
+      "audio_file": "catalog/tracks/5/singles/b23e9ac8-f69b-48b0-a1a8-9031b0465ebf.mp3",
       "single_cover": "catalog/covers/track/10/nemo-V0r2HVrGrto-unsplash.jpg",
       "release_date": "2022-07-01",
       "artists": [
@@ -544,7 +544,7 @@
       "title": "Deep House",
       "duration": 322,
       "explicit": false,
-      "audio_file": "catalog/tracks/5/singles/the_mountain-deep-house-483808.mp3",
+      "audio_file": "catalog/tracks/5/singles/bbaf98dd-7ee2-4ae7-929a-49f37fdf7071.mp3",
       "single_cover": "catalog/covers/track/11/quan-jing-ng5UoPFejm4-unsplash.jpg",
       "release_date": "2022-07-15",
       "artists": [
@@ -563,7 +563,7 @@
       "title": "Deep House Lounge",
       "duration": 349,
       "explicit": false,
-      "audio_file": "catalog/tracks/5/singles/tunetank-deep-house-lounge-music-349539.mp3",
+      "audio_file": "catalog/tracks/5/singles/b79c2c22-4094-41b1-9436-76be9b3fd9b7.mp3",
       "single_cover": "catalog/covers/track/12/rafael-peier-b7h5JF-qb80-unsplash.jpg",
       "release_date": "2022-08-01",
       "artists": [
@@ -581,7 +581,7 @@
       "title": "L'Ambitieux",
       "duration": 264,
       "explicit": false,
-      "audio_file": "catalog/tracks/5/singles/u_26r01mp7bj-nelson-lx27ambitieux-452122.mp3",
+      "audio_file": "catalog/tracks/5/singles/121b0a26-0f73-4155-b2ec-d52fa8190276.mp3",
       "single_cover": "catalog/covers/track/13/tom-caillarec-giTMpiRYElE-unsplash.jpg",
       "release_date": "2022-09-01",
       "artists": [
@@ -599,7 +599,7 @@
       "title": "Nos Vemos Luego",
       "duration": 253,
       "explicit": false,
-      "audio_file": "catalog/tracks/5/singles/u_64vrncvq0s-nos-vemos-luego-480505.mp3",
+      "audio_file": "catalog/tracks/5/singles/1c43f5b4-97b8-4b10-afce-724c88265308.mp3",
       "single_cover": "catalog/covers/track/14/yuheng-ouyang-gsylhBigagM-unsplash.jpg",
       "release_date": "2022-09-10",
       "artists": [
@@ -617,7 +617,7 @@
       "title": "La Mer",
       "duration": 241,
       "explicit": false,
-      "audio_file": "catalog/tracks/5/singles/u_i05gb93rxm-la-mer-choix1-479743 (1).mp3",
+      "audio_file": "catalog/tracks/5/singles/693d7e04-cc92-4eeb-ae86-3b3dfe9824b5.mp3",
       "single_cover": "catalog/covers/track/15/h-ng-ph-m-9xPjoOnzsfA-unsplash.jpg",
       "release_date": "2022-09-20",
       "artists": [
@@ -635,7 +635,7 @@
       "title": "Fucking 20 Enero",
       "duration": 218,
       "explicit": true,
-      "audio_file": "catalog/tracks/5/singles/u_mw6mt8l2mr-fucking-20-enero-458612.mp3",
+      "audio_file": "catalog/tracks/5/singles/15001007-107e-40cc-8bae-194e5e20f4ed.mp3",
       "single_cover": "catalog/covers/track/16/venti-views-8WJqVwDnV54-unsplash.jpg",
       "release_date": "2022-10-01",
       "artists": [
@@ -653,7 +653,7 @@
       "title": "Audio 1",
       "duration": 229,
       "explicit": false,
-      "audio_file": "catalog/tracks/5/singles/u_rifnof1th6-audio-1-481315.mp3",
+      "audio_file": "catalog/tracks/5/singles/0b3c0fb3-ad87-4aec-b4f4-8eeca224dc6c.mp3",
       "single_cover": "catalog/covers/track/17/quan-jing-ng5UoPFejm4-unsplash.jpg",
       "release_date": "2022-10-10",
       "artists": [
@@ -671,7 +671,7 @@
       "title": "Gyermakuthinu Fryzo",
       "duration": 237,
       "explicit": false,
-      "audio_file": "catalog/tracks/5/singles/u_xel5nxx9fr-gyermakuthinu-fryzo-450917.mp3",
+      "audio_file": "catalog/tracks/5/singles/1bdf637d-3ca3-4b64-a0ea-db8236e7ad6f.mp3",
       "single_cover": "catalog/covers/track/18/zidhan-ibrahim-2zykp7xLb1Q-unsplash.jpg",
       "release_date": "2022-10-20",
       "artists": [
@@ -689,7 +689,7 @@
       "title": "House",
       "duration": 294,
       "explicit": false,
-      "audio_file": "catalog/tracks/6/singles/jonasblakewood-house-533847.mp3",
+      "audio_file": "catalog/tracks/6/singles/a0cf6d30-6dad-4134-8971-efc86910c70a.mp3",
       "single_cover": "catalog/covers/track/19/zhen-yao-Oyln94HUMJA-unsplash.jpg",
       "release_date": "2023-02-14",
       "artists": [
@@ -707,7 +707,7 @@
       "title": "Sunset House Classic",
       "duration": 318,
       "explicit": false,
-      "audio_file": "catalog/tracks/6/singles/sunset-house-grooves-sunset-house-classic-538760.mp3",
+      "audio_file": "catalog/tracks/6/singles/2b90c1fb-d884-43b9-a5a1-b9991316bf96.mp3",
       "single_cover": "catalog/covers/track/20/zidhan-ibrahim-2zykp7xLb1Q-unsplash.jpg",
       "release_date": "2023-03-01",
       "artists": [
@@ -725,7 +725,7 @@
       "title": "Deep House Sunset",
       "duration": 307,
       "explicit": false,
-      "audio_file": "catalog/tracks/6/singles/sunset-house-grooves-deep-house-sunset-538759.mp3",
+      "audio_file": "catalog/tracks/6/singles/a9012596-e62d-4abe-87e3-f7b5f1d0a79d.mp3",
       "single_cover": "catalog/covers/track/21/venti-views-8WJqVwDnV54-unsplash.jpg",
       "release_date": "2023-03-01",
       "artists": [
@@ -744,7 +744,7 @@
       "title": "Medicine",
       "duration": 193,
       "explicit": false,
-      "audio_file": "catalog/tracks/7/singles/gvidon-gvidon-medicine-364031.mp3",
+      "audio_file": "catalog/tracks/7/singles/61e34a82-7bbb-4a1b-986b-57d1978d4f3e.mp3",
       "single_cover": "catalog/covers/track/22/sheng-hu-77-5h7dxgPI-unsplash.jpg",
       "release_date": "2021-11-05",
       "artists": [
@@ -762,7 +762,7 @@
       "title": "Dark Melodic Techno 01",
       "duration": 387,
       "explicit": false,
-      "audio_file": "catalog/tracks/8/102/vjgalaxy-dark-melodic-techno-01-513314.mp3",
+      "audio_file": "catalog/tracks/8/102/f71db9f9-0581-4d43-bd36-09880848bbf3.mp3",
       "single_cover": null,
       "release_date": "2023-06-01",
       "artists": [
@@ -780,7 +780,7 @@
       "title": "Melodic Techno 03",
       "duration": 412,
       "explicit": false,
-      "audio_file": "catalog/tracks/8/102/vjgalaxy-melodic-techno-03-513313.mp3",
+      "audio_file": "catalog/tracks/8/102/46aab709-f83a-4aad-bcc9-d9a0484e0c33.mp3",
       "single_cover": null,
       "release_date": "2023-06-01",
       "artists": [
@@ -798,7 +798,7 @@
       "title": "Melodic Techno 05",
       "duration": 398,
       "explicit": false,
-      "audio_file": "catalog/tracks/8/102/vjgalaxy-melodic-techno-05-513322.mp3",
+      "audio_file": "catalog/tracks/8/102/dd9a7c4d-279a-4a08-99ac-627c43fee800.mp3",
       "single_cover": null,
       "release_date": "2023-06-01",
       "artists": [
@@ -817,7 +817,7 @@
       "title": "Melodic Techno 06",
       "duration": 376,
       "explicit": false,
-      "audio_file": "catalog/tracks/8/102/vjgalaxy-melodic-techno-06-513323.mp3",
+      "audio_file": "catalog/tracks/8/102/55b86e94-7ecd-4684-b57e-6832e97bca0d.mp3",
       "single_cover": null,
       "release_date": "2023-06-01",
       "artists": [
@@ -835,7 +835,7 @@
       "title": "Dark Dub Techno - Somewhere We Got Lost",
       "duration": 428,
       "explicit": false,
-      "audio_file": "catalog/tracks/9/singles/saturn-3-music-dark-dub-techno-somewhere-we-got-lost-no-copyright-music-144827.mp3",
+      "audio_file": "catalog/tracks/9/singles/127a97c9-e1ee-4e58-a5b0-2804c5a6feb6.mp3",
       "single_cover": "catalog/covers/track/27/h-ng-ph-m-9xPjoOnzsfA-unsplash.jpg",
       "release_date": "2021-07-20",
       "artists": [
@@ -853,7 +853,7 @@
       "title": "Iron Velocity Industrial Techno",
       "duration": 351,
       "explicit": false,
-      "audio_file": "catalog/tracks/10/singles/mroneilovealot-iron-velocity-industrial-techno-518642.mp3",
+      "audio_file": "catalog/tracks/10/singles/a9a0df1b-0519-4185-b1ed-6ea6f9f2cd98.mp3",
       "single_cover": "catalog/covers/track/28/puscas-adryan-W5m2KwELu6M-unsplash.jpg",
       "release_date": "2023-04-11",
       "artists": [
@@ -872,7 +872,7 @@
       "title": "Hard Aggressive Techno",
       "duration": 339,
       "explicit": false,
-      "audio_file": "catalog/tracks/11/singles/apalonbeats-hard-aggressive-techno-519295.mp3",
+      "audio_file": "catalog/tracks/11/singles/42fe0a2d-3d83-42e9-8477-689bbbb0f7e6.mp3",
       "single_cover": "catalog/covers/track/29/zidhan-ibrahim-2zykp7xLb1Q-unsplash.jpg",
       "release_date": "2023-05-01",
       "artists": [
@@ -890,7 +890,7 @@
       "title": "Techno",
       "duration": 362,
       "explicit": false,
-      "audio_file": "catalog/tracks/12/singles/leberch-techno-437501.mp3",
+      "audio_file": "catalog/tracks/12/singles/fd8f3258-f754-4578-b545-54b5367271d4.mp3",
       "single_cover": "catalog/covers/track/30/sheng-hu-77-5h7dxgPI-unsplash.jpg",
       "release_date": "2022-11-20",
       "artists": [
@@ -908,7 +908,7 @@
       "title": "Techno Warehouse",
       "duration": 375,
       "explicit": false,
-      "audio_file": "catalog/tracks/13/singles/alex-morgan-techno-warehouse-537487.mp3",
+      "audio_file": "catalog/tracks/13/singles/c40cbf5a-d196-484f-974e-b6b9424f8bd5.mp3",
       "single_cover": "catalog/covers/track/31/rostislav-uzunov-dhjMXyc7Weo-unsplash.jpg",
       "release_date": "2023-07-08",
       "artists": [
@@ -927,7 +927,7 @@
       "title": "Energetic Rock",
       "duration": 224,
       "explicit": false,
-      "audio_file": "catalog/tracks/14/103/alexgrohl-energetic-rock-470588.mp3",
+      "audio_file": "catalog/tracks/14/103/89fd411f-23b1-41d2-bd66-8eb9b25b71c8.mp3",
       "single_cover": null,
       "release_date": "2023-09-22",
       "artists": [
@@ -945,7 +945,7 @@
       "title": "Rock Motivation",
       "duration": 198,
       "explicit": false,
-      "audio_file": "catalog/tracks/14/103/alexgrohl-rock-motivation-478802.mp3",
+      "audio_file": "catalog/tracks/14/103/a7291168-fcd1-4ae7-8b06-6965d7a945fc.mp3",
       "single_cover": null,
       "release_date": "2023-09-22",
       "artists": [
@@ -964,7 +964,7 @@
       "title": "Upbeat Rock",
       "duration": 211,
       "explicit": false,
-      "audio_file": "catalog/tracks/14/103/alexgrohl-upbeat-rock-552511.mp3",
+      "audio_file": "catalog/tracks/14/103/e85ffe15-3779-462c-9868-69f1709440e1.mp3",
       "single_cover": null,
       "release_date": "2023-09-22",
       "artists": [
@@ -982,7 +982,7 @@
       "title": "Rock Commercial",
       "duration": 189,
       "explicit": false,
-      "audio_file": "catalog/tracks/15/singles/the_mountain-rock-commercial-317788.mp3",
+      "audio_file": "catalog/tracks/15/singles/544aa3b7-c343-48aa-bc97-00651c1233d6.mp3",
       "single_cover": "catalog/covers/track/35/rostislav-uzunov-dhjMXyc7Weo-unsplash.jpg",
       "release_date": "2022-04-18",
       "artists": [
@@ -1000,7 +1000,7 @@
       "title": "Upbeat Rock",
       "duration": 204,
       "explicit": false,
-      "audio_file": "catalog/tracks/15/singles/the_mountain-upbeat-rock-492814.mp3",
+      "audio_file": "catalog/tracks/15/singles/38585a41-40b2-4df4-9056-8400094c62c9.mp3",
       "single_cover": "catalog/covers/track/36/pavel-boltov-D65H8xr4X9s-unsplash.jpg",
       "release_date": "2022-05-02",
       "artists": [
@@ -1018,7 +1018,7 @@
       "title": "Vocal Rock",
       "duration": 217,
       "explicit": false,
-      "audio_file": "catalog/tracks/15/singles/the_mountain-vocal-rock-246075.mp3",
+      "audio_file": "catalog/tracks/15/singles/8b5de8ae-600c-400c-be94-b8581b474700.mp3",
       "single_cover": "catalog/covers/track/37/nemo-V0r2HVrGrto-unsplash.jpg",
       "release_date": "2022-05-20",
       "artists": [
@@ -1037,7 +1037,7 @@
       "title": "Indie Rock",
       "duration": 231,
       "explicit": false,
-      "audio_file": "catalog/tracks/16/singles/nastelbom-indie-rock-513422.mp3",
+      "audio_file": "catalog/tracks/16/singles/59172bcd-9f2e-487e-b860-1b35a939caf4.mp3",
       "single_cover": "catalog/covers/track/38/runda-choo-gThBW41ZMJo-unsplash.jpg",
       "release_date": "2023-02-05",
       "artists": [
@@ -1055,7 +1055,7 @@
       "title": "Rock",
       "duration": 245,
       "explicit": false,
-      "audio_file": "catalog/tracks/16/singles/nastelbom-rock-486991.mp3",
+      "audio_file": "catalog/tracks/16/singles/43708ecf-0775-49c7-94be-8b2c4cba057e.mp3",
       "single_cover": "catalog/covers/track/39/pavel-boltov-D65H8xr4X9s-unsplash.jpg",
       "release_date": "2023-03-10",
       "artists": [
@@ -1073,7 +1073,7 @@
       "title": "Upbeat Rock",
       "duration": 222,
       "explicit": false,
-      "audio_file": "catalog/tracks/16/singles/nastelbom-upbeat-rock-507935.mp3",
+      "audio_file": "catalog/tracks/16/singles/0102a9d8-779a-4950-a807-ac46c7fb49d6.mp3",
       "single_cover": "catalog/covers/track/40/rowan-heuvel-5ZsI-rFsoHU-unsplash.jpg",
       "release_date": "2023-04-01",
       "artists": [
@@ -1091,7 +1091,7 @@
       "title": "Action Rock",
       "duration": 263,
       "explicit": false,
-      "audio_file": "catalog/tracks/17/singles/bombinsound-action-rock-rock-music-514148.mp3",
+      "audio_file": "catalog/tracks/17/singles/3de3f380-9ab6-41cb-bb97-07a638fcb9a4.mp3",
       "single_cover": "catalog/covers/track/41/rowan-heuvel-5ZsI-rFsoHU-unsplash.jpg",
       "release_date": "2023-05-15",
       "artists": [
@@ -1109,7 +1109,7 @@
       "title": "Club Pop",
       "duration": 198,
       "explicit": false,
-      "audio_file": "catalog/tracks/20/105/the_mountain-club-pop-246792.mp3",
+      "audio_file": "catalog/tracks/20/105/dee6101b-293f-40bf-be48-7cab9ffed168.mp3",
       "single_cover": null,
       "release_date": "2023-11-10",
       "artists": [
@@ -1127,7 +1127,7 @@
       "title": "Pop Neon",
       "duration": 213,
       "explicit": false,
-      "audio_file": "catalog/tracks/20/105/the_mountain-pop-neon-246793.mp3",
+      "audio_file": "catalog/tracks/20/105/614f1e7d-d5c0-4f68-b509-98eec195a793.mp3",
       "single_cover": null,
       "release_date": "2023-11-10",
       "artists": [
@@ -1146,7 +1146,7 @@
       "title": "Pop Dance Electric Swing",
       "duration": 187,
       "explicit": false,
-      "audio_file": "catalog/tracks/21/singles/paulyudin-pop-dance-electric-swing-song-475324.mp3",
+      "audio_file": "catalog/tracks/21/singles/1610f2d8-6727-451d-8cd9-65d9738f2966.mp3",
       "single_cover": "catalog/covers/track/44/nathan-Tdoi2OjaOpQ-unsplash.jpg",
       "release_date": "2022-12-01",
       "artists": [
@@ -1164,7 +1164,7 @@
       "title": "044 Indietronica",
       "duration": 234,
       "explicit": false,
-      "audio_file": "catalog/tracks/22/singles/vladislav_zavorin-044-indietronica-553349.mp3",
+      "audio_file": "catalog/tracks/22/singles/a4e7e7b0-068b-4ca0-bb52-fa2b153fbeb8.mp3",
       "single_cover": "catalog/covers/track/45/zidhan-ibrahim-cXCYFrzJlTQ-unsplash.jpg",
       "release_date": "2024-02-10",
       "artists": [
@@ -1182,7 +1182,7 @@
       "title": "044 Lounge",
       "duration": 248,
       "explicit": false,
-      "audio_file": "catalog/tracks/22/singles/vladislav_zavorin-044-lounge-553350.mp3",
+      "audio_file": "catalog/tracks/22/singles/a40151ac-5745-448f-951f-657bf4e535b2.mp3",
       "single_cover": "catalog/covers/track/46/steve-pancrate-tH2JVty2AZI-unsplash.jpg",
       "release_date": "2024-02-10",
       "artists": [
@@ -1200,7 +1200,7 @@
       "title": "Sad Lofi",
       "duration": 176,
       "explicit": false,
-      "audio_file": "catalog/tracks/23/106/apalonbeats-sad-lofi-549452.mp3",
+      "audio_file": "catalog/tracks/23/106/27018f74-366c-4663-9309-c6b3ff0b36d5.mp3",
       "single_cover": null,
       "release_date": "2024-01-20",
       "artists": [
@@ -1218,7 +1218,7 @@
       "title": "Lofi Girl",
       "duration": 193,
       "explicit": false,
-      "audio_file": "catalog/tracks/23/106/mondamusic-lofi-lofi-girl-lofi-music-2-542562.mp3",
+      "audio_file": "catalog/tracks/23/106/17fa4a23-ac9c-4998-b114-e37f6a35bfa1.mp3",
       "single_cover": null,
       "release_date": "2024-01-20",
       "artists": [
@@ -1236,7 +1236,7 @@
       "title": "Lofi Music",
       "duration": 181,
       "explicit": false,
-      "audio_file": "catalog/tracks/23/106/prettyjohn1-lofi-lofi-music-533423.mp3",
+      "audio_file": "catalog/tracks/23/106/6f8b1501-4bbe-4ab6-acae-0b6d17faab4c.mp3",
       "single_cover": null,
       "release_date": "2024-01-20",
       "artists": [
@@ -1255,7 +1255,7 @@
       "title": "Lofi Night",
       "duration": 207,
       "explicit": false,
-      "audio_file": "catalog/tracks/23/106/pulsebox-lofi-night-522890.mp3",
+      "audio_file": "catalog/tracks/23/106/250e1d4a-58b5-48ee-ba31-f6011c3a145f.mp3",
       "single_cover": null,
       "release_date": "2024-01-20",
       "artists": [
@@ -1274,7 +1274,7 @@
       "title": "Lofi Production",
       "duration": 214,
       "explicit": false,
-      "audio_file": "catalog/tracks/23/106/pulsebox-lofi-production-522875.mp3",
+      "audio_file": "catalog/tracks/23/106/43ffeb60-d8bc-47f7-85e8-6dd111b48b52.mp3",
       "single_cover": null,
       "release_date": "2024-01-20",
       "artists": [
@@ -1292,7 +1292,7 @@
       "title": "Lofi Hip Hop",
       "duration": 198,
       "explicit": false,
-      "audio_file": "catalog/tracks/23/106/solarflex-lofi-hiphop-541533.mp3",
+      "audio_file": "catalog/tracks/23/106/05a09db3-cf7c-4cba-8e0c-3dcb603fdfbf.mp3",
       "single_cover": null,
       "release_date": "2024-01-20",
       "artists": [
@@ -1310,7 +1310,7 @@
       "title": "Hip Hop Vlog",
       "duration": 164,
       "explicit": false,
-      "audio_file": "catalog/tracks/23/singles/atlasaudio-hip-hop-vlog-518291.mp3",
+      "audio_file": "catalog/tracks/23/singles/9033284e-4fd3-4512-9a4f-38a035c075ba.mp3",
       "single_cover": "catalog/covers/track/53/zhen-yao-Oyln94HUMJA-unsplash.jpg",
       "release_date": "2023-08-15",
       "artists": [
@@ -1328,7 +1328,7 @@
       "title": "Lofi Music",
       "duration": 188,
       "explicit": false,
-      "audio_file": "catalog/tracks/23/singles/the_mountain-lofi-lofi-music-496553.mp3",
+      "audio_file": "catalog/tracks/23/singles/796c9288-a772-45d2-bbe4-3167091a639c.mp3",
       "single_cover": "catalog/covers/track/54/yuheng-ouyang-gsylhBigagM-unsplash.jpg",
       "release_date": "2023-09-01",
       "artists": [
@@ -1347,7 +1347,7 @@
       "title": "Gardens Stylish Chill",
       "duration": 221,
       "explicit": false,
-      "audio_file": "catalog/tracks/24/singles/penguinmusic-gardens-stylish-chill-303261.mp3",
+      "audio_file": "catalog/tracks/24/singles/81193d4c-42fa-4195-be56-55f00dff7f0a.mp3",
       "single_cover": "catalog/covers/track/55/rowan-heuvel-5ZsI-rFsoHU-unsplash.jpg",
       "release_date": "2023-10-05",
       "artists": [
@@ -1365,7 +1365,7 @@
       "title": "276 Dream Pop",
       "duration": 243,
       "explicit": false,
-      "audio_file": "catalog/tracks/24/singles/vladislav_zavorin-276-dream-pop-553320.mp3",
+      "audio_file": "catalog/tracks/24/singles/a048ae5d-38ec-465c-bc7d-8bdc6778e073.mp3",
       "single_cover": "catalog/covers/track/56/vitaliy-shevchenko-8YWkDeN2HbQ-unsplash.jpg",
       "release_date": "2024-03-01",
       "artists": [
@@ -1383,7 +1383,7 @@
       "title": "279 Trip Hop",
       "duration": 257,
       "explicit": false,
-      "audio_file": "catalog/tracks/24/singles/vladislav_zavorin-279-trip-hop-553323.mp3",
+      "audio_file": "catalog/tracks/24/singles/0730db44-3dbd-4243-a1ce-f6817a6f9d48.mp3",
       "single_cover": "catalog/covers/track/57/quan-jing-ng5UoPFejm4-unsplash.jpg",
       "release_date": "2024-03-01",
       "artists": [
@@ -1401,7 +1401,7 @@
       "title": "280 Trip Hop",
       "duration": 261,
       "explicit": false,
-      "audio_file": "catalog/tracks/24/singles/vladislav_zavorin-280-trip-hop-553324.mp3",
+      "audio_file": "catalog/tracks/24/singles/e049f97c-01b0-48c8-86bb-d9b40227242b.mp3",
       "single_cover": "catalog/covers/track/58/zidhan-ibrahim-2zykp7xLb1Q-unsplash.jpg",
       "release_date": "2024-03-01",
       "artists": [

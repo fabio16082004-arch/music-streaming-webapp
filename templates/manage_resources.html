@@ -401,9 +401,15 @@
                 </div>
 
                 <div class="form-field">
-                    <label class="custom-label" for="artist-country">Country</label>
-                    <input type="text" id="artist-country" name="country" class="custom-form-input"
-                           value="{{ artist.country|default:'' }}">
+                    <label class="custom-label">Country</label>
+                    <div class="dropdown country-select-dropdown" data-current-country="{{ artist.country|default:'' }}">
+                        <button type="button"
+                                class="custom-form-input filter-select singleselect-toggle dropdown-toggle"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="singleselect-toggle-label" data-placeholder="Select country">Select country</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark singleselect-menu"></ul>
+                    </div>
                 </div>
 
                 <div class="form-field">
