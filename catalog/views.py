@@ -68,11 +68,13 @@ class AlbumView(LoginRequiredMixin, View):
     def get(self, request, album_id):
         album = get_object_or_404(Album, id=album_id)
 
-        tracks = (
-            Track.objects
-            .filter(albums=album)
-            .order_by('albumtrack__track_number')
+        album_tracks = (
+            AlbumTrack.objects
+            .filter(album=album)
+            .select_related('track')
+            .order_by('track_number')
         )
+        tracks = [album_track.track for album_track in album_tracks]
 
         listener_playlists = Playlist.objects.filter(listener=request.user)
 
