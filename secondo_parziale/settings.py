@@ -16,7 +16,6 @@ import dj_database_url
 from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR /
 import os
-print(f"--- VARIABILI D'AMBIENTE DISPONIBILI: {list(os.environ.keys())} ---")
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -75,8 +74,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'secondo_parziale.wsgi.application'
-print(f"DEBUG: DATABASE_URL is present: {'DATABASE_URL' in os.environ}")
-
 
 if os.environ.get('DATABASE_URL'):
     DATABASES = {
