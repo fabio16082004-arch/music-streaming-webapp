@@ -101,6 +101,11 @@ else:
                 'PORT': '5432',
             }
         }
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'music-streaming-webapp-production.up.railway.app'
+]
 
 
 AUTH_PASSWORD_VALIDATORS = [
