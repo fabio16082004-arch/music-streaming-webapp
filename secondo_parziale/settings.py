@@ -134,6 +134,10 @@ STORAGES = {
     },
 }
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://music-streaming-webapp-production.up.railway.app',
+]
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
