@@ -85,13 +85,18 @@ class TrackForm(forms.ModelForm):
                     if track_number > max_valid_position:
                         track_number = max_valid_position
 
-                    existing = AlbumTrack.objects.filter(
-                        album=album, track_number__gte=track_number
-                    ).order_by('-track_number')
+                    slot_occupied = AlbumTrack.objects.filter(
+                        album=album, track_number=track_number
+                    ).exists()
 
-                    for album_track in existing:
-                        album_track.track_number += 1
-                        album_track.save(update_fields=['track_number'])
+                    if slot_occupied:
+                        existing = AlbumTrack.objects.filter(
+                            album=album, track_number__gte=track_number
+                        ).order_by('-track_number')
+
+                        for album_track in existing:
+                            album_track.track_number += 1
+                            album_track.save(update_fields=['track_number'])
 
                     AlbumTrack.objects.create(album=album, track=instance, track_number=track_number)
 
