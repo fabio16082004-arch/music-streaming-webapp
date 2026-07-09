@@ -1,6 +1,18 @@
-
 from django.conf import settings
 from django.db import migrations, models
+
+
+def alter_month_column(apps, schema_editor):
+    if schema_editor.connection.vendor == 'postgresql':
+        schema_editor.execute(
+            'ALTER TABLE listeners_monthlylisteningstatistic '
+            'ALTER COLUMN month TYPE smallint '
+            'USING EXTRACT(MONTH FROM month)::smallint;'
+        )
+
+
+def reverse_noop(apps, schema_editor):
+    pass
 
 
 class Migration(migrations.Migration):
@@ -23,14 +35,19 @@ class Migration(migrations.Migration):
             preserve_default=False,
         ),
 
-        migrations.RunSQL(
-            sql=(
-                'ALTER TABLE listeners_monthlylisteningstatistic '
-                'ALTER COLUMN month TYPE smallint '
-                'USING EXTRACT(MONTH FROM month)::smallint;'
-            ),
-            reverse_sql=migrations.RunSQL.noop,
+        migrations.SeparateDatabaseAndState(
+            state_operations=[
+                migrations.AlterField(
+                    model_name='monthlylisteningstatistic',
+                    name='month',
+                    field=models.PositiveSmallIntegerField(),
+                ),
+            ],
+            database_operations=[
+                migrations.RunPython(alter_month_column, reverse_noop),
+            ],
         ),
+
         migrations.AlterUniqueTogether(
             name='monthlylisteningstatistic',
             unique_together={('listener', 'track', 'month', 'year')},
