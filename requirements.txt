@@ -4,3 +4,4 @@ django
 mutagen
 psycopg2-binary
 python-dotenv
+gunicorn
