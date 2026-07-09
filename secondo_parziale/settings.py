@@ -74,6 +74,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'secondo_parziale.wsgi.application'
 
+if os.getenv('RAILWAY_ENVIRONMENT_NAME') is None:
+    from dotenv import load_dotenv
+    load_dotenv()
+
+print(f"DEBUG: DATABASE_URL is present: {'DATABASE_URL' in os.environ}")
+
 
 if os.environ.get('DATABASE_URL'):
     DATABASES = {
