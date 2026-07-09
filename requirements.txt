@@ -2,3 +2,5 @@ pillow
 django-filter
 django
 mutagen
+psycopg2-binary
+python-dotenv

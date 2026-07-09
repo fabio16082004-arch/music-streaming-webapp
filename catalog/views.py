@@ -28,7 +28,6 @@ class SearchView(View):
 
 class SearchResultsView(View):
     def get(self, request):
-        print(request.GET)
         query = request.GET.get('q', '').strip()
 
         allowed_playlists = Playlist.objects.filter(
