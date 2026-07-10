@@ -170,7 +170,7 @@ function readArtistFilters(params) {
     const initialChip = document.querySelector('#artistFiltersModal .filter-chip.selected');
     const country = document.getElementById('artist-country')?.value;
 
-    if (initialChip) params.append('stage_name_initial', initialChip.dataset.value);
+    if (initialChip) params.append('initial', initialChip.dataset.value);
     if (country) params.append('country', country);
 }
 
