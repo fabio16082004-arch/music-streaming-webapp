@@ -5,7 +5,6 @@ from django.conf.urls.static import static
 from django.views.generic import RedirectView
 
 urlpatterns = [
-    # Pannello di amministrazione
     path('admin/', admin.site.urls),
 
     path('catalog/', include('catalog.urls')),

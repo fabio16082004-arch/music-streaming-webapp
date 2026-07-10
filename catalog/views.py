@@ -132,8 +132,6 @@ class TrackCreateView(PermissionRequiredMixin, ResourceFormContextMixin, CreateV
     permission_required = 'catalog.add_track'
     resource_type = 'track'
     success_url = reverse_lazy('search')
-    # form_valid di default: TrackForm.save() gestisce già M2M, AlbumTrack
-    # (con shift automatico delle posizioni) e la scrittura dei file.
 
 
 class TrackUpdateView(PermissionRequiredMixin, ResourceFormContextMixin, UpdateView):

@@ -9,18 +9,6 @@ from .models import Track, Album, Artist, Genre, AlbumTrack
 
 
 class TrackForm(forms.ModelForm):
-    """
-    Form per Track. 'album' e 'track_number' non sono campi diretti del modello
-    (la relazione passa dalla tabella intermedia AlbumTrack), quindi vengono
-    dichiarati qui a parte e gestiti manualmente in save().
-
-    'duration' NON è un campo del form: arriva da 'client_duration', un campo
-    hidden compilato via JS con la durata calcolata dal browser (vedi
-    resource_form.js). Non usiamo più mutagen: alcuni file hanno un
-    contenitore con la durata a 0 nell'header nonostante il file suoni
-    correttamente, e il browser (che decodifica davvero lo stream) è più
-    affidabile in quei casi.
-    """
     album = forms.ModelChoiceField(
         queryset=Album.objects.all(),
         required=False,
