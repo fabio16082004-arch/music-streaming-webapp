@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Group
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -17,3 +18,9 @@ class SignupView(CreateView):
     form_class = ListenerSignupForm
     success_url = reverse_lazy('login')
     template_name = "registration/signup.html"
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        listeners_group, _ = Group.objects.get_or_create(name='Listeners')
+        self.object.groups.add(listeners_group)
+        return response
