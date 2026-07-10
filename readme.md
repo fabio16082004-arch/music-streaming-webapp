@@ -25,12 +25,7 @@ The system uses native **Django Groups** and are reported in the following table
 ## Setup and Installation
 
 ```bash
-# Option A: venv (standard library)
-python -m venv .venv
-.venv\Scripts\activate        # Windows
-source .venv/bin/activate     # macOS/Linux
-
-# Option B: conda
+#1. Create the environment
 conda create -n music-app python=3.11
 conda activate music-app
 

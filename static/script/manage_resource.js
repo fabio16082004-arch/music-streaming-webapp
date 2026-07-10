@@ -307,13 +307,6 @@ document.addEventListener('DOMContentLoaded', function () {
                                     ? parseInt(hiddenTrackNumber.value)
                                     : null;
 
-                                // Calcoliamo la posizione come "rango": quante
-                                // tracce hanno un track_number PIÙ BASSO del
-                                // nostro. Non usiamo (numero - 1) come indice
-                                // letterale, perché i numeri assoluti possono
-                                // driftare nel tempo e non partire più da 1
-                                // (es. 2, 3, 4 invece di 1, 2, 3) — il rango
-                                // resta corretto in ogni caso.
                                 let startPos = (currentNumber !== null && !isNaN(currentNumber))
                                     ? fetchedTracks.filter(t => t.track_number < currentNumber).length
                                     : uiTracks.length;
